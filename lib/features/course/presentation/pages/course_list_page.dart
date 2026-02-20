@@ -116,7 +116,7 @@ class CourseListPage extends ConsumerWidget {
                     border: Border.all(
                       color: Theme.of(
                         context,
-                      ).colorScheme.outline.withOpacity(0.5),
+                      ).colorScheme.outline.withValues(alpha: 0.5),
                     ),
                   ),
                   child: IntrinsicHeight(
@@ -165,7 +165,7 @@ class CourseListPage extends ConsumerWidget {
                                           vertical: 4,
                                         ),
                                         decoration: BoxDecoration(
-                                          color: courseColor.withOpacity(0.2),
+                                          color: courseColor.withValues(alpha: 0.2),
                                           borderRadius: BorderRadius.circular(
                                             8,
                                           ),

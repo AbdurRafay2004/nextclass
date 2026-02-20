@@ -70,7 +70,7 @@ class CourseDetailPage extends ConsumerWidget {
             // Header Section
             Container(
               padding: const EdgeInsets.all(24),
-              color: courseColor.withOpacity(0.1),
+              color: courseColor.withValues(alpha: 0.1),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -173,7 +173,7 @@ class CourseDetailPage extends ConsumerWidget {
                         border: Border.all(
                           color: Theme.of(
                             context,
-                          ).colorScheme.outline.withOpacity(0.5),
+                          ).colorScheme.outline.withValues(alpha: 0.5),
                         ),
                       ),
                       child: ListTile(

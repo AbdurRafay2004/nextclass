@@ -206,7 +206,7 @@ class _SessionAddPageState extends ConsumerState<SessionAddPage> {
                   const SizedBox(width: 16),
                   Expanded(
                     child: DropdownButtonFormField<int>(
-                      value: _durationMinutes,
+                      initialValue: _durationMinutes,
                       decoration: const InputDecoration(
                         labelText: 'Duration',
                         border: OutlineInputBorder(),

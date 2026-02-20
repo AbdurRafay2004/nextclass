@@ -71,7 +71,7 @@ class TimelineEventCard extends StatelessWidget {
                 color: Theme.of(context).colorScheme.surface,
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
-                  color: courseColor.withOpacity(0.5),
+                  color: courseColor.withValues(alpha: 0.5),
                   width: 1,
                 ),
               ),
@@ -90,7 +90,7 @@ class TimelineEventCard extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: Theme.of(
                         context,
-                      ).colorScheme.onSurface.withOpacity(0.7),
+                      ).colorScheme.onSurface.withValues(alpha: 0.7),
                     ),
                   ),
                   const Spacer(),
@@ -102,7 +102,7 @@ class TimelineEventCard extends StatelessWidget {
                         size: 14,
                         color: Theme.of(
                           context,
-                        ).colorScheme.onSurface.withOpacity(0.7),
+                        ).colorScheme.onSurface.withValues(alpha: 0.7),
                       ),
                       const SizedBox(width: 4),
                       Text(
@@ -115,7 +115,7 @@ class TimelineEventCard extends StatelessWidget {
                         size: 14,
                         color: Theme.of(
                           context,
-                        ).colorScheme.onSurface.withOpacity(0.7),
+                        ).colorScheme.onSurface.withValues(alpha: 0.7),
                       ),
                       const SizedBox(width: 4),
                       Text(

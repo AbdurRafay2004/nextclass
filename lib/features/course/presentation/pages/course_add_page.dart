@@ -21,7 +21,7 @@ class _CourseAddPageState extends ConsumerState<CourseAddPage> {
 
   // Convert Color to Hex String
   String _colorToHex(Color color) {
-    return '#${color.value.toRadixString(16).substring(2, 8).toUpperCase()}';
+    return '#${color.toARGB32().toRadixString(16).substring(2, 8).toUpperCase()}';
   }
 
   void _saveCourse() async {
@@ -155,14 +155,14 @@ class _CourseAddPageState extends ConsumerState<CourseAddPage> {
                             ? Border.all(
                                 color: Theme.of(
                                   context,
-                                ).colorScheme.onBackground,
+                                ).colorScheme.onSurface,
                                 width: 3,
                               )
                             : null,
                         boxShadow: [
                           if (isSelected)
                             BoxShadow(
-                              color: color.withOpacity(0.4),
+                              color: color.withValues(alpha: 0.4),
                               blurRadius: 8,
                               offset: const Offset(0, 4),
                             ),
