@@ -17,7 +17,19 @@ class TimelineEventCard extends StatelessWidget {
       minutesSinceMidnight ~/ 60,
       minutesSinceMidnight % 60,
     );
-    return DateFormat('h:mm a').format(time);
+    return DateFormat('h:mm').format(time);
+  }
+
+  String _formatAmPm(int minutesSinceMidnight) {
+    final now = DateTime.now();
+    final time = DateTime(
+      now.year,
+      now.month,
+      now.day,
+      minutesSinceMidnight ~/ 60,
+      minutesSinceMidnight % 60,
+    );
+    return DateFormat('a').format(time);
   }
 
   Color _hexToColor(String hexString) {
@@ -31,104 +43,150 @@ class TimelineEventCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final courseColor = _hexToColor(item.course.colorHex);
 
-    return IntrinsicHeight(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          // Timeline logic (Left side)
-          SizedBox(
-            width: 60,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  _formatTime(item.session.startTimeMinutes),
-                  style: Theme.of(
-                    context,
-                  ).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(width: 8),
-
-          // Colored vertical line indicator
-          Container(
-            width: 4,
-            decoration: BoxDecoration(
-              color: courseColor,
-              borderRadius: BorderRadius.circular(2),
-            ),
-          ),
-          const SizedBox(width: 8),
-
-          // Card content (Right side)
-          Expanded(
-            child: Container(
-              margin: const EdgeInsets.only(bottom: 16),
-              padding: const EdgeInsets.all(12),
+    return Container(
+      decoration: BoxDecoration(
+        color: const Color(0xFF161618),
+        borderRadius: BorderRadius.circular(24),
+      ),
+      child: IntrinsicHeight(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // Left color strip
+            Container(
+              width: 14,
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surface,
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(
-                  color: courseColor.withValues(alpha: 0.5),
-                  width: 1,
+                color: courseColor,
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(24),
+                  bottomLeft: Radius.circular(24),
                 ),
               ),
+            ),
+
+            // Time Column
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 20,
+                right: 16,
+                top: 20,
+                bottom: 20,
+              ),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    item.course.name,
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
+                    _formatTime(item.session.startTimeMinutes),
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                      fontWeight: FontWeight.w900,
+                      color: Colors.white,
                     ),
                   ),
-                  const SizedBox(height: 4),
                   Text(
-                    '${item.course.code} · ${item.session.type.name}',
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: Theme.of(
-                        context,
-                      ).colorScheme.onSurface.withValues(alpha: 0.7),
+                    _formatAmPm(item.session.startTimeMinutes),
+                    style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey[500],
+                      letterSpacing: 1.2,
                     ),
                   ),
-                  const Spacer(),
                   const SizedBox(height: 8),
                   Row(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(
-                        Icons.location_on,
-                        size: 14,
-                        color: Theme.of(
-                          context,
-                        ).colorScheme.onSurface.withValues(alpha: 0.7),
-                      ),
+                      Icon(Icons.location_on, size: 14, color: courseColor),
                       const SizedBox(width: 4),
                       Text(
-                        item.session.room,
-                        style: Theme.of(context).textTheme.bodySmall,
-                      ),
-                      const SizedBox(width: 12),
-                      Icon(
-                        Icons.person,
-                        size: 14,
-                        color: Theme.of(
-                          context,
-                        ).colorScheme.onSurface.withValues(alpha: 0.7),
-                      ),
-                      const SizedBox(width: 4),
-                      Text(
-                        item.course.facultyName,
-                        style: Theme.of(context).textTheme.bodySmall,
+                        item.session.room.toUpperCase(),
+                        style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                          color: Colors.grey[400],
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ],
                   ),
                 ],
               ),
             ),
-          ),
-        ],
+
+            // Vertical Divider
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 24),
+              child: Container(
+                width: 1,
+                color: Colors.white.withValues(alpha: 0.1),
+              ),
+            ),
+
+            // Subject Details Column
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  left: 16,
+                  right: 8,
+                  top: 20,
+                  bottom: 20,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      item.course.name,
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      item.course.code,
+                      style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                        color: courseColor,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 1.0,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.person_outline,
+                          size: 16,
+                          color: courseColor,
+                        ),
+                        const SizedBox(width: 6),
+                        Expanded(
+                          child: Text(
+                            item.course.facultyName,
+                            style: Theme.of(context).textTheme.labelMedium
+                                ?.copyWith(color: Colors.grey[400]),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            // Trailing Icon
+            Padding(
+              padding: const EdgeInsets.only(right: 20),
+              child: Center(
+                child: Icon(
+                  Icons.edit_note_rounded,
+                  color: Colors.grey[500],
+                  size: 28,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

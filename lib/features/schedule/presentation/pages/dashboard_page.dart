@@ -123,25 +123,26 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
             padding: const EdgeInsets.all(16),
             children: [
               if (liveItem != null) ...[
-                Text(
-                  'Happening Now',
-                  style: Theme.of(
-                    context,
-                  ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 16),
                 LiveStatusCard(item: liveItem),
+                const SizedBox(height: 16),
               ],
               if (upcomingItems.isNotEmpty) ...[
                 const SizedBox(height: 8),
                 Text(
-                  'Up Next',
-                  style: Theme.of(
-                    context,
-                  ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+                  'UP NEXT TODAY',
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: 2.0,
+                    color: Colors.grey[500],
+                  ),
                 ),
                 const SizedBox(height: 16),
-                ...upcomingItems.map((item) => TimelineEventCard(item: item)),
+                ...upcomingItems.map(
+                  (item) => Padding(
+                    padding: const EdgeInsets.only(bottom: 16.0),
+                    child: TimelineEventCard(item: item),
+                  ),
+                ),
               ],
             ],
           ),

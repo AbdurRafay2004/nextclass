@@ -20,17 +20,8 @@ class LiveStatusCard extends StatelessWidget {
     return DateFormat('h:mm a').format(time);
   }
 
-  Color _hexToColor(String hexString) {
-    final buffer = StringBuffer();
-    if (hexString.length == 6 || hexString.length == 7) buffer.write('ff');
-    buffer.write(hexString.replaceFirst('#', ''));
-    return Color(int.parse(buffer.toString(), radix: 16));
-  }
-
   @override
   Widget build(BuildContext context) {
-    final courseColor = _hexToColor(item.course.colorHex);
-
     // Calculate progress for the Live Card
     final now = DateTime.now();
     final currentMinutes = now.hour * 60 + now.minute;
@@ -45,160 +36,209 @@ class LiveStatusCard extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(20),
-      margin: const EdgeInsets.only(bottom: 24),
-      decoration: BoxDecoration(
-        color: courseColor,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: courseColor.withValues(alpha: 0.3),
-            blurRadius: 15,
-            offset: const Offset(0, 8),
-          ),
-        ],
-      ),
+      color: Colors.transparent,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 4,
-                ),
-                decoration: BoxDecoration(
-                  color: Colors.black.withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Text(
-                  item.course.code,
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black87,
-                  ),
-                ),
+          // NOW tag
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            decoration: BoxDecoration(
+              border: Border.all(color: const Color(0xFF00E676), width: 1.0),
+              borderRadius: BorderRadius.circular(4),
+              color: Colors.transparent,
+            ),
+            child: const Text(
+              'NOW',
+              style: TextStyle(
+                color: Color(0xFF00E676),
+                fontWeight: FontWeight.w900,
+                fontSize: 10,
+                letterSpacing: 2.0,
               ),
-              const Icon(Icons.videocam, color: Colors.black87),
-            ],
-          ),
-          const SizedBox(height: 12),
-          Text(
-            item.course.name,
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
             ),
           ),
           const SizedBox(height: 16),
-          Row(
-            children: [
-              _buildInfoItem(
-                context,
-                Icons.location_on,
-                'Room',
-                item.session.room,
-              ),
-              const SizedBox(width: 32),
-              _buildInfoItem(
-                context,
-                Icons.person,
-                'Faculty',
-                item.course.facultyName,
-              ),
-            ],
-          ),
-          const SizedBox(height: 24),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Time Remaining',
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black54,
-                ),
-              ),
-              Text(
-                '${remainingMinutes > 0 ? remainingMinutes : 0} min',
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87,
-                ),
-              ),
-            ],
+          // Course Code
+          Text(
+            item.course.code.toUpperCase(),
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+              color: Colors.grey[600],
+              fontWeight: FontWeight.w900,
+              letterSpacing: 1.5,
+            ),
           ),
           const SizedBox(height: 8),
+          // Course Name
+          Text(
+            item.course.name,
+            style: Theme.of(context).textTheme.displayLarge?.copyWith(
+              fontWeight: FontWeight.w900,
+              color: Colors.white,
+              height: 1.05,
+              letterSpacing: -1.0,
+            ),
+          ),
+          const SizedBox(height: 48),
+          // Room and Faculty Info
+          Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.location_on_outlined,
+                          size: 16,
+                          color: Colors.grey[600],
+                        ),
+                        const SizedBox(width: 6),
+                        Text(
+                          'ROOM',
+                          style: TextStyle(
+                            color: Colors.grey[600],
+                            fontWeight: FontWeight.w900,
+                            fontSize: 12,
+                            letterSpacing: 1.5,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      item.session.room,
+                      style: Theme.of(context).textTheme.headlineSmall
+                          ?.copyWith(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w900,
+                          ),
+                    ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.person_outline,
+                          size: 16,
+                          color: Colors.grey[600],
+                        ),
+                        const SizedBox(width: 6),
+                        Text(
+                          'FACULTY',
+                          style: TextStyle(
+                            color: Colors.grey[600],
+                            fontWeight: FontWeight.w900,
+                            fontSize: 12,
+                            letterSpacing: 1.5,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      item.course.facultyName,
+                      style: Theme.of(context).textTheme.headlineSmall
+                          ?.copyWith(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w900,
+                          ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 32),
+          // Divider
+          Divider(color: Colors.grey[900], thickness: 2.0),
+          const SizedBox(height: 24),
+          // Time Remaining and Ends At
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'TIME REMAINING',
+                    style: TextStyle(
+                      color: Colors.grey[600],
+                      fontWeight: FontWeight.w900,
+                      fontSize: 12,
+                      letterSpacing: 1.5,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    textBaseline: TextBaseline.alphabetic,
+                    children: [
+                      Text(
+                        '${remainingMinutes > 0 ? remainingMinutes : 0}',
+                        style: Theme.of(context).textTheme.displayMedium
+                            ?.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w900,
+                            ),
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        'min',
+                        style: TextStyle(
+                          color: Colors.grey[500],
+                          fontWeight: FontWeight.w900,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    'ENDS AT',
+                    style: TextStyle(
+                      color: Colors.grey[600],
+                      fontWeight: FontWeight.w900,
+                      fontSize: 12,
+                      letterSpacing: 1.5,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    _formatTime(endMinutes),
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                ],
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          // Progress bar
           LinearProgressIndicator(
             value: clampedProgress,
-            backgroundColor: Colors.black12,
-            valueColor: const AlwaysStoppedAnimation<Color>(Colors.black87),
-            borderRadius: BorderRadius.circular(4),
-            minHeight: 8,
+            backgroundColor: Colors.grey[900],
+            valueColor: const AlwaysStoppedAnimation<Color>(Colors.white),
+            minHeight: 6,
+            borderRadius: BorderRadius.circular(3),
           ),
-          const SizedBox(height: 8),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                _formatTime(item.session.startTimeMinutes),
-                style: Theme.of(
-                  context,
-                ).textTheme.bodySmall?.copyWith(color: Colors.black54),
-              ),
-              Text(
-                _formatTime(endMinutes),
-                style: Theme.of(
-                  context,
-                ).textTheme.bodySmall?.copyWith(color: Colors.black54),
-              ),
-            ],
-          ),
+          const SizedBox(height: 16), // Extra spacing before the next section
         ],
       ),
-    );
-  }
-
-  Widget _buildInfoItem(
-    BuildContext context,
-    IconData icon,
-    String label,
-    String value,
-  ) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          padding: const EdgeInsets.all(6),
-          decoration: BoxDecoration(
-            color: Colors.white.withValues(alpha: 0.3),
-            shape: BoxShape.circle,
-          ),
-          child: Icon(icon, size: 16, color: Colors.black87),
-        ),
-        const SizedBox(width: 10),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              label,
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                color: Colors.black54,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            Text(
-              value,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: Colors.black87,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ),
-      ],
     );
   }
 }
