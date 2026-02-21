@@ -23,9 +23,6 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
 
   @override
   Widget build(BuildContext context) {
-    final currentDay = ref.watch(currentDayProvider);
-    final scheduleAsync = ref.watch(dayScheduleProvider(currentDay));
-
     return Scaffold(
       appBar: _currentIndex == 0
           ? AppBar(
@@ -60,7 +57,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
         children: [
           Positioned.fill(
             child: _currentIndex == 0
-                ? _buildDashboardBody(scheduleAsync)
+                ? _buildDashboardBody()
                 : _currentIndex == 1
                 ? const CourseListPage()
                 : _currentIndex == 2
@@ -85,99 +82,87 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
     );
   }
 
-  Widget _buildDashboardBody(AsyncValue<List<ScheduleItem>> scheduleAsync) {
-    return scheduleAsync.when(
-      data: (items) {
-        if (items.isEmpty) {
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(Icons.weekend, size: 64, color: Colors.grey),
-                const SizedBox(height: 16),
-                Text(
-                  'Weekend Mode',
-                  style: Theme.of(context).textTheme.headlineSmall,
+  Widget _buildDashboardBody() {
+    return Consumer(
+      builder: (context, ref, child) {
+        final scheduleData = ref.watch(dashboardScheduleProvider);
+
+        return scheduleData.when(
+          data: (data) {
+            final liveItem = data.liveItem;
+            final upcomingItems = data.upcomingItems;
+
+            // If there's no live item and no upcoming items left today
+            if (liveItem == null && upcomingItems.isEmpty) {
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(Icons.weekend, size: 64, color: Colors.grey),
+                    const SizedBox(height: 16),
+                    Text(
+                      'All Caught Up',
+                      style: Theme.of(context).textTheme.headlineSmall,
+                    ),
+                    const SizedBox(height: 8),
+                    const Text('No more classes scheduled for today.'),
+                    const SizedBox(height: 24),
+                    ElevatedButton.icon(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const CourseAddPage(),
+                          ),
+                        );
+                      },
+                      icon: const Icon(Icons.add),
+                      label: const Text('Add a class'),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 8),
-                const Text('No classes scheduled for today.'),
-                const SizedBox(height: 24),
-                ElevatedButton.icon(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const CourseAddPage(),
+              );
+            }
+
+            return RefreshIndicator(
+              onRefresh: () async {
+                // Trigger a refresh (riverpod invalidation)
+                ref.invalidate(dayScheduleProvider);
+                ref.invalidate(timeProvider);
+              },
+              child: ListView(
+                padding: const EdgeInsets.fromLTRB(16, 16, 16, 100),
+                children: [
+                  if (liveItem != null) ...[
+                    LiveStatusCard(item: liveItem),
+                    const SizedBox(height: 16),
+                  ],
+                  if (upcomingItems.isNotEmpty) ...[
+                    const SizedBox(height: 8),
+                    Text(
+                      'UP NEXT TODAY',
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.w900,
+                        letterSpacing: 2.0,
+                        color: Colors.grey[500],
                       ),
-                    );
-                  },
-                  icon: const Icon(Icons.add),
-                  label: const Text('Add a class'),
-                ),
-              ],
-            ),
-          );
-        }
-
-        // Determine if there is a live class
-        ScheduleItem? liveItem;
-        final now = DateTime.now();
-        final currentMinutes = now.hour * 60 + now.minute;
-
-        for (var item in items) {
-          final endMinutes =
-              item.session.startTimeMinutes + item.session.durationMinutes;
-          if (currentMinutes >= item.session.startTimeMinutes &&
-              currentMinutes <= endMinutes) {
-            liveItem = item;
-            break;
-          }
-        }
-
-        // Filter out past items and the live item
-        final upcomingItems = items.where((i) {
-          if (i == liveItem) return false;
-          final endMinutes =
-              i.session.startTimeMinutes + i.session.durationMinutes;
-          return currentMinutes < endMinutes;
-        }).toList();
-
-        return RefreshIndicator(
-          onRefresh: () async {
-            // Trigger a refresh (riverpod invalidation)
-            ref.invalidate(dayScheduleProvider);
+                    ),
+                    const SizedBox(height: 16),
+                    ...upcomingItems.map(
+                      (item) => Padding(
+                        padding: const EdgeInsets.only(bottom: 16.0),
+                        child: TimelineEventCard(item: item),
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+            );
           },
-          child: ListView(
-            padding: const EdgeInsets.fromLTRB(16, 16, 16, 100),
-            children: [
-              if (liveItem != null) ...[
-                LiveStatusCard(item: liveItem),
-                const SizedBox(height: 16),
-              ],
-              if (upcomingItems.isNotEmpty) ...[
-                const SizedBox(height: 8),
-                Text(
-                  'UP NEXT TODAY',
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w900,
-                    letterSpacing: 2.0,
-                    color: Colors.grey[500],
-                  ),
-                ),
-                const SizedBox(height: 16),
-                ...upcomingItems.map(
-                  (item) => Padding(
-                    padding: const EdgeInsets.only(bottom: 16.0),
-                    child: TimelineEventCard(item: item),
-                  ),
-                ),
-              ],
-            ],
-          ),
+          loading: () => const Center(child: CircularProgressIndicator()),
+          error: (e, st) => Center(child: Text('Error: $e')),
         );
       },
-      loading: () => const Center(child: CircularProgressIndicator()),
-      error: (e, st) => Center(child: Text('Error: $e')),
     );
   }
 }

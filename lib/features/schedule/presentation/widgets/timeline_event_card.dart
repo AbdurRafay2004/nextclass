@@ -45,21 +45,25 @@ class TimelineEventCard extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: const Color(0xFF161618),
+        color: const Color(0xFF222224),
         borderRadius: BorderRadius.circular(24),
       ),
       child: IntrinsicHeight(
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Left color strip
-            Container(
-              width: 14,
-              decoration: BoxDecoration(
-                color: courseColor,
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(24),
-                  bottomLeft: Radius.circular(24),
+            // Left color strip (inset and rounded)
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 12.0,
+                top: 12.0,
+                bottom: 12.0,
+              ),
+              child: Container(
+                width: 14,
+                decoration: BoxDecoration(
+                  color: courseColor,
+                  borderRadius: BorderRadius.circular(12),
                 ),
               ),
             ),

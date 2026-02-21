@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
 
 import '../../../../core/database/database_manager.dart';
+import '../../../../core/providers/time_provider.dart';
 import '../../../course/data/models/course.dart';
 import '../../data/models/class_session.dart';
 
@@ -69,3 +70,49 @@ final sessionsByCourseProvider =
 
       return sessions;
     });
+
+// A computed provider that yields the current live class and upcoming classes
+// based on the realtime clock.
+typedef DashboardSchedule = ({
+  ScheduleItem? liveItem,
+  List<ScheduleItem> upcomingItems,
+});
+
+final dashboardScheduleProvider = Provider<AsyncValue<DashboardSchedule>>((
+  ref,
+) {
+  final currentDay = ref.watch(currentDayProvider);
+  final scheduleAsync = ref.watch(dayScheduleProvider(currentDay));
+  final nowAsync = ref.watch(timeProvider);
+
+  if (scheduleAsync.isLoading || nowAsync.isLoading) {
+    return const AsyncValue.loading();
+  }
+
+  if (scheduleAsync.hasError) {
+    return AsyncValue.error(scheduleAsync.error!, scheduleAsync.stackTrace!);
+  }
+
+  final items = scheduleAsync.value ?? [];
+  final now = nowAsync.value ?? DateTime.now();
+  final currentMinutes = now.hour * 60 + now.minute;
+
+  ScheduleItem? liveItem;
+  for (var item in items) {
+    final endMinutes =
+        item.session.startTimeMinutes + item.session.durationMinutes;
+    if (currentMinutes >= item.session.startTimeMinutes &&
+        currentMinutes <= endMinutes) {
+      liveItem = item;
+      break;
+    }
+  }
+
+  final upcomingItems = items.where((i) {
+    if (i == liveItem) return false;
+    final endMinutes = i.session.startTimeMinutes + i.session.durationMinutes;
+    return currentMinutes < endMinutes;
+  }).toList();
+
+  return AsyncValue.data((liveItem: liveItem, upcomingItems: upcomingItems));
+});
