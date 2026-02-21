@@ -30,19 +30,19 @@ class DynamicNavBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           _NavBarItem(
-            icon: Icons.circle_outlined,
+            icon: Icons.radio_button_unchecked,
             label: 'FOCUS',
             isSelected: currentIndex == 0,
             onTap: () => onTap(0),
           ),
           _NavBarItem(
-            icon: Icons.calendar_today_outlined,
+            icon: Icons.view_day,
             label: 'COURSES',
             isSelected: currentIndex == 1,
             onTap: () => onTap(1),
           ),
           _NavBarItem(
-            icon: Icons.person_outline,
+            icon: Icons.person,
             label: 'SETTINGS',
             isSelected: currentIndex == 2,
             onTap: () => onTap(2),
@@ -75,28 +75,23 @@ class _NavBarItem extends StatelessWidget {
         duration: const Duration(milliseconds: 250),
         curve: Curves.easeInOut,
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-        decoration: BoxDecoration(
-          color: isSelected
-              ? Colors.white.withValues(alpha: 0.1)
-              : Colors.transparent,
-          borderRadius: BorderRadius.circular(20),
-        ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(
               icon,
-              size: 22,
-              color: isSelected ? Colors.white : Colors.grey[600],
+              size: 24, // Slightly larger icon to match reference
+              color: isSelected ? Colors.white : const Color(0xFF64748B),
             ),
-            const SizedBox(height: 4),
+            const SizedBox(height: 6),
             Text(
               label,
               style: TextStyle(
-                color: isSelected ? Colors.white : Colors.grey[600],
+                color: isSelected ? Colors.white : const Color(0xFF64748B),
                 fontWeight: FontWeight.w900,
-                fontSize: 8,
-                letterSpacing: 1.5,
+                fontSize: 9, // Slightly larger text
+                letterSpacing:
+                    2.0, // Increased letter spacing to match reference
               ),
             ),
           ],
