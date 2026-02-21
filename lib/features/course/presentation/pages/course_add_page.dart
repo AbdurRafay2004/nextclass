@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/utils/color_utils.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../providers/course_provider.dart';
 
@@ -20,11 +21,6 @@ class _CourseAddPageState extends ConsumerState<CourseAddPage> {
 
   Color _selectedColor = AppColors.courseColors.first;
 
-  // Convert Color to Hex String
-  String _colorToHex(Color color) {
-    return '#${color.toARGB32().toRadixString(16).substring(2, 8).toUpperCase()}';
-  }
-
   void _saveCourse() async {
     if (_formKey.currentState!.validate()) {
       await ref
@@ -33,7 +29,7 @@ class _CourseAddPageState extends ConsumerState<CourseAddPage> {
             name: _nameController.text.trim(),
             code: _codeController.text.trim(),
             facultyAcronym: _facultyAcronymController.text.trim(),
-            colorHex: _colorToHex(_selectedColor),
+            colorHex: colorToHex(_selectedColor),
           );
 
       if (mounted) {

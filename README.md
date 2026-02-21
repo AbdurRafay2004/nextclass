@@ -19,7 +19,10 @@ The project follows a **Feature-based Clean Architecture** to ensure scalability
 lib/
 ├── core/             # Shared utilities, database, and theme configuration
 │   ├── database/     # Isar initialization and providers
-│   └── theme/        # Global theme data and color schemes
+│   ├── providers/    # Global providers (real-time clock)
+│   ├── theme/        # Global theme data and color schemes
+│   ├── utils/        # Shared utilities (color, time formatting)
+│   └── widgets/      # Shared widgets (DynamicNavBar)
 ├── features/         # Domain-specific modules
 │   ├── course/       # Course CRUD and management
 │   ├── schedule/     # Timeline and dashboard views

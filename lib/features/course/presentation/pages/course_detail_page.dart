@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
+import '../../../../core/utils/color_utils.dart';
+import '../../../../core/utils/time_utils.dart';
 import '../../../schedule/presentation/pages/session_add_page.dart';
 import '../../../schedule/presentation/providers/session_provider.dart';
 import '../../data/models/course.dart';
@@ -10,25 +11,6 @@ class CourseDetailPage extends ConsumerWidget {
   final Course course;
 
   const CourseDetailPage({super.key, required this.course});
-
-  Color _hexToColor(String hexString) {
-    final buffer = StringBuffer();
-    if (hexString.length == 6 || hexString.length == 7) buffer.write('ff');
-    buffer.write(hexString.replaceFirst('#', ''));
-    return Color(int.parse(buffer.toString(), radix: 16));
-  }
-
-  String _formatTime(int minutesSinceMidnight) {
-    final now = DateTime.now();
-    final time = DateTime(
-      now.year,
-      now.month,
-      now.day,
-      minutesSinceMidnight ~/ 60,
-      minutesSinceMidnight % 60,
-    );
-    return DateFormat('h:mm a').format(time);
-  }
 
   String _dayOfWeekToString(int day) {
     const days = [
@@ -46,7 +28,7 @@ class CourseDetailPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final sessionsAsync = ref.watch(sessionsByCourseProvider(course.uuid));
-    final courseColor = _hexToColor(course.colorHex);
+    final courseColor = hexToColor(course.colorHex);
 
     return Scaffold(
       appBar: AppBar(
@@ -182,7 +164,7 @@ class CourseDetailPage extends ConsumerWidget {
                           style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                         subtitle: Text(
-                          '${_formatTime(session.startTimeMinutes)} - ${_formatTime(session.startTimeMinutes + session.durationMinutes)}\nRoom: ${session.room} · ${session.type.name.toUpperCase()}',
+                          '${formatTime(session.startTimeMinutes)} - ${formatTime(session.startTimeMinutes + session.durationMinutes)}\nRoom: ${session.room} · ${session.type.name.toUpperCase()}',
                         ),
                         isThreeLine: true,
                         trailing: IconButton(

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
+import '../../../../core/utils/color_utils.dart';
+import '../../../../core/utils/time_utils.dart';
 import '../../../../core/providers/time_provider.dart';
 import '../providers/session_provider.dart';
 
@@ -9,18 +10,6 @@ class LiveStatusCard extends ConsumerWidget {
   final ScheduleItem item;
 
   const LiveStatusCard({super.key, required this.item});
-
-  String _formatTime(int minutesSinceMidnight) {
-    final now = DateTime.now();
-    final time = DateTime(
-      now.year,
-      now.month,
-      now.day,
-      minutesSinceMidnight ~/ 60,
-      minutesSinceMidnight % 60,
-    );
-    return DateFormat('h:mm a').format(time);
-  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -37,27 +26,8 @@ class LiveStatusCard extends ConsumerWidget {
     final clampedProgress = progress.clamp(0.0, 1.0);
     final remainingMinutes = endMinutes - currentMinutes;
 
-    // Determine course color based on the first letter of the course code
-    final courseCodeFirstLetter = item.course.code.isNotEmpty
-        ? item.course.code.substring(0, 1).toUpperCase()
-        : '';
-    Color courseColor;
-    switch (courseCodeFirstLetter) {
-      case 'C':
-        courseColor = Colors.blue;
-        break;
-      case 'M':
-        courseColor = Colors.green;
-        break;
-      case 'E':
-        courseColor = Colors.orange;
-        break;
-      case 'P':
-        courseColor = Colors.purple;
-        break;
-      default:
-        courseColor = Colors.grey;
-    }
+    // Use the course's user-chosen color from the model
+    final courseColor = hexToColor(item.course.colorHex);
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16),
@@ -283,7 +253,7 @@ class LiveStatusCard extends ConsumerWidget {
                             ),
                             const SizedBox(height: 8),
                             Text(
-                              _formatTime(endMinutes),
+                              formatTime(endMinutes),
                               style: Theme.of(context).textTheme.titleMedium
                                   ?.copyWith(
                                     color: Colors.white,

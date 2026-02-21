@@ -14,9 +14,11 @@ class ScheduleItem {
   ScheduleItem({required this.session, required this.course});
 }
 
-// Provider for getting today's day of week (1..7)
+// Provider for getting today's day of week (1..7).
+// Derives from timeProvider so it reactively updates past midnight.
 final currentDayProvider = Provider<int>((ref) {
-  return DateTime.now().weekday;
+  final now = ref.watch(timeProvider).value ?? DateTime.now();
+  return now.weekday;
 });
 
 // Fetches the schedule for a given day (1..7)

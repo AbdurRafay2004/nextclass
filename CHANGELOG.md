@@ -1,7 +1,7 @@
 # Changelog
 
 ## Current Status
-✅ Phase 10 Complete: Global refactor of "Faculty Name" to "Faculty Acronym"
+✅ Phase 11 Complete: Comprehensive codebase analysis & high-priority fixes
 
 ## ChangeLog
 - **2026-02-21**: Analyzed NextClass design workflows. Selected Flutter, Riverpod, and Isar tech stack. Bootstrapped clean architecture plan.
@@ -30,11 +30,19 @@
 - **2026-02-21**: Dramatically simplified `time_provider.dart` to fix clock drifting. Replaced the custom manual delay logic with a standard `Stream.periodic` that polls the exact system clock (`DateTime.now()`) every 1 second. This guarantees the app clock will never fall out of sync with the phone's system time, while relying on Flutter's efficient state management to only rebuild UI when necessary. Also bound `timeProvider` invalidation to the Dashboard's pull-to-refresh.
 - **2026-02-21**: Extracted the complex "Live class vs Upcoming class" time-filtering logic out of the `DashboardPage` UI code and into a dedicated `dashboardScheduleProvider`. This cleans up the UI layer to be a pure renderer, and strictly enforces the separation of concerns by placing all business logic in the Provider layer.
 - **2026-02-21**: Fixed `withOpacity` deprecation warnings in `LiveStatusCard` by migrating to the new `withValues(alpha: ...)` API.
+- **2026-02-21**: Performed comprehensive codebase analysis across all 21 Dart files. Identified 12 issues across inefficiency, over-engineering, file structure, and design/color consistency.
+- **2026-02-21**: Extracted duplicated `_hexToColor` and `_formatTime` utilities from 5 files into shared `core/utils/color_utils.dart` and `core/utils/time_utils.dart`.
+- **2026-02-21**: Fixed critical color bug in `LiveStatusCard` — was using a letter-based switch (first letter of course code → hardcoded Material color) instead of the user-chosen `course.colorHex`. Now consistent with `TimelineEventCard` and `CourseListPage`.
+- **2026-02-21**: Reduced `timeProvider` polling frequency from 1 second to 30 seconds. The UI only shows minute-level granularity, so 59 of 60 emissions per minute were wasted.
+- **2026-02-21**: Made `currentDayProvider` reactive by deriving from `timeProvider`. Previously was a static `DateTime.now().weekday` that never updated past midnight.
+- **2026-02-21**: Created `BestPractices.md` documenting project-level architecture, Riverpod, performance, theming, and code organization conventions.
 
 ## Immediate Next Steps
-1. Test local notifications scheduling.
-2. Implement Class Session Conflict detection.
-3. Refine animations and padding tweaks.
+1. Centralize remaining hardcoded colors (`0xFF222224`, `Colors.grey[500]`, etc.) into `AppColors` and wire through `Theme.of(context)`.
+2. Create `SessionController` mirroring `CourseController` pattern.
+3. Persist settings via `SharedPreferences`.
+4. Test local notifications scheduling.
+5. Implement Class Session Conflict detection.
 
 ## Known Issues/Notes
 - Notification functionality is currently untied. Session creation lacks conflict validation.

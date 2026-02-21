@@ -1,19 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/utils/color_utils.dart';
 import '../providers/course_provider.dart';
 import 'course_add_page.dart';
 import 'course_detail_page.dart';
 
 class CourseListPage extends ConsumerWidget {
   const CourseListPage({super.key});
-
-  Color _hexToColor(String hexString) {
-    final buffer = StringBuffer();
-    if (hexString.length == 6 || hexString.length == 7) buffer.write('ff');
-    buffer.write(hexString.replaceFirst('#', ''));
-    return Color(int.parse(buffer.toString(), radix: 16));
-  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -63,7 +57,7 @@ class CourseListPage extends ConsumerWidget {
             separatorBuilder: (_, __) => const SizedBox(height: 12),
             itemBuilder: (context, index) {
               final course = courses[index];
-              final courseColor = _hexToColor(course.colorHex);
+              final courseColor = hexToColor(course.colorHex);
 
               return Dismissible(
                 key: Key(course.uuid),

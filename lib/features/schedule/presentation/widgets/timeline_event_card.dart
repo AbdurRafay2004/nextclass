@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
+import '../../../../core/utils/color_utils.dart';
+import '../../../../core/utils/time_utils.dart';
 import '../providers/session_provider.dart';
 
 class TimelineEventCard extends StatelessWidget {
@@ -8,40 +9,9 @@ class TimelineEventCard extends StatelessWidget {
 
   const TimelineEventCard({super.key, required this.item});
 
-  String _formatTime(int minutesSinceMidnight) {
-    final now = DateTime.now();
-    final time = DateTime(
-      now.year,
-      now.month,
-      now.day,
-      minutesSinceMidnight ~/ 60,
-      minutesSinceMidnight % 60,
-    );
-    return DateFormat('h:mm').format(time);
-  }
-
-  String _formatAmPm(int minutesSinceMidnight) {
-    final now = DateTime.now();
-    final time = DateTime(
-      now.year,
-      now.month,
-      now.day,
-      minutesSinceMidnight ~/ 60,
-      minutesSinceMidnight % 60,
-    );
-    return DateFormat('a').format(time);
-  }
-
-  Color _hexToColor(String hexString) {
-    final buffer = StringBuffer();
-    if (hexString.length == 6 || hexString.length == 7) buffer.write('ff');
-    buffer.write(hexString.replaceFirst('#', ''));
-    return Color(int.parse(buffer.toString(), radix: 16));
-  }
-
   @override
   Widget build(BuildContext context) {
-    final courseColor = _hexToColor(item.course.colorHex);
+    final courseColor = hexToColor(item.course.colorHex);
 
     return Container(
       decoration: BoxDecoration(
@@ -80,14 +50,14 @@ class TimelineEventCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    _formatTime(item.session.startTimeMinutes),
+                    formatTimeOnly(item.session.startTimeMinutes),
                     style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                       fontWeight: FontWeight.w900,
                       color: Colors.white,
                     ),
                   ),
                   Text(
-                    _formatAmPm(item.session.startTimeMinutes),
+                    formatAmPm(item.session.startTimeMinutes),
                     style: Theme.of(context).textTheme.labelSmall?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: Colors.grey[500],

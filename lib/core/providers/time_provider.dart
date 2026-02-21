@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// A simple stream that emits the current system time every second.
-/// Checking every second guarantees the app clock is perfectly in sync
-/// with the phone's system clock.
+/// A stream that emits the current system time every 30 seconds.
+/// The UI only displays minute-level granularity (h:mm), so polling
+/// every 30 seconds is sufficient to stay in sync while saving battery.
 final timeProvider = StreamProvider<DateTime>((ref) {
-  return Stream.periodic(const Duration(seconds: 1), (_) => DateTime.now());
+  return Stream.periodic(const Duration(seconds: 30), (_) => DateTime.now());
 });
