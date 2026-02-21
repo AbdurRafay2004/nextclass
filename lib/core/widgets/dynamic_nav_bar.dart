@@ -16,7 +16,7 @@ class DynamicNavBar extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 24, left: 24, right: 24),
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
       decoration: BoxDecoration(
-        color: const Color(0xFF161618),
+        color: const Color(0xFF222224),
         borderRadius: BorderRadius.circular(32),
         boxShadow: [
           BoxShadow(
