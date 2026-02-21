@@ -14,6 +14,7 @@
 - **2026-02-21**: Fixed Android build compatibility issues (`isar_flutter_libs` namespace and `compileSdkVersion`, `coreLibraryDesugaring` for notifications).
 - **2026-02-21**: Removed the "Calendar" placeholder section from the Dashboard to streamline the navigation.
 - **2026-02-21**: Fixed the "Add a class" button on the Dashboard (Focus) screen to correctly navigate to the "Add Course" screen.
+- **2026-02-21**: Implemented an isolated, auto-updating real-time clock using Riverpod `StreamProvider` to accurately manage the Dashboard's "App Bar Time" and the "Live Status Card" progress bars. Refined the provider to synchronize its updates perfectly with the system clock minute rollover, ensuring the UI flips exactly at the start of each new minute.
 - **2026-02-21**: Updated the `DashboardPage` primary header from "Today" to dynamically format the current date and time (e.g., "WEDNESDAY, OCT 24 • 10:25 AM") aligned to the typography style.
 - **2026-02-21**: Scaled down the sizing and padding of fonts and icons in the `BottomNavigationBar` and `LiveStatusCard` (Happening Now) to take up significantly less vertical space (~25% of the screen), enhancing the minimalistic layout.
 - **2026-02-21**: Redesigned the primary navigation mechanism (`BottomNavigationBar`) to match the minimalist pure black dark theme, exchanging the label 'Home' for 'FOCUS', removing the default Material 3 pill selection, and using heavily spaced typography with outlined minimalist icons (`circle_outlined`, `calendar_today_outlined`, `person_outline`).

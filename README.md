@@ -31,6 +31,7 @@ lib/
 - **Offline-First:** All data is stored locally using Isar for instant access without internet.
 - **Clean Architecture:** Ensures UI, business logic, and data layers are decoupled.
 - **Reactive UI:** Uses Riverpod for efficient state propagation across the app.
+- **Isolated Real-Time Updates:** For clock-dependent UI components (e.g., current time, class active duration), a standalone `StreamProvider` emitting updates every minute is used. By wrapping specific components in `Consumer` or `ConsumerWidget`, this prevents full-app rebuilds, ensuring battery efficiency while keeping data highly accurate.
 
 ## 📝 Getting Started
 To run the project locally, ensure you have the Flutter SDK installed.

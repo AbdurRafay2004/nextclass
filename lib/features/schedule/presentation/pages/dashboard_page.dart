@@ -27,9 +27,11 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
     return Scaffold(
       appBar: _currentIndex == 0
           ? AppBar(
-              title: Builder(
-                builder: (context) {
-                  final now = DateTime.now();
+              title: Consumer(
+                builder: (context, ref, child) {
+                  final nowAsync = ref.watch(timeProvider);
+                  final now = nowAsync.value ?? DateTime.now();
+
                   final formattedDate = DateFormat(
                     'EEEE, MMM d',
                   ).format(now).toUpperCase();

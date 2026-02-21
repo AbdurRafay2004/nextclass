@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../providers/schedule_provider.dart';
 
-class LiveStatusCard extends StatelessWidget {
+class LiveStatusCard extends ConsumerWidget {
   final ScheduleItem item;
 
   const LiveStatusCard({super.key, required this.item});
@@ -21,9 +22,10 @@ class LiveStatusCard extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     // Calculate progress for the Live Card
-    final now = DateTime.now();
+    final nowAsync = ref.watch(timeProvider);
+    final now = nowAsync.value ?? DateTime.now();
     final currentMinutes = now.hour * 60 + now.minute;
     final endMinutes =
         item.session.startTimeMinutes + item.session.durationMinutes;
