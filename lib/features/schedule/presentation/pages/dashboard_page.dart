@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 
 import '../../../course/presentation/pages/course_add_page.dart';
 import '../../../../core/providers/time_provider.dart';
+import '../../../../core/widgets/dynamic_nav_bar.dart';
 import '../../../course/presentation/pages/course_list_page.dart';
 import '../../../settings/presentation/pages/settings_page.dart';
 import '../providers/session_provider.dart';
@@ -55,89 +56,31 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
               ],
             )
           : null,
-      body: _currentIndex == 0
-          ? _buildDashboardBody(scheduleAsync)
-          : _currentIndex == 1
-          ? const CourseListPage()
-          : _currentIndex == 2
-          ? const SettingsPage()
-          : Center(child: Text('Index $_currentIndex')),
-      bottomNavigationBar: Theme(
-        data: Theme.of(context).copyWith(
-          splashColor: Colors.transparent,
-          highlightColor: Colors.transparent,
-        ),
-        child: BottomNavigationBar(
-          backgroundColor: Colors.black,
-          currentIndex: _currentIndex,
-          onTap: (index) {
-            setState(() {
-              _currentIndex = index;
-            });
-          },
-          type: BottomNavigationBarType.fixed,
-          showSelectedLabels: true,
-          showUnselectedLabels: true,
-          selectedItemColor: Colors.white,
-          unselectedItemColor: Colors.grey[700],
-          selectedLabelStyle: const TextStyle(
-            fontWeight: FontWeight.w900,
-            fontSize: 8,
-            letterSpacing: 1.5,
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: _currentIndex == 0
+                ? _buildDashboardBody(scheduleAsync)
+                : _currentIndex == 1
+                ? const CourseListPage()
+                : _currentIndex == 2
+                ? const SettingsPage()
+                : Center(child: Text('Index $_currentIndex')),
           ),
-          unselectedLabelStyle: const TextStyle(
-            fontWeight: FontWeight.w900,
-            fontSize: 8,
-            letterSpacing: 1.5,
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: SafeArea(
+              child: DynamicNavBar(
+                currentIndex: _currentIndex,
+                onTap: (index) {
+                  setState(() {
+                    _currentIndex = index;
+                  });
+                },
+              ),
+            ),
           ),
-          items: const [
-            BottomNavigationBarItem(
-              icon: Padding(
-                padding: EdgeInsets.only(bottom: 4.0),
-                child: Icon(Icons.circle_outlined, size: 22),
-              ),
-              activeIcon: Padding(
-                padding: EdgeInsets.only(bottom: 4.0),
-                child: Icon(
-                  Icons.circle_outlined,
-                  size: 22,
-                  color: Colors.white,
-                ),
-              ),
-              label: 'FOCUS',
-            ),
-            BottomNavigationBarItem(
-              icon: Padding(
-                padding: EdgeInsets.only(bottom: 4.0),
-                child: Icon(Icons.calendar_today_outlined, size: 22),
-              ),
-              activeIcon: Padding(
-                padding: EdgeInsets.only(bottom: 4.0),
-                child: Icon(
-                  Icons.calendar_today_outlined,
-                  size: 22,
-                  color: Colors.white,
-                ),
-              ),
-              label: 'COURSES',
-            ),
-            BottomNavigationBarItem(
-              icon: Padding(
-                padding: EdgeInsets.only(bottom: 4.0),
-                child: Icon(Icons.person_outline, size: 22),
-              ),
-              activeIcon: Padding(
-                padding: EdgeInsets.only(bottom: 4.0),
-                child: Icon(
-                  Icons.person_outline,
-                  size: 22,
-                  color: Colors.white,
-                ),
-              ),
-              label: 'SETTINGS',
-            ),
-          ],
-        ),
+        ],
       ),
     );
   }
@@ -205,7 +148,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
             ref.invalidate(dayScheduleProvider);
           },
           child: ListView(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.fromLTRB(16, 16, 16, 100),
             children: [
               if (liveItem != null) ...[
                 LiveStatusCard(item: liveItem),
