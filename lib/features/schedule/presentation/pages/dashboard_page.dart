@@ -111,8 +111,13 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
           }
         }
 
-        // The rest are up next or past
-        final upcomingItems = items.where((i) => i != liveItem).toList();
+        // Filter out past items and the live item
+        final upcomingItems = items.where((i) {
+          if (i == liveItem) return false;
+          final endMinutes =
+              i.session.startTimeMinutes + i.session.durationMinutes;
+          return currentMinutes < endMinutes;
+        }).toList();
 
         return RefreshIndicator(
           onRefresh: () async {
