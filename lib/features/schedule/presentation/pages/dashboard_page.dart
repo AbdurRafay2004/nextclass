@@ -41,30 +41,82 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
           : _currentIndex == 2
           ? const SettingsPage()
           : Center(child: Text('Index $_currentIndex')),
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: _currentIndex,
-        onDestinationSelected: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        destinations: const [
-          NavigationDestination(
-            icon: Icon(Icons.home_outlined),
-            selectedIcon: Icon(Icons.home),
-            label: 'Home',
+      bottomNavigationBar: Theme(
+        data: Theme.of(context).copyWith(
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
+        ),
+        child: BottomNavigationBar(
+          backgroundColor: Colors.black,
+          currentIndex: _currentIndex,
+          onTap: (index) {
+            setState(() {
+              _currentIndex = index;
+            });
+          },
+          type: BottomNavigationBarType.fixed,
+          showSelectedLabels: true,
+          showUnselectedLabels: true,
+          selectedItemColor: Colors.white,
+          unselectedItemColor: Colors.grey[700],
+          selectedLabelStyle: const TextStyle(
+            fontWeight: FontWeight.w900,
+            fontSize: 10,
+            letterSpacing: 1.5,
           ),
-          NavigationDestination(
-            icon: Icon(Icons.menu_book_outlined),
-            selectedIcon: Icon(Icons.menu_book),
-            label: 'Courses',
+          unselectedLabelStyle: const TextStyle(
+            fontWeight: FontWeight.w900,
+            fontSize: 10,
+            letterSpacing: 1.5,
           ),
-          NavigationDestination(
-            icon: Icon(Icons.settings_outlined),
-            selectedIcon: Icon(Icons.settings),
-            label: 'Settings',
-          ),
-        ],
+          items: const [
+            BottomNavigationBarItem(
+              icon: Padding(
+                padding: EdgeInsets.only(bottom: 8.0),
+                child: Icon(Icons.circle_outlined, size: 28),
+              ),
+              activeIcon: Padding(
+                padding: EdgeInsets.only(bottom: 8.0),
+                child: Icon(
+                  Icons.circle_outlined,
+                  size: 28,
+                  color: Colors.white,
+                ),
+              ),
+              label: 'FOCUS',
+            ),
+            BottomNavigationBarItem(
+              icon: Padding(
+                padding: EdgeInsets.only(bottom: 8.0),
+                child: Icon(Icons.calendar_today_outlined, size: 28),
+              ),
+              activeIcon: Padding(
+                padding: EdgeInsets.only(bottom: 8.0),
+                child: Icon(
+                  Icons.calendar_today_outlined,
+                  size: 28,
+                  color: Colors.white,
+                ),
+              ),
+              label: 'COURSES',
+            ),
+            BottomNavigationBarItem(
+              icon: Padding(
+                padding: EdgeInsets.only(bottom: 8.0),
+                child: Icon(Icons.person_outline, size: 28),
+              ),
+              activeIcon: Padding(
+                padding: EdgeInsets.only(bottom: 8.0),
+                child: Icon(
+                  Icons.person_outline,
+                  size: 28,
+                  color: Colors.white,
+                ),
+              ),
+              label: 'SETTINGS',
+            ),
+          ],
+        ),
       ),
     );
   }
