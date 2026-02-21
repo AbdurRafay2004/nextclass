@@ -1,7 +1,7 @@
 # Changelog
 
 ## Current Status
-✅ Phase 6 Complete: Refined NextClass "Up Next Today" and "Happening Now" UI to match target aesthetics
+✅ Phase 7 Complete: Linked 'Add a class' button to Course Add screen on Dashboard
 
 ## ChangeLog
 - **2026-02-21**: Updated the `DashboardPage` primary header from "Today" to dynamically format the current date and time (e.g., "WEDNESDAY, OCT 24 • 10:25 AM") aligned to the typography style.
@@ -19,12 +19,12 @@
 - **2026-02-21**: Added App Settings provider to reactively manage `ThemeMode` globally. Fixed dart compilation issues with relative imports. 
 - **2026-02-21**: Fixed Android build compatibility issues (`isar_flutter_libs` namespace and `compileSdkVersion`, `coreLibraryDesugaring` for notifications).
 - **2026-02-21**: Removed the "Calendar" placeholder section from the Dashboard to streamline the navigation.
+- **2026-02-21**: Fixed the "Add a class" button on the Dashboard (Focus) screen to correctly navigate to the "Add Course" screen.
 
 ## Immediate Next Steps
-1. Test MVP natively on desired target (Windows/Android/iOS) to verify UI aesthetics.
-2. Implement Local Notifications scheduling (reminders logic).
-3. Implement Class Session Conflict detection & Duplication workflows.
-4. Refine layout nuances (animations, padding tweaks based on visual feedback).
+1. Test local notifications scheduling.
+2. Implement Class Session Conflict detection.
+3. Refine animations and padding tweaks.
 
 ## Known Issues/Notes
 - `withOpacity` deprecated warnings from Flutter SDK are visible during `dart analyze`, recommending migration to `withAlpha`.

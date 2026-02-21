@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../course/presentation/pages/course_add_page.dart';
 import '../../../course/presentation/pages/course_list_page.dart';
 import '../../../settings/presentation/pages/settings_page.dart';
 import '../providers/schedule_provider.dart';
@@ -156,7 +157,14 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
                 const Text('No classes scheduled for today.'),
                 const SizedBox(height: 24),
                 ElevatedButton.icon(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const CourseAddPage(),
+                      ),
+                    );
+                  },
                   icon: const Icon(Icons.add),
                   label: const Text('Add a class'),
                 ),
