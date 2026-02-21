@@ -160,7 +160,7 @@ class TimelineEventCard extends StatelessWidget {
                         const SizedBox(width: 6),
                         Expanded(
                           child: Text(
-                            item.course.facultyName,
+                            item.course.facultyAcronym,
                             style: Theme.of(context).textTheme.labelMedium
                                 ?.copyWith(color: Colors.grey[400]),
                             maxLines: 1,

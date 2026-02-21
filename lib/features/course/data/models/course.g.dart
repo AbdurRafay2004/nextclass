@@ -27,9 +27,9 @@ const CourseSchema = CollectionSchema(
       name: r'colorHex',
       type: IsarType.string,
     ),
-    r'facultyName': PropertySchema(
+    r'facultyAcronym': PropertySchema(
       id: 2,
-      name: r'facultyName',
+      name: r'facultyAcronym',
       type: IsarType.string,
     ),
     r'name': PropertySchema(
@@ -79,7 +79,7 @@ int _courseEstimateSize(
   var bytesCount = offsets.last;
   bytesCount += 3 + object.code.length * 3;
   bytesCount += 3 + object.colorHex.length * 3;
-  bytesCount += 3 + object.facultyName.length * 3;
+  bytesCount += 3 + object.facultyAcronym.length * 3;
   bytesCount += 3 + object.name.length * 3;
   bytesCount += 3 + object.uuid.length * 3;
   return bytesCount;
@@ -93,7 +93,7 @@ void _courseSerialize(
 ) {
   writer.writeString(offsets[0], object.code);
   writer.writeString(offsets[1], object.colorHex);
-  writer.writeString(offsets[2], object.facultyName);
+  writer.writeString(offsets[2], object.facultyAcronym);
   writer.writeString(offsets[3], object.name);
   writer.writeString(offsets[4], object.uuid);
 }
@@ -107,7 +107,7 @@ Course _courseDeserialize(
   final object = Course();
   object.code = reader.readString(offsets[0]);
   object.colorHex = reader.readString(offsets[1]);
-  object.facultyName = reader.readString(offsets[2]);
+  object.facultyAcronym = reader.readString(offsets[2]);
   object.id = id;
   object.name = reader.readString(offsets[3]);
   object.uuid = reader.readString(offsets[4]);
@@ -580,20 +580,20 @@ extension CourseQueryFilter on QueryBuilder<Course, Course, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Course, Course, QAfterFilterCondition> facultyNameEqualTo(
+  QueryBuilder<Course, Course, QAfterFilterCondition> facultyAcronymEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'facultyName',
+        property: r'facultyAcronym',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<Course, Course, QAfterFilterCondition> facultyNameGreaterThan(
+  QueryBuilder<Course, Course, QAfterFilterCondition> facultyAcronymGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -601,14 +601,14 @@ extension CourseQueryFilter on QueryBuilder<Course, Course, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: r'facultyName',
+        property: r'facultyAcronym',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<Course, Course, QAfterFilterCondition> facultyNameLessThan(
+  QueryBuilder<Course, Course, QAfterFilterCondition> facultyAcronymLessThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -616,14 +616,14 @@ extension CourseQueryFilter on QueryBuilder<Course, Course, QFilterCondition> {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: r'facultyName',
+        property: r'facultyAcronym',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<Course, Course, QAfterFilterCondition> facultyNameBetween(
+  QueryBuilder<Course, Course, QAfterFilterCondition> facultyAcronymBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -632,7 +632,7 @@ extension CourseQueryFilter on QueryBuilder<Course, Course, QFilterCondition> {
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: r'facultyName',
+        property: r'facultyAcronym',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -642,69 +642,70 @@ extension CourseQueryFilter on QueryBuilder<Course, Course, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Course, Course, QAfterFilterCondition> facultyNameStartsWith(
+  QueryBuilder<Course, Course, QAfterFilterCondition> facultyAcronymStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.startsWith(
-        property: r'facultyName',
+        property: r'facultyAcronym',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<Course, Course, QAfterFilterCondition> facultyNameEndsWith(
+  QueryBuilder<Course, Course, QAfterFilterCondition> facultyAcronymEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.endsWith(
-        property: r'facultyName',
+        property: r'facultyAcronym',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<Course, Course, QAfterFilterCondition> facultyNameContains(
+  QueryBuilder<Course, Course, QAfterFilterCondition> facultyAcronymContains(
       String value,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
-        property: r'facultyName',
+        property: r'facultyAcronym',
         value: value,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<Course, Course, QAfterFilterCondition> facultyNameMatches(
+  QueryBuilder<Course, Course, QAfterFilterCondition> facultyAcronymMatches(
       String pattern,
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
-        property: r'facultyName',
+        property: r'facultyAcronym',
         wildcard: pattern,
         caseSensitive: caseSensitive,
       ));
     });
   }
 
-  QueryBuilder<Course, Course, QAfterFilterCondition> facultyNameIsEmpty() {
+  QueryBuilder<Course, Course, QAfterFilterCondition> facultyAcronymIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'facultyName',
+        property: r'facultyAcronym',
         value: '',
       ));
     });
   }
 
-  QueryBuilder<Course, Course, QAfterFilterCondition> facultyNameIsNotEmpty() {
+  QueryBuilder<Course, Course, QAfterFilterCondition>
+      facultyAcronymIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
-        property: r'facultyName',
+        property: r'facultyAcronym',
         value: '',
       ));
     });
@@ -1050,15 +1051,15 @@ extension CourseQuerySortBy on QueryBuilder<Course, Course, QSortBy> {
     });
   }
 
-  QueryBuilder<Course, Course, QAfterSortBy> sortByFacultyName() {
+  QueryBuilder<Course, Course, QAfterSortBy> sortByFacultyAcronym() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'facultyName', Sort.asc);
+      return query.addSortBy(r'facultyAcronym', Sort.asc);
     });
   }
 
-  QueryBuilder<Course, Course, QAfterSortBy> sortByFacultyNameDesc() {
+  QueryBuilder<Course, Course, QAfterSortBy> sortByFacultyAcronymDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'facultyName', Sort.desc);
+      return query.addSortBy(r'facultyAcronym', Sort.desc);
     });
   }
 
@@ -1112,15 +1113,15 @@ extension CourseQuerySortThenBy on QueryBuilder<Course, Course, QSortThenBy> {
     });
   }
 
-  QueryBuilder<Course, Course, QAfterSortBy> thenByFacultyName() {
+  QueryBuilder<Course, Course, QAfterSortBy> thenByFacultyAcronym() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'facultyName', Sort.asc);
+      return query.addSortBy(r'facultyAcronym', Sort.asc);
     });
   }
 
-  QueryBuilder<Course, Course, QAfterSortBy> thenByFacultyNameDesc() {
+  QueryBuilder<Course, Course, QAfterSortBy> thenByFacultyAcronymDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'facultyName', Sort.desc);
+      return query.addSortBy(r'facultyAcronym', Sort.desc);
     });
   }
 
@@ -1176,10 +1177,11 @@ extension CourseQueryWhereDistinct on QueryBuilder<Course, Course, QDistinct> {
     });
   }
 
-  QueryBuilder<Course, Course, QDistinct> distinctByFacultyName(
+  QueryBuilder<Course, Course, QDistinct> distinctByFacultyAcronym(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'facultyName', caseSensitive: caseSensitive);
+      return query.addDistinctBy(r'facultyAcronym',
+          caseSensitive: caseSensitive);
     });
   }
 
@@ -1217,9 +1219,9 @@ extension CourseQueryProperty on QueryBuilder<Course, Course, QQueryProperty> {
     });
   }
 
-  QueryBuilder<Course, String, QQueryOperations> facultyNameProperty() {
+  QueryBuilder<Course, String, QQueryOperations> facultyAcronymProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'facultyName');
+      return query.addPropertyName(r'facultyAcronym');
     });
   }
 

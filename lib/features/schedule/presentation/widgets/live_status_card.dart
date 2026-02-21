@@ -130,7 +130,7 @@ class LiveStatusCard extends StatelessWidget {
                         ),
                         const SizedBox(width: 4),
                         Text(
-                          'FACULTY',
+                          'FACULTY ACRONYM',
                           style: TextStyle(
                             color: Colors.grey[600],
                             fontWeight: FontWeight.w900,
@@ -142,7 +142,7 @@ class LiveStatusCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      item.course.facultyName,
+                      item.course.facultyAcronym,
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         color: Colors.white,
                         fontWeight: FontWeight.w900,

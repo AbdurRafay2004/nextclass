@@ -86,7 +86,7 @@ class CourseDetailPage extends ConsumerWidget {
                       const Icon(Icons.person, size: 20, color: Colors.grey),
                       const SizedBox(width: 8),
                       Text(
-                        course.facultyName,
+                        course.facultyAcronym,
                         style: Theme.of(
                           context,
                         ).textTheme.titleMedium?.copyWith(color: Colors.grey),

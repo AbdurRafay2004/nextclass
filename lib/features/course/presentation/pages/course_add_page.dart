@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/theme/app_colors.dart';
@@ -15,7 +16,7 @@ class _CourseAddPageState extends ConsumerState<CourseAddPage> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _codeController = TextEditingController();
-  final _facultyController = TextEditingController();
+  final _facultyAcronymController = TextEditingController();
 
   Color _selectedColor = AppColors.courseColors.first;
 
@@ -31,7 +32,7 @@ class _CourseAddPageState extends ConsumerState<CourseAddPage> {
           .addCourse(
             name: _nameController.text.trim(),
             code: _codeController.text.trim(),
-            facultyName: _facultyController.text.trim(),
+            facultyAcronym: _facultyAcronymController.text.trim(),
             colorHex: _colorToHex(_selectedColor),
           );
 
@@ -48,7 +49,7 @@ class _CourseAddPageState extends ConsumerState<CourseAddPage> {
   void dispose() {
     _nameController.dispose();
     _codeController.dispose();
-    _facultyController.dispose();
+    _facultyAcronymController.dispose();
     super.dispose();
   }
 
@@ -101,6 +102,14 @@ class _CourseAddPageState extends ConsumerState<CourseAddPage> {
                     flex: 1,
                     child: TextFormField(
                       controller: _codeController,
+                      textCapitalization: TextCapitalization.characters,
+                      inputFormatters: [
+                        TextInputFormatter.withFunction((oldValue, newValue) {
+                          return newValue.copyWith(
+                            text: newValue.text.toUpperCase(),
+                          );
+                        }),
+                      ],
                       decoration: const InputDecoration(
                         labelText: 'Course Code',
                         hintText: 'CSE-401',
@@ -114,10 +123,18 @@ class _CourseAddPageState extends ConsumerState<CourseAddPage> {
                   Expanded(
                     flex: 2,
                     child: TextFormField(
-                      controller: _facultyController,
+                      controller: _facultyAcronymController,
+                      textCapitalization: TextCapitalization.characters,
+                      inputFormatters: [
+                        TextInputFormatter.withFunction((oldValue, newValue) {
+                          return newValue.copyWith(
+                            text: newValue.text.toUpperCase(),
+                          );
+                        }),
+                      ],
                       decoration: const InputDecoration(
-                        labelText: 'Faculty Name',
-                        hintText: 'Dr. Smith',
+                        labelText: 'Faculty Acronym',
+                        hintText: 'e.g., MMH',
                         border: OutlineInputBorder(),
                       ),
                       validator: (val) =>
@@ -153,9 +170,7 @@ class _CourseAddPageState extends ConsumerState<CourseAddPage> {
                         shape: BoxShape.circle,
                         border: isSelected
                             ? Border.all(
-                                color: Theme.of(
-                                  context,
-                                ).colorScheme.onSurface,
+                                color: Theme.of(context).colorScheme.onSurface,
                                 width: 3,
                               )
                             : null,

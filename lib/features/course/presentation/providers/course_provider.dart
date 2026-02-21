@@ -30,14 +30,14 @@ class CourseController {
     required String name,
     required String code,
     required String colorHex,
-    required String facultyName,
+    required String facultyAcronym,
   }) async {
     final course = Course()
       ..uuid = const Uuid().v4()
       ..name = name
       ..code = code
       ..colorHex = colorHex
-      ..facultyName = facultyName;
+      ..facultyAcronym = facultyAcronym;
 
     await isar.writeTxn(() async {
       await isar.courses.put(course);

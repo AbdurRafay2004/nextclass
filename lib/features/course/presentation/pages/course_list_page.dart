@@ -165,7 +165,9 @@ class CourseListPage extends ConsumerWidget {
                                           vertical: 4,
                                         ),
                                         decoration: BoxDecoration(
-                                          color: courseColor.withValues(alpha: 0.2),
+                                          color: courseColor.withValues(
+                                            alpha: 0.2,
+                                          ),
                                           borderRadius: BorderRadius.circular(
                                             8,
                                           ),
@@ -210,7 +212,7 @@ class CourseListPage extends ConsumerWidget {
                                       ),
                                       const SizedBox(width: 6),
                                       Text(
-                                        course.facultyName,
+                                        course.facultyAcronym,
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyMedium
