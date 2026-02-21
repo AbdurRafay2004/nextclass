@@ -126,9 +126,10 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
 
             return RefreshIndicator(
               onRefresh: () async {
-                // Trigger a refresh (riverpod invalidation)
+                // Only invalidate the schedule data — NOT timeProvider.
+                // Invalidating a StreamProvider restarts the stream from zero,
+                // which means a 30-second wait before the first emission.
                 ref.invalidate(dayScheduleProvider);
-                ref.invalidate(timeProvider);
               },
               child: ListView(
                 padding: const EdgeInsets.fromLTRB(16, 16, 16, 100),
