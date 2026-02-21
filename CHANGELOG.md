@@ -1,7 +1,7 @@
 # Changelog
 
 ## Current Status
-✅ Phase 11 Complete: Comprehensive codebase analysis & high-priority fixes
+✅ Phase 12 Complete: Codebase quality improvements — consolidated colors, SessionController, settings persistence
 
 ## ChangeLog
 - **2026-02-21**: Analyzed NextClass design workflows. Selected Flutter, Riverpod, and Isar tech stack. Bootstrapped clean architecture plan.
@@ -36,13 +36,14 @@
 - **2026-02-21**: Reduced `timeProvider` polling frequency from 1 second to 30 seconds. The UI only shows minute-level granularity, so 59 of 60 emissions per minute were wasted.
 - **2026-02-21**: Made `currentDayProvider` reactive by deriving from `timeProvider`. Previously was a static `DateTime.now().weekday` that never updated past midnight.
 - **2026-02-21**: Created `BestPractices.md` documenting project-level architecture, Riverpod, performance, theming, and code organization conventions.
+- **2026-02-22**: Consolidated `color_utils.dart` into `AppColors` as static methods (`hexToColor`, `colorToHex`). Added semantic color constants `cardDark`, `liveGreen`, `navInactive`. Deleted standalone `color_utils.dart`. Updated all 8 affected files to use `AppColors.*`.
+- **2026-02-22**: Created `SessionController` (mirroring `CourseController`) with `addSession` and `deleteSession` methods. Refactored `SessionAddPage` to use the controller instead of direct Isar database access, enforcing clean architecture separation.
+- **2026-02-22**: Added `SharedPreferences` persistence to `SettingsNotifier`. Theme mode and notification preferences now survive app restarts. Settings load asynchronously on startup and persist on every change.
 
 ## Immediate Next Steps
-1. Centralize remaining hardcoded colors (`0xFF222224`, `Colors.grey[500]`, etc.) into `AppColors` and wire through `Theme.of(context)`.
-2. Create `SessionController` mirroring `CourseController` pattern.
-3. Persist settings via `SharedPreferences`.
-4. Test local notifications scheduling.
-5. Implement Class Session Conflict detection.
+1. Test local notifications scheduling.
+2. Implement Class Session Conflict detection.
+3. Refine animations and padding tweaks.
 
 ## Known Issues/Notes
 - Notification functionality is currently untied. Session creation lacks conflict validation.

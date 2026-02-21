@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../theme/app_colors.dart';
+
 class DynamicNavBar extends StatelessWidget {
   final int currentIndex;
   final ValueChanged<int> onTap;
@@ -16,7 +18,7 @@ class DynamicNavBar extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 24, left: 24, right: 24),
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
       decoration: BoxDecoration(
-        color: const Color(0xFF222224),
+        color: AppColors.cardDark,
         borderRadius: BorderRadius.circular(32),
         boxShadow: [
           BoxShadow(
@@ -81,13 +83,13 @@ class _NavBarItem extends StatelessWidget {
             Icon(
               icon,
               size: 24, // Slightly larger icon to match reference
-              color: isSelected ? Colors.white : const Color(0xFF64748B),
+              color: isSelected ? Colors.white : AppColors.navInactive,
             ),
             const SizedBox(height: 6),
             Text(
               label,
               style: TextStyle(
-                color: isSelected ? Colors.white : const Color(0xFF64748B),
+                color: isSelected ? Colors.white : AppColors.navInactive,
                 fontWeight: FontWeight.w900,
                 fontSize: 9, // Slightly larger text
                 letterSpacing:

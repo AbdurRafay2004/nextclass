@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/utils/color_utils.dart';
+import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/time_utils.dart';
 import '../../../schedule/presentation/pages/session_add_page.dart';
 import '../../../schedule/presentation/providers/session_provider.dart';
@@ -28,7 +28,7 @@ class CourseDetailPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final sessionsAsync = ref.watch(sessionsByCourseProvider(course.uuid));
-    final courseColor = hexToColor(course.colorHex);
+    final courseColor = AppColors.hexToColor(course.colorHex);
 
     return Scaffold(
       appBar: AppBar(

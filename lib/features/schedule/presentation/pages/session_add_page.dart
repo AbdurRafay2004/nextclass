@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/database/database_manager.dart';
 import '../../../course/data/models/course.dart';
 import '../../data/models/class_session.dart';
 import '../providers/session_provider.dart';
@@ -40,23 +39,16 @@ class _SessionAddPageState extends ConsumerState<SessionAddPage> {
 
   void _saveSession() async {
     if (_formKey.currentState!.validate()) {
-      // Create session via provider mutator logic handling Isar access directly
-      // or through a controller. Since we don't have a specific SessionController yet,
-      // let's create a quick mutator here or add it to schedule_provider.
-      // For MVP, we'll write directly using the databaseProvider.
-
-      final isar = ref.read(databaseProvider);
-      final session = ClassSession()
-        ..courseUuid = widget.course.uuid
-        ..dayOfWeek = _selectedDay
-        ..startTimeMinutes = _startTime.hour * 60 + _startTime.minute
-        ..durationMinutes = _durationMinutes
-        ..room = _roomController.text.trim()
-        ..type = _selectedType;
-
-      await isar.writeTxn(() async {
-        await isar.classSessions.put(session);
-      });
+      await ref
+          .read(sessionControllerProvider)
+          .addSession(
+            courseUuid: widget.course.uuid,
+            dayOfWeek: _selectedDay,
+            startTimeMinutes: _startTime.hour * 60 + _startTime.minute,
+            durationMinutes: _durationMinutes,
+            room: _roomController.text.trim(),
+            type: _selectedType,
+          );
 
       if (mounted) {
         // Invalidate the session query for this course so the list updates

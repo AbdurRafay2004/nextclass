@@ -73,6 +73,45 @@ final sessionsByCourseProvider =
       return sessions;
     });
 
+// A Controller to handle Session mutations (mirrors CourseController)
+class SessionController {
+  final Isar isar;
+  SessionController({required this.isar});
+
+  Future<void> addSession({
+    required String courseUuid,
+    required int dayOfWeek,
+    required int startTimeMinutes,
+    required int durationMinutes,
+    required String room,
+    required SessionType type,
+  }) async {
+    final session = ClassSession()
+      ..courseUuid = courseUuid
+      ..dayOfWeek = dayOfWeek
+      ..startTimeMinutes = startTimeMinutes
+      ..durationMinutes = durationMinutes
+      ..room = room
+      ..type = type;
+
+    await isar.writeTxn(() async {
+      await isar.classSessions.put(session);
+    });
+  }
+
+  Future<void> deleteSession(int id) async {
+    await isar.writeTxn(() async {
+      await isar.classSessions.delete(id);
+    });
+  }
+}
+
+// Provider for the session controller
+final sessionControllerProvider = Provider<SessionController>((ref) {
+  final isar = ref.watch(databaseProvider);
+  return SessionController(isar: isar);
+});
+
 // A computed provider that yields the current live class and upcoming classes
 // based on the realtime clock.
 typedef DashboardSchedule = ({

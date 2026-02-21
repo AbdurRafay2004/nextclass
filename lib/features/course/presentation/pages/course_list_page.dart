@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/utils/color_utils.dart';
+import '../../../../core/theme/app_colors.dart';
 import '../providers/course_provider.dart';
 import 'course_add_page.dart';
 import 'course_detail_page.dart';
@@ -57,7 +57,7 @@ class CourseListPage extends ConsumerWidget {
             separatorBuilder: (_, __) => const SizedBox(height: 12),
             itemBuilder: (context, index) {
               final course = courses[index];
-              final courseColor = hexToColor(course.colorHex);
+              final courseColor = AppColors.hexToColor(course.colorHex);
 
               return Dismissible(
                 key: Key(course.uuid),

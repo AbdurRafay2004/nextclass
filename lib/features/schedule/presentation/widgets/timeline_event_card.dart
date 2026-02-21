@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/utils/color_utils.dart';
+import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/time_utils.dart';
 import '../providers/session_provider.dart';
 
@@ -11,11 +11,11 @@ class TimelineEventCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final courseColor = hexToColor(item.course.colorHex);
+    final courseColor = AppColors.hexToColor(item.course.colorHex);
 
     return Container(
       decoration: BoxDecoration(
-        color: const Color(0xFF222224),
+        color: AppColors.cardDark,
         borderRadius: BorderRadius.circular(24),
       ),
       child: IntrinsicHeight(

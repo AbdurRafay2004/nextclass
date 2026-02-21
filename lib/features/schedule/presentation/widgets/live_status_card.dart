@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/utils/color_utils.dart';
+import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/time_utils.dart';
 import '../../../../core/providers/time_provider.dart';
 import '../providers/session_provider.dart';
@@ -27,12 +27,12 @@ class LiveStatusCard extends ConsumerWidget {
     final remainingMinutes = endMinutes - currentMinutes;
 
     // Use the course's user-chosen color from the model
-    final courseColor = hexToColor(item.course.colorHex);
+    final courseColor = AppColors.hexToColor(item.course.colorHex);
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
-        color: const Color(0xFF222224),
+        color: AppColors.cardDark,
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
@@ -76,7 +76,7 @@ class LiveStatusCard extends ConsumerWidget {
                       ),
                       decoration: BoxDecoration(
                         border: Border.all(
-                          color: const Color(0xFF00E676),
+                          color: AppColors.liveGreen,
                           width: 1.0,
                         ),
                         borderRadius: BorderRadius.circular(4),
@@ -85,7 +85,7 @@ class LiveStatusCard extends ConsumerWidget {
                       child: const Text(
                         'NOW',
                         style: TextStyle(
-                          color: Color(0xFF00E676),
+                          color: AppColors.liveGreen,
                           fontWeight: FontWeight.w900,
                           fontSize: 8,
                           letterSpacing: 1.5,
