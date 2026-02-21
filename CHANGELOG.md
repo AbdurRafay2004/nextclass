@@ -29,6 +29,7 @@
 - **2026-02-21**: Fixed a bug where the `DashboardPage` required a manual refresh for upcoming classes to transition to live status. Moved the `timeProvider` subscription to an isolated `Consumer` wrapping only the schedule list body, ensuring the layout automatically recalculates live/upcoming states every minute without forcing the entire `DashboardPage` scaffolding to rebuild.
 - **2026-02-21**: Dramatically simplified `time_provider.dart` to fix clock drifting. Replaced the custom manual delay logic with a standard `Stream.periodic` that polls the exact system clock (`DateTime.now()`) every 1 second. This guarantees the app clock will never fall out of sync with the phone's system time, while relying on Flutter's efficient state management to only rebuild UI when necessary. Also bound `timeProvider` invalidation to the Dashboard's pull-to-refresh.
 - **2026-02-21**: Extracted the complex "Live class vs Upcoming class" time-filtering logic out of the `DashboardPage` UI code and into a dedicated `dashboardScheduleProvider`. This cleans up the UI layer to be a pure renderer, and strictly enforces the separation of concerns by placing all business logic in the Provider layer.
+- **2026-02-21**: Fixed `withOpacity` deprecation warnings in `LiveStatusCard` by migrating to the new `withValues(alpha: ...)` API.
 
 ## Immediate Next Steps
 1. Test local notifications scheduling.
@@ -36,6 +37,5 @@
 3. Refine animations and padding tweaks.
 
 ## Known Issues/Notes
-- `withOpacity` deprecated warnings from Flutter SDK are visible during `dart analyze`, recommending migration to `withAlpha`.
 - Notification functionality is currently untied. Session creation lacks conflict validation.
 - Renaming the database field triggered a code regeneration requirement (`build_runner`).
