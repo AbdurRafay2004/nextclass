@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../schedule/presentation/pages/session_add_page.dart';
-import '../../../schedule/presentation/providers/schedule_provider.dart';
+import '../../../schedule/presentation/providers/session_provider.dart';
 import '../../data/models/course.dart';
 
 class CourseDetailPage extends ConsumerWidget {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../providers/schedule_provider.dart';
+import '../providers/session_provider.dart';
 
 class TimelineEventCard extends StatelessWidget {
   final ScheduleItem item;

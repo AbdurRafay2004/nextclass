@@ -3,9 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../course/presentation/pages/course_add_page.dart';
+import '../../../../core/providers/time_provider.dart';
 import '../../../course/presentation/pages/course_list_page.dart';
 import '../../../settings/presentation/pages/settings_page.dart';
-import '../providers/schedule_provider.dart';
+import '../providers/session_provider.dart';
 import '../widgets/live_status_card.dart';
 import '../widgets/timeline_event_card.dart';
 

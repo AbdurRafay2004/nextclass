@@ -18,26 +18,6 @@ final currentDayProvider = Provider<int>((ref) {
   return DateTime.now().weekday;
 });
 
-// An isolated auto-updating clock stream that yields the current time immediately,
-// and then updates every minute, synchronized with the system clock rollover.
-final timeProvider = StreamProvider<DateTime>((ref) async* {
-  // Yield initial time immediately
-  yield DateTime.now();
-
-  // Calculate delay until the next minute rollover
-  final now = DateTime.now();
-  final delay = 60 - now.second;
-
-  // Wait for the next minute to start
-  await Future.delayed(Duration(seconds: delay));
-
-  // Yield the synchronized time
-  yield DateTime.now();
-
-  // Thereafter, update every minute
-  yield* Stream.periodic(const Duration(minutes: 1), (_) => DateTime.now());
-});
-
 // Fetches the schedule for a given day (1..7)
 final dayScheduleProvider = FutureProvider.family<List<ScheduleItem>, int>((
   ref,
@@ -71,10 +51,21 @@ final dayScheduleProvider = FutureProvider.family<List<ScheduleItem>, int>((
 final sessionsByCourseProvider =
     FutureProvider.family<List<ClassSession>, String>((ref, courseUuid) async {
       final isar = ref.watch(databaseProvider);
-      return isar.classSessions
+      final sessions = await isar.classSessions
           .filter()
           .courseUuidEqualTo(courseUuid)
-          .sortByDayOfWeek()
-          .thenByStartTimeMinutes()
           .findAll();
+
+      // Custom sort: Saturday(6) first, then Sunday(7), then Mon(1)...
+      // (day + 1) % 7 maps: 6->0, 7->1, 1->2, 2->3, 3->4, 4->5, 5->6
+      sessions.sort((a, b) {
+        final aDaySorted = (a.dayOfWeek + 1) % 7;
+        final bDaySorted = (b.dayOfWeek + 1) % 7;
+        if (aDaySorted != bDaySorted) {
+          return aDaySorted.compareTo(bDaySorted);
+        }
+        return a.startTimeMinutes.compareTo(b.startTimeMinutes);
+      });
+
+      return sessions;
     });

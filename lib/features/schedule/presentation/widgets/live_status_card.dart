@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
-import '../providers/schedule_provider.dart';
+import '../../../../core/providers/time_provider.dart';
+import '../providers/session_provider.dart';
 
 class LiveStatusCard extends ConsumerWidget {
   final ScheduleItem item;

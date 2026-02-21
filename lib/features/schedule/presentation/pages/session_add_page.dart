@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/database/database_manager.dart';
 import '../../../course/data/models/course.dart';
 import '../../data/models/class_session.dart';
-import '../providers/schedule_provider.dart';
+import '../providers/session_provider.dart';
 
 class SessionAddPage extends ConsumerStatefulWidget {
   final Course course;
