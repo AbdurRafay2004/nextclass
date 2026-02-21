@@ -42,7 +42,7 @@ class LiveStatusCard extends StatelessWidget {
         children: [
           // NOW tag
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
             decoration: BoxDecoration(
               border: Border.all(color: const Color(0xFF00E676), width: 1.0),
               borderRadius: BorderRadius.circular(4),
@@ -53,33 +53,33 @@ class LiveStatusCard extends StatelessWidget {
               style: TextStyle(
                 color: Color(0xFF00E676),
                 fontWeight: FontWeight.w900,
-                fontSize: 10,
-                letterSpacing: 2.0,
+                fontSize: 8,
+                letterSpacing: 1.5,
               ),
             ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 8),
           // Course Code
           Text(
             item.course.code.toUpperCase(),
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+            style: Theme.of(context).textTheme.labelMedium?.copyWith(
               color: Colors.grey[600],
               fontWeight: FontWeight.w900,
               letterSpacing: 1.5,
             ),
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 4),
           // Course Name
           Text(
             item.course.name,
-            style: Theme.of(context).textTheme.displayLarge?.copyWith(
+            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
               fontWeight: FontWeight.w900,
               color: Colors.white,
-              height: 1.05,
-              letterSpacing: -1.0,
+              height: 1.1,
+              letterSpacing: -0.5,
             ),
           ),
-          const SizedBox(height: 48),
+          const SizedBox(height: 24),
           // Room and Faculty Info
           Row(
             children: [
@@ -91,29 +91,28 @@ class LiveStatusCard extends StatelessWidget {
                       children: [
                         Icon(
                           Icons.location_on_outlined,
-                          size: 16,
+                          size: 14,
                           color: Colors.grey[600],
                         ),
-                        const SizedBox(width: 6),
+                        const SizedBox(width: 4),
                         Text(
                           'ROOM',
                           style: TextStyle(
                             color: Colors.grey[600],
                             fontWeight: FontWeight.w900,
-                            fontSize: 12,
-                            letterSpacing: 1.5,
+                            fontSize: 10,
+                            letterSpacing: 1.0,
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 4),
                     Text(
                       item.session.room,
-                      style: Theme.of(context).textTheme.headlineSmall
-                          ?.copyWith(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w900,
-                          ),
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w900,
+                      ),
                     ),
                   ],
                 ),
@@ -126,39 +125,38 @@ class LiveStatusCard extends StatelessWidget {
                       children: [
                         Icon(
                           Icons.person_outline,
-                          size: 16,
+                          size: 14,
                           color: Colors.grey[600],
                         ),
-                        const SizedBox(width: 6),
+                        const SizedBox(width: 4),
                         Text(
                           'FACULTY',
                           style: TextStyle(
                             color: Colors.grey[600],
                             fontWeight: FontWeight.w900,
-                            fontSize: 12,
-                            letterSpacing: 1.5,
+                            fontSize: 10,
+                            letterSpacing: 1.0,
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 4),
                     Text(
                       item.course.facultyName,
-                      style: Theme.of(context).textTheme.headlineSmall
-                          ?.copyWith(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w900,
-                          ),
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w900,
+                      ),
                     ),
                   ],
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 32),
+          const SizedBox(height: 16),
           // Divider
-          Divider(color: Colors.grey[900], thickness: 2.0),
-          const SizedBox(height: 24),
+          Divider(color: Colors.grey[900], thickness: 1.0),
+          const SizedBox(height: 12),
           // Time Remaining and Ends At
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -172,18 +170,18 @@ class LiveStatusCard extends StatelessWidget {
                     style: TextStyle(
                       color: Colors.grey[600],
                       fontWeight: FontWeight.w900,
-                      fontSize: 12,
-                      letterSpacing: 1.5,
+                      fontSize: 10,
+                      letterSpacing: 1.0,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 4),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.baseline,
                     textBaseline: TextBaseline.alphabetic,
                     children: [
                       Text(
                         '${remainingMinutes > 0 ? remainingMinutes : 0}',
-                        style: Theme.of(context).textTheme.displayMedium
+                        style: Theme.of(context).textTheme.headlineLarge
                             ?.copyWith(
                               color: Colors.white,
                               fontWeight: FontWeight.w900,
@@ -195,7 +193,7 @@ class LiveStatusCard extends StatelessWidget {
                         style: TextStyle(
                           color: Colors.grey[500],
                           fontWeight: FontWeight.w900,
-                          fontSize: 20,
+                          fontSize: 14,
                         ),
                       ),
                     ],
@@ -210,33 +208,33 @@ class LiveStatusCard extends StatelessWidget {
                     style: TextStyle(
                       color: Colors.grey[600],
                       fontWeight: FontWeight.w900,
-                      fontSize: 12,
-                      letterSpacing: 1.5,
+                      fontSize: 10,
+                      letterSpacing: 1.0,
                     ),
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 8),
                   Text(
                     _formatTime(endMinutes),
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 8),
                 ],
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 12),
           // Progress bar
           LinearProgressIndicator(
             value: clampedProgress,
             backgroundColor: Colors.grey[900],
             valueColor: const AlwaysStoppedAnimation<Color>(Colors.white),
-            minHeight: 6,
-            borderRadius: BorderRadius.circular(3),
+            minHeight: 4,
+            borderRadius: BorderRadius.circular(2),
           ),
-          const SizedBox(height: 16), // Extra spacing before the next section
+          const SizedBox(height: 12), // Extra spacing before the next section
         ],
       ),
     );

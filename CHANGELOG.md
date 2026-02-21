@@ -4,6 +4,8 @@
 ✅ Phase 6 Complete: Refined NextClass "Up Next Today" and "Happening Now" UI to match target aesthetics
 
 ## ChangeLog
+- **2026-02-21**: Updated the `DashboardPage` primary header from "Today" to dynamically format the current date and time (e.g., "WEDNESDAY, OCT 24 • 10:25 AM") aligned to the typography style.
+- **2026-02-21**: Scaled down the sizing and padding of fonts and icons in the `BottomNavigationBar` and `LiveStatusCard` (Happening Now) to take up significantly less vertical space (~25% of the screen), enhancing the minimalistic layout.
 - **2026-02-21**: Redesigned the primary navigation mechanism (`BottomNavigationBar`) to match the minimalist pure black dark theme, exchanging the label 'Home' for 'FOCUS', removing the default Material 3 pill selection, and using heavily spaced typography with outlined minimalist icons (`circle_outlined`, `calendar_today_outlined`, `person_outline`).
 - **2026-02-21**: Fixed an issue in `DashboardPage` where past classes were still appearing in the "UP NEXT TODAY" list. Ended classes are now correctly filtered out.
 - **2026-02-21**: Redesigned `LiveStatusCard` (Happening Now) to match the dark, typography-focused UI aesthetics with custom "NOW" badge, large headings, and refined layout. Removed redundant header from Dashboard.

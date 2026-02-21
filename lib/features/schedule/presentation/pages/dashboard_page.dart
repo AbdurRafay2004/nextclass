@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 
 import '../../../course/presentation/pages/course_list_page.dart';
 import '../../../settings/presentation/pages/settings_page.dart';
@@ -25,9 +26,25 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
     return Scaffold(
       appBar: _currentIndex == 0
           ? AppBar(
-              title: const Text(
-                'Today',
-                style: TextStyle(fontWeight: FontWeight.bold),
+              title: Builder(
+                builder: (context) {
+                  final now = DateTime.now();
+                  final formattedDate = DateFormat(
+                    'EEEE, MMM d',
+                  ).format(now).toUpperCase();
+                  final formattedTime = DateFormat(
+                    'h:mm a',
+                  ).format(now).toUpperCase();
+                  return Text(
+                    '$formattedDate • $formattedTime',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w900,
+                      fontSize: 10,
+                      letterSpacing: 2.0,
+                      color: Colors.grey,
+                    ),
+                  );
+                },
               ),
               actions: [
                 IconButton(icon: const Icon(Icons.person), onPressed: () {}),
@@ -61,25 +78,25 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
           unselectedItemColor: Colors.grey[700],
           selectedLabelStyle: const TextStyle(
             fontWeight: FontWeight.w900,
-            fontSize: 10,
+            fontSize: 8,
             letterSpacing: 1.5,
           ),
           unselectedLabelStyle: const TextStyle(
             fontWeight: FontWeight.w900,
-            fontSize: 10,
+            fontSize: 8,
             letterSpacing: 1.5,
           ),
           items: const [
             BottomNavigationBarItem(
               icon: Padding(
-                padding: EdgeInsets.only(bottom: 8.0),
-                child: Icon(Icons.circle_outlined, size: 28),
+                padding: EdgeInsets.only(bottom: 4.0),
+                child: Icon(Icons.circle_outlined, size: 22),
               ),
               activeIcon: Padding(
-                padding: EdgeInsets.only(bottom: 8.0),
+                padding: EdgeInsets.only(bottom: 4.0),
                 child: Icon(
                   Icons.circle_outlined,
-                  size: 28,
+                  size: 22,
                   color: Colors.white,
                 ),
               ),
@@ -87,14 +104,14 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
             ),
             BottomNavigationBarItem(
               icon: Padding(
-                padding: EdgeInsets.only(bottom: 8.0),
-                child: Icon(Icons.calendar_today_outlined, size: 28),
+                padding: EdgeInsets.only(bottom: 4.0),
+                child: Icon(Icons.calendar_today_outlined, size: 22),
               ),
               activeIcon: Padding(
-                padding: EdgeInsets.only(bottom: 8.0),
+                padding: EdgeInsets.only(bottom: 4.0),
                 child: Icon(
                   Icons.calendar_today_outlined,
-                  size: 28,
+                  size: 22,
                   color: Colors.white,
                 ),
               ),
@@ -102,14 +119,14 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
             ),
             BottomNavigationBarItem(
               icon: Padding(
-                padding: EdgeInsets.only(bottom: 8.0),
-                child: Icon(Icons.person_outline, size: 28),
+                padding: EdgeInsets.only(bottom: 4.0),
+                child: Icon(Icons.person_outline, size: 22),
               ),
               activeIcon: Padding(
-                padding: EdgeInsets.only(bottom: 8.0),
+                padding: EdgeInsets.only(bottom: 4.0),
                 child: Icon(
                   Icons.person_outline,
-                  size: 28,
+                  size: 22,
                   color: Colors.white,
                 ),
               ),
