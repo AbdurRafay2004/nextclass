@@ -38,7 +38,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
           ? _buildDashboardBody(scheduleAsync)
           : _currentIndex == 1
           ? const CourseListPage()
-          : _currentIndex == 3
+          : _currentIndex == 2
           ? const SettingsPage()
           : Center(child: Text('Index $_currentIndex')),
       bottomNavigationBar: NavigationBar(
@@ -58,11 +58,6 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
             icon: Icon(Icons.menu_book_outlined),
             selectedIcon: Icon(Icons.menu_book),
             label: 'Courses',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.calendar_month_outlined),
-            selectedIcon: Icon(Icons.calendar_month),
-            label: 'Calendar',
           ),
           NavigationDestination(
             icon: Icon(Icons.settings_outlined),
