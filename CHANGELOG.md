@@ -1,7 +1,7 @@
 # Changelog
 
 ## Current Status
-✅ Phase 17 Complete: Removed human icon from Focus page AppBar
+✅ Phase 20 Complete: Fully centralized design system (font, colors, text styles)
 
 ## ChangeLog
 - **2026-02-21**: Analyzed NextClass design workflows. Selected Flutter, Riverpod, and Isar tech stack. Bootstrapped clean architecture plan.
@@ -52,15 +52,14 @@
 - **2026-02-23**: Removed light theme entirely — app is now permanently dark mode. Removed notification feature (toggle and persistence). Stripped `SettingsState` of themeMode/notifications, simplified `main.dart` to a dark-only `StatelessWidget`, removed `lightTheme` from `AppTheme`. Settings page now only shows Time Format, About, and version 2.0.0.
 - **2026-02-23**: Font consistency fix across all 9 UI files. Replaced every direct `TextStyle()` with `GoogleFonts.inter()` to ensure Inter font is used in all labels, buttons, and standalone text that doesn't go through `theme.textTheme`. Updated `AppTextStyles` to also use `GoogleFonts.inter()` directly.
 - **2026-02-23**: Centralized font configuration into `AppFonts` class (`core/theme/app_fonts.dart`). All `GoogleFonts.inter()` calls across 9 files replaced with `AppFonts.style()`. To change the app font, update the two methods in `AppFonts` — one place, whole-app change.
-
-## Immediate Next Steps
-- **2026-02-23**: Removed the person icon from the Dashboard (FOCUS) page `AppBar` actions to simplify the UI, as requested by the user.
+- **2026-02-23**: Removed the person icon from the Dashboard (FOCUS) page `AppBar` actions to simplify the UI.
 - **2026-02-23**: Switched app font from Inter to **Bricolage Grotesque** (variable axes: weight 200–800, width 75–100). Updated `AppFonts` (2-file change thanks to centralization). Tuned `AppTextStyles` weights for Bricolage's axis range.
 - **2026-02-23**: Fully centralized all text styles into `AppTextStyles` (16 named styles). Removed every inline `AppFonts.style()` call from all 8 page/widget files. All typography is now editable from one file (`app_text_styles.dart`).
 
-1. Test local notifications scheduling.
-2. Implement Class Session Conflict detection.
-3. Visual QA: run the app in both light/dark mode and verify all pages.
+## Immediate Next Steps
+1. Implement Class Session Conflict detection.
+2. Visual QA: run the app on device and verify all pages.
+3. Refine animations and micro-interactions.
 
 ## Known Issues/Notes
 - Notification functionality is currently untied. Session creation lacks conflict validation.

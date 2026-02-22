@@ -54,14 +54,20 @@ Read `lib/core/core.dart` barrel export to see everything available:
 ## Theming & Colors
 - **Never hardcode colors** (`Colors.white`, `Color(0xFF222224)`) — use `AppColors.*` constants or context-aware helpers
 - All course-specific colors come from `course.colorHex` via `AppColors.hexToColor()` — never derive from course code letters
-- Use `AppColors.cardSurface(context)` for card/container backgrounds (adapts to light/dark)
-- Use `AppColors.mutedText(context)` for secondary/muted text (adapts to light/dark)
+- Use `AppColors.cardSurface(context)` for card/container backgrounds
+- Use `AppColors.mutedText(context)` for secondary/muted text
 - Use `AppColors.dividerColor(context)` for dividers and separators
 - Use `theme.colorScheme.onSurface` for primary text instead of `Colors.white`
 - Use `theme.colorScheme.error` for destructive actions instead of `Colors.red`
-- Use `AppTextStyles.sectionHeader(context)` for section labels — never create ad-hoc uppercase styles
 - New color constants go in `AppColors` with semantic names
-- Border radii: `AppColors.cardRadius` (20px) for cards, `AppColors.cardRadius` for containers, `AppColors.formRadius` (16px) for form inputs
+- Border radii: `AppColors.cardRadius` (20px) for cards, `AppColors.formRadius` (16px) for form inputs
+
+## Typography
+- **Never use inline `TextStyle()` or `AppFonts.style()`** in page files — use `AppTextStyles.*` named styles
+- All 16 text styles live in `AppTextStyles` (`core/theme/app_text_styles.dart`) — edit there to change everywhere
+- Font family is set in `AppFonts` (`core/theme/app_fonts.dart`) — change **one file** to switch the whole app's font
+- Current font: **Bricolage Grotesque** (weight 200–800)
+- If adding a new text role, add a named style to `AppTextStyles` — never create ad-hoc styles in pages
 
 ## Code Organization
 - Color utilities and constants are in `AppColors` (`core/theme/app_colors.dart`) — NOT a separate utils file
