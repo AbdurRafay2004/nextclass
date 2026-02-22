@@ -99,6 +99,29 @@ class SessionController {
     });
   }
 
+  Future<void> updateSession({
+    required int id,
+    required String courseUuid,
+    required int dayOfWeek,
+    required int startTimeMinutes,
+    required int durationMinutes,
+    required String room,
+    required SessionType type,
+  }) async {
+    final session = ClassSession()
+      ..id = id
+      ..courseUuid = courseUuid
+      ..dayOfWeek = dayOfWeek
+      ..startTimeMinutes = startTimeMinutes
+      ..durationMinutes = durationMinutes
+      ..room = room
+      ..type = type;
+
+    await isar.writeTxn(() async {
+      await isar.classSessions.put(session);
+    });
+  }
+
   Future<void> deleteSession(int id) async {
     await isar.writeTxn(() async {
       await isar.classSessions.delete(id);

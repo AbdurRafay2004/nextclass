@@ -7,8 +7,15 @@ import '../providers/session_provider.dart';
 
 class SessionAddPage extends ConsumerStatefulWidget {
   final Course course;
+  final ClassSession? sessionToEdit;
+  final ClassSession? sessionToDuplicate;
 
-  const SessionAddPage({super.key, required this.course});
+  const SessionAddPage({
+    super.key,
+    required this.course,
+    this.sessionToEdit,
+    this.sessionToDuplicate,
+  });
 
   @override
   ConsumerState<SessionAddPage> createState() => _SessionAddPageState();
@@ -25,6 +32,22 @@ class _SessionAddPageState extends ConsumerState<SessionAddPage> {
 
   final List<String> _days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
 
+  @override
+  void initState() {
+    super.initState();
+    final initSession = widget.sessionToEdit ?? widget.sessionToDuplicate;
+    if (initSession != null) {
+      _roomController.text = initSession.room;
+      _selectedDay = initSession.dayOfWeek;
+      _startTime = TimeOfDay(
+        hour: initSession.startTimeMinutes ~/ 60,
+        minute: initSession.startTimeMinutes % 60,
+      );
+      _durationMinutes = initSession.durationMinutes;
+      _selectedType = initSession.type;
+    }
+  }
+
   Future<void> _pickTime() async {
     final TimeOfDay? picked = await showTimePicker(
       context: context,
@@ -39,16 +62,30 @@ class _SessionAddPageState extends ConsumerState<SessionAddPage> {
 
   void _saveSession() async {
     if (_formKey.currentState!.validate()) {
-      await ref
-          .read(sessionControllerProvider)
-          .addSession(
-            courseUuid: widget.course.uuid,
-            dayOfWeek: _selectedDay,
-            startTimeMinutes: _startTime.hour * 60 + _startTime.minute,
-            durationMinutes: _durationMinutes,
-            room: _roomController.text.trim(),
-            type: _selectedType,
-          );
+      if (widget.sessionToEdit != null) {
+        await ref
+            .read(sessionControllerProvider)
+            .updateSession(
+              id: widget.sessionToEdit!.id,
+              courseUuid: widget.course.uuid,
+              dayOfWeek: _selectedDay,
+              startTimeMinutes: _startTime.hour * 60 + _startTime.minute,
+              durationMinutes: _durationMinutes,
+              room: _roomController.text.trim(),
+              type: _selectedType,
+            );
+      } else {
+        await ref
+            .read(sessionControllerProvider)
+            .addSession(
+              courseUuid: widget.course.uuid,
+              dayOfWeek: _selectedDay,
+              startTimeMinutes: _startTime.hour * 60 + _startTime.minute,
+              durationMinutes: _durationMinutes,
+              room: _roomController.text.trim(),
+              type: _selectedType,
+            );
+      }
 
       if (mounted) {
         // Invalidate the session query for this course so the list updates
@@ -72,9 +109,9 @@ class _SessionAddPageState extends ConsumerState<SessionAddPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Add Session',
-          style: TextStyle(fontWeight: FontWeight.bold),
+        title: Text(
+          widget.sessionToEdit != null ? 'Edit Session' : 'Add Session',
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         actions: [
           TextButton(

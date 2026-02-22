@@ -5,7 +5,10 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/time_utils.dart';
 import '../../../schedule/presentation/pages/session_add_page.dart';
 import '../../../schedule/presentation/providers/session_provider.dart';
+import '../../../schedule/data/models/class_session.dart';
+import '../providers/course_provider.dart';
 import '../../data/models/course.dart';
+import 'course_add_page.dart';
 
 class CourseDetailPage extends ConsumerWidget {
   final Course course;
@@ -25,6 +28,149 @@ class CourseDetailPage extends ConsumerWidget {
     return days[day - 1];
   }
 
+  void _showSessionOptionsBottomSheet(
+    BuildContext context,
+    WidgetRef ref,
+    ClassSession session,
+  ) {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      builder: (bottomSheetContext) {
+        return SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                leading: const Icon(Icons.edit),
+                title: const Text('Edit'),
+                onTap: () {
+                  Navigator.pop(bottomSheetContext);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => SessionAddPage(
+                        course: course,
+                        sessionToEdit: session,
+                      ),
+                    ),
+                  );
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.copy),
+                title: const Text('Duplicate'),
+                onTap: () {
+                  Navigator.pop(bottomSheetContext);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => SessionAddPage(
+                        course: course,
+                        sessionToDuplicate: session,
+                      ),
+                    ),
+                  );
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.delete, color: Colors.red),
+                title: const Text(
+                  'Delete',
+                  style: TextStyle(color: Colors.red),
+                ),
+                onTap: () {
+                  Navigator.pop(bottomSheetContext);
+                  _showDeleteConfirmationDialog(context, ref, session);
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _showDeleteConfirmationDialog(
+    BuildContext context,
+    WidgetRef ref,
+    ClassSession session,
+  ) {
+    showDialog(
+      context: context,
+      builder: (dialogContext) {
+        return AlertDialog(
+          title: const Text('Delete Session'),
+          content: const Text('Are you sure you want to delete this session?'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(dialogContext),
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () async {
+                await ref
+                    .read(sessionControllerProvider)
+                    .deleteSession(session.id);
+                if (context.mounted) {
+                  ref.invalidate(sessionsByCourseProvider(course.uuid));
+                  ref.invalidate(dayScheduleProvider);
+                  Navigator.pop(dialogContext); // Close dialog
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Session deleted')),
+                  );
+                }
+              },
+              child: const Text('Delete', style: TextStyle(color: Colors.red)),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showCourseDeleteConfirmationDialog(
+    BuildContext context,
+    WidgetRef ref,
+  ) {
+    showDialog(
+      context: context,
+      builder: (dialogContext) {
+        return AlertDialog(
+          title: const Text('Delete Course'),
+          content: const Text(
+            'Are you sure you want to delete this course and all its sessions?',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(dialogContext),
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () async {
+                await ref
+                    .read(courseControllerProvider)
+                    .deleteCourse(course.uuid);
+                if (context.mounted) {
+                  ref.invalidate(coursesProvider);
+                  ref.invalidate(dayScheduleProvider);
+                  Navigator.pop(dialogContext); // Close dialog
+                  Navigator.pop(context); // Go back to course list
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Course deleted')),
+                  );
+                }
+              },
+              child: const Text('Delete', style: TextStyle(color: Colors.red)),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final sessionsAsync = ref.watch(sessionsByCourseProvider(course.uuid));
@@ -40,7 +186,18 @@ class CourseDetailPage extends ConsumerWidget {
           IconButton(
             icon: const Icon(Icons.edit),
             onPressed: () {
-              // TODO: Edit course logic
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => CourseAddPage(courseToEdit: course),
+                ),
+              );
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.delete, color: Colors.red),
+            onPressed: () {
+              _showCourseDeleteConfirmationDialog(context, ref);
             },
           ),
         ],
@@ -170,7 +327,11 @@ class CourseDetailPage extends ConsumerWidget {
                         trailing: IconButton(
                           icon: const Icon(Icons.more_vert),
                           onPressed: () {
-                            // TODO: Edit/Delete Session BottomSheet
+                            _showSessionOptionsBottomSheet(
+                              context,
+                              ref,
+                              session,
+                            );
                           },
                         ),
                       ),

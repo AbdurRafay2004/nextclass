@@ -5,8 +5,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../providers/course_provider.dart';
 
+import '../../data/models/course.dart';
+
 class CourseAddPage extends ConsumerStatefulWidget {
-  const CourseAddPage({super.key});
+  final Course? courseToEdit;
+
+  const CourseAddPage({super.key, this.courseToEdit});
 
   @override
   ConsumerState<CourseAddPage> createState() => _CourseAddPageState();
@@ -20,16 +24,40 @@ class _CourseAddPageState extends ConsumerState<CourseAddPage> {
 
   Color _selectedColor = AppColors.courseColors.first;
 
+  @override
+  void initState() {
+    super.initState();
+    if (widget.courseToEdit != null) {
+      _nameController.text = widget.courseToEdit!.name;
+      _codeController.text = widget.courseToEdit!.code;
+      _facultyAcronymController.text = widget.courseToEdit!.facultyAcronym;
+      _selectedColor = AppColors.hexToColor(widget.courseToEdit!.colorHex);
+    }
+  }
+
   void _saveCourse() async {
     if (_formKey.currentState!.validate()) {
-      await ref
-          .read(courseControllerProvider)
-          .addCourse(
-            name: _nameController.text.trim(),
-            code: _codeController.text.trim(),
-            facultyAcronym: _facultyAcronymController.text.trim(),
-            colorHex: AppColors.colorToHex(_selectedColor),
-          );
+      if (widget.courseToEdit != null) {
+        await ref
+            .read(courseControllerProvider)
+            .updateCourse(
+              id: widget.courseToEdit!.id,
+              uuid: widget.courseToEdit!.uuid,
+              name: _nameController.text.trim(),
+              code: _codeController.text.trim(),
+              facultyAcronym: _facultyAcronymController.text.trim(),
+              colorHex: AppColors.colorToHex(_selectedColor),
+            );
+      } else {
+        await ref
+            .read(courseControllerProvider)
+            .addCourse(
+              name: _nameController.text.trim(),
+              code: _codeController.text.trim(),
+              facultyAcronym: _facultyAcronymController.text.trim(),
+              colorHex: AppColors.colorToHex(_selectedColor),
+            );
+      }
 
       if (mounted) {
         Navigator.pop(context);
@@ -52,9 +80,9 @@ class _CourseAddPageState extends ConsumerState<CourseAddPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Add Course',
-          style: TextStyle(fontWeight: FontWeight.bold),
+        title: Text(
+          widget.courseToEdit != null ? 'Edit Course' : 'Add Course',
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         actions: [
           TextButton(

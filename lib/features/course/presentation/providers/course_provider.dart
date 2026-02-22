@@ -44,7 +44,22 @@ class CourseController {
     });
   }
 
-  Future<void> updateCourse(Course course) async {
+  Future<void> updateCourse({
+    required int id,
+    required String uuid,
+    required String name,
+    required String code,
+    required String colorHex,
+    required String facultyAcronym,
+  }) async {
+    final course = Course()
+      ..id = id
+      ..uuid = uuid
+      ..name = name
+      ..code = code
+      ..colorHex = colorHex
+      ..facultyAcronym = facultyAcronym;
+
     await isar.writeTxn(() async {
       await isar.courses.put(course);
     });

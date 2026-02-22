@@ -45,6 +45,8 @@
 - **2026-02-23**: Tightened `analysis_options.yaml` with 20+ strict lint rules. `unused_import` and `duplicate_import` are now treated as errors. Added rules for type safety, code quality, and style consistency.
 - **2026-02-23**: Created barrel export files: `core/core.dart`, `core/theme/theme.dart`, `core/utils/utils.dart` for discoverability of shared utilities.
 - **2026-02-23**: Performed project cleanup by identifying and planning the removal of unused target platforms (`ios`, `macos`, `linux`, `windows`, `web`). NextClass is now explicitly configured as an Android-only application to reduce noise and maintain a lean project structure.
+- **2026-02-23**: Added Session Management feature: implemented Edit, Duplicate, and Remove actions for class sessions, accessible via a bottom sheet in `CourseDetailPage`.
+- **2026-02-23**: Added Course Management feature: implemented Edit and Remove actions for courses directly from the `CourseDetailPage` AppBar.
 
 ## Immediate Next Steps
 1. Test local notifications scheduling.
