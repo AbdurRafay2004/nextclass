@@ -47,6 +47,7 @@
 - **2026-02-23**: Performed project cleanup by identifying and planning the removal of unused target platforms (`ios`, `macos`, `linux`, `windows`, `web`). NextClass is now explicitly configured as an Android-only application to reduce noise and maintain a lean project structure.
 - **2026-02-23**: Added Session Management feature: implemented Edit, Duplicate, and Remove actions for class sessions, accessible via a bottom sheet in `CourseDetailPage`.
 - **2026-02-23**: Added Course Management feature: implemented Edit and Remove actions for courses directly from the `CourseDetailPage` AppBar.
+- **2026-02-23**: Redesigned the Course Cards on the Courses page to align with the Focus page design system (dark UI, `AppColors.cardDark`, fully rounded 24px container, inset 14px color pill).
 
 ## Immediate Next Steps
 1. Test local notifications scheduling.
