@@ -1,1 +1,44 @@
 include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  errors:
+    # Treat these as errors so they block builds
+    unused_import: error
+    duplicate_import: error
+    unused_local_variable: warning
+    dead_code: warning
+
+linter:
+  rules:
+    # ── Prevent Duplication & Dead Code ───────────────────────
+    directives_ordering: true # Enforces consistent import ordering
+    implementation_imports: true # Blocks importing src/ internals of other packages
+
+    # ── Code Quality ─────────────────────────────────────────
+    prefer_const_constructors: true
+    prefer_const_declarations: true
+    prefer_final_locals: true
+    avoid_print: true
+    prefer_single_quotes: true
+    use_key_in_widget_constructors: true
+    sized_box_for_whitespace: true
+    avoid_unnecessary_containers: true
+
+    # ── Type Safety ──────────────────────────────────────────
+    always_declare_return_types: true
+    annotate_overrides: true
+    avoid_dynamic_calls: true
+    prefer_typing_uninitialized_variables: true
+
+    # ── Clean Architecture ───────────────────────────────────
+    avoid_relative_lib_imports: true # Forces package:nextclass/... imports
+    library_private_types_in_public_api: true
+
+    # ── Style Consistency ────────────────────────────────────
+    curly_braces_in_flow_control_structures: true
+    prefer_is_empty: true
+    prefer_is_not_empty: true
+    unnecessary_this: true
+    unnecessary_string_interpolations: true
+    unnecessary_brace_in_string_interps: true
+    use_rethrow_when_possible: true

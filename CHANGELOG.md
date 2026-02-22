@@ -1,7 +1,7 @@
 # Changelog
 
 ## Current Status
-✅ Phase 12 Complete: Codebase quality improvements — consolidated colors, SessionController, settings persistence
+✅ Phase 13 Complete: Performance fixes, strict lints, barrel exports, app lifecycle handling
 
 ## ChangeLog
 - **2026-02-21**: Analyzed NextClass design workflows. Selected Flutter, Riverpod, and Isar tech stack. Bootstrapped clean architecture plan.
@@ -39,6 +39,11 @@
 - **2026-02-22**: Consolidated `color_utils.dart` into `AppColors` as static methods (`hexToColor`, `colorToHex`). Added semantic color constants `cardDark`, `liveGreen`, `navInactive`. Deleted standalone `color_utils.dart`. Updated all 8 affected files to use `AppColors.*`.
 - **2026-02-22**: Created `SessionController` (mirroring `CourseController`) with `addSession` and `deleteSession` methods. Refactored `SessionAddPage` to use the controller instead of direct Isar database access, enforcing clean architecture separation.
 - **2026-02-22**: Added `SharedPreferences` persistence to `SettingsNotifier`. Theme mode and notification preferences now survive app restarts. Settings load asynchronously on startup and persist on every change.
+- **2026-02-23**: Fixed 30-second startup loading hang on FOCUS page. Root cause: `Stream.periodic` does not emit on subscribe — it waits one full interval (30s). Fixed by adding an immediate `yield DateTime.now()` before entering the periodic loop. Dashboard now loads in milliseconds.
+- **2026-02-23**: Removed `ref.invalidate(timeProvider)` from pull-to-refresh handler. Invalidating a `StreamProvider` restarts the stream from zero, causing the same 30s loading freeze on every refresh.
+- **2026-02-23**: Added `WidgetsBindingObserver` to `DashboardPage` with `didChangeAppLifecycleState`. When the app resumes from background, `dayScheduleProvider` is invalidated to immediately recompute the schedule.
+- **2026-02-23**: Tightened `analysis_options.yaml` with 20+ strict lint rules. `unused_import` and `duplicate_import` are now treated as errors. Added rules for type safety, code quality, and style consistency.
+- **2026-02-23**: Created barrel export files: `core/core.dart`, `core/theme/theme.dart`, `core/utils/utils.dart` for discoverability of shared utilities.
 
 ## Immediate Next Steps
 1. Test local notifications scheduling.

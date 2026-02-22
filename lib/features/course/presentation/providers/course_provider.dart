@@ -3,8 +3,8 @@ import 'package:isar/isar.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../../core/database/database_manager.dart';
-import '../../data/models/course.dart';
 import '../../../schedule/data/models/class_session.dart';
+import '../../data/models/course.dart';
 
 // Stream of all courses to keep the list reactively updated
 final coursesProvider = StreamProvider<List<Course>>((ref) {

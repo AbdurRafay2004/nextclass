@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
-import '../../../course/presentation/pages/course_add_page.dart';
 import '../../../../core/providers/time_provider.dart';
 import '../../../../core/widgets/dynamic_nav_bar.dart';
+import '../../../course/presentation/pages/course_add_page.dart';
 import '../../../course/presentation/pages/course_list_page.dart';
 import '../../../settings/presentation/pages/settings_page.dart';
 import '../providers/session_provider.dart';

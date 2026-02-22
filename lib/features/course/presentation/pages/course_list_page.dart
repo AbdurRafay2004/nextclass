@@ -76,19 +76,19 @@ class CourseListPage extends ConsumerWidget {
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
-                        title: const Text("Confirm"),
+                        title: const Text('Confirm'),
                         content: const Text(
-                          "Are you sure you wish to delete this course and all its sessions?",
+                          'Are you sure you wish to delete this course and all its sessions?',
                         ),
                         actions: [
                           TextButton(
                             onPressed: () => Navigator.of(context).pop(false),
-                            child: const Text("CANCEL"),
+                            child: const Text('CANCEL'),
                           ),
                           TextButton(
                             onPressed: () => Navigator.of(context).pop(true),
                             child: const Text(
-                              "DELETE",
+                              'DELETE',
                               style: TextStyle(color: Colors.red),
                             ),
                           ),
