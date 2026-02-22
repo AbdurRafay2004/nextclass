@@ -1,7 +1,7 @@
 # Changelog
 
 ## Current Status
-✅ Phase 14 Complete: Platform reduction (Android-only) and cleanup
+✅ Phase 16 Complete: Removed light theme and notification feature (dark-only, v2.0.0)
 
 ## ChangeLog
 - **2026-02-21**: Analyzed NextClass design workflows. Selected Flutter, Riverpod, and Isar tech stack. Bootstrapped clean architecture plan.
@@ -48,11 +48,13 @@
 - **2026-02-23**: Added Session Management feature: implemented Edit, Duplicate, and Remove actions for class sessions, accessible via a bottom sheet in `CourseDetailPage`.
 - **2026-02-23**: Added Course Management feature: implemented Edit and Remove actions for courses directly from the `CourseDetailPage` AppBar.
 - **2026-02-23**: Redesigned the Course Cards on the Courses page to align with the Focus page design system (dark UI, `AppColors.cardDark`, fully rounded 24px container, inset 14px color pill).
+- **2026-02-23**: Complete UI consistency overhaul across all 10 page/widget files. Created `AppTextStyles` for shared typography, extended `AppColors` with context-aware helpers (`cardSurface`, `mutedText`, `primaryText`, `dividerColor`) and standardized border radius constants (20px cards, 16px forms). Extended `AppTheme` with unified `AppBarTheme`, `CardThemeData`, `InputDecorationTheme`, `DialogThemeData`, and `DividerThemeData`. Refactored every page to use theme-derived colors instead of hardcoded `Colors.white`/`Colors.grey[*]`/`Colors.black`. Standardized card styling, section headers, empty states, and form inputs across Focus, Courses, Course Detail, Add/Edit Course, Add/Edit Session, and Settings pages. All pages now support both light and dark modes consistently.
+- **2026-02-23**: Removed light theme entirely — app is now permanently dark mode. Removed notification feature (toggle and persistence). Stripped `SettingsState` of themeMode/notifications, simplified `main.dart` to a dark-only `StatelessWidget`, removed `lightTheme` from `AppTheme`. Settings page now only shows Time Format, About, and version 2.0.0.
 
 ## Immediate Next Steps
 1. Test local notifications scheduling.
 2. Implement Class Session Conflict detection.
-3. Refine animations and padding tweaks.
+3. Visual QA: run the app in both light/dark mode and verify all pages.
 
 ## Known Issues/Notes
 - Notification functionality is currently untied. Session creation lacks conflict validation.

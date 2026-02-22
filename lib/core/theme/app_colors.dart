@@ -54,7 +54,7 @@ class AppColors {
   /// Inactive icon/label color in the navigation bar.
   static const Color navInactive = Color(0xFF64748B);
 
-  // ── UI Palette - Light Mode ──────────────────────────────────────────
+  // ── UI Palette - Light Mode (retained for potential future use) ─────
 
   static const Color bgLight = Color(0xFFFFFFFF);
   static const Color surfaceLight = Color(0xFFF5F5F5);
@@ -69,4 +69,26 @@ class AppColors {
   static const Color fgDark = Color(0xFFECEDEE);
   static const Color mutedDark = Color(0xFF9BA1A6);
   static const Color borderDark = Color(0xFF334155);
+
+  // ── Standardized Border Radii ───────────────────────────────────────
+
+  /// Card border radius (course cards, timeline cards, live card, settings groups).
+  static const double cardRadius = 20.0;
+
+  /// Form container / input border radius.
+  static const double formRadius = 16.0;
+
+  // ── Context-Aware Helpers ───────────────────────────────────────────
+
+  /// Card/surface background (dark-only app).
+  static Color cardSurface(BuildContext context) => cardDark;
+
+  /// Muted text color (dark-only app).
+  static Color mutedText(BuildContext context) => mutedDark;
+
+  /// Primary foreground text color (dark-only app).
+  static Color primaryText(BuildContext context) => fgDark;
+
+  /// Divider color (dark-only app).
+  static Color dividerColor(BuildContext context) => borderDark;
 }

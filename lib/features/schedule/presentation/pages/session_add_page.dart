@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_text_styles.dart';
 import '../../../course/data/models/course.dart';
 import '../../data/models/class_session.dart';
 import '../providers/session_provider.dart';
@@ -88,9 +90,8 @@ class _SessionAddPageState extends ConsumerState<SessionAddPage> {
       }
 
       if (mounted) {
-        // Invalidate the session query for this course so the list updates
         ref.invalidate(sessionsByCourseProvider(widget.course.uuid));
-        ref.invalidate(dayScheduleProvider); // Invalidate dashboard too
+        ref.invalidate(dayScheduleProvider);
         Navigator.pop(context);
         ScaffoldMessenger.of(
           context,
@@ -111,7 +112,6 @@ class _SessionAddPageState extends ConsumerState<SessionAddPage> {
       appBar: AppBar(
         title: Text(
           widget.sessionToEdit != null ? 'Edit Session' : 'Add Session',
-          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         actions: [
           TextButton(
@@ -130,17 +130,14 @@ class _SessionAddPageState extends ConsumerState<SessionAddPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Course', style: Theme.of(context).textTheme.titleSmall),
+              Text('COURSE', style: AppTextStyles.sectionHeader(context)),
               const SizedBox(height: 8),
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.surface,
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                    color: Theme.of(context).colorScheme.outline,
-                  ),
+                  color: AppColors.cardSurface(context),
+                  borderRadius: BorderRadius.circular(AppColors.formRadius),
                 ),
                 child: Text(
                   '${widget.course.code} - ${widget.course.name}',
@@ -150,12 +147,7 @@ class _SessionAddPageState extends ConsumerState<SessionAddPage> {
                 ),
               ),
               const SizedBox(height: 24),
-              Text(
-                'Day of Week',
-                style: Theme.of(
-                  context,
-                ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
-              ),
+              Text('DAY OF WEEK', style: AppTextStyles.sectionHeader(context)),
               const SizedBox(height: 16),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -171,12 +163,12 @@ class _SessionAddPageState extends ConsumerState<SessionAddPage> {
                       decoration: BoxDecoration(
                         color: isSelected
                             ? Theme.of(context).colorScheme.primary
-                            : Theme.of(context).colorScheme.surface,
+                            : AppColors.cardSurface(context),
                         shape: BoxShape.circle,
                         border: isSelected
                             ? null
                             : Border.all(
-                                color: Theme.of(context).colorScheme.outline,
+                                color: AppColors.dividerColor(context),
                               ),
                       ),
                       child: Text(
@@ -194,10 +186,8 @@ class _SessionAddPageState extends ConsumerState<SessionAddPage> {
               ),
               const SizedBox(height: 32),
               Text(
-                'Time & Duration',
-                style: Theme.of(
-                  context,
-                ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+                'TIME & DURATION',
+                style: AppTextStyles.sectionHeader(context),
               ),
               const SizedBox(height: 16),
               Row(
@@ -205,13 +195,13 @@ class _SessionAddPageState extends ConsumerState<SessionAddPage> {
                   Expanded(
                     child: InkWell(
                       onTap: _pickTime,
+                      borderRadius: BorderRadius.circular(AppColors.formRadius),
                       child: Container(
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.surface,
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(
-                            color: Theme.of(context).colorScheme.outline,
+                          color: AppColors.cardSurface(context),
+                          borderRadius: BorderRadius.circular(
+                            AppColors.formRadius,
                           ),
                         ),
                         child: Column(
@@ -219,7 +209,10 @@ class _SessionAddPageState extends ConsumerState<SessionAddPage> {
                           children: [
                             Text(
                               'Start Time',
-                              style: Theme.of(context).textTheme.bodySmall,
+                              style: Theme.of(context).textTheme.bodySmall
+                                  ?.copyWith(
+                                    color: AppColors.mutedText(context),
+                                  ),
                             ),
                             const SizedBox(height: 4),
                             Text(
@@ -236,10 +229,7 @@ class _SessionAddPageState extends ConsumerState<SessionAddPage> {
                   Expanded(
                     child: DropdownButtonFormField<int>(
                       initialValue: _durationMinutes,
-                      decoration: const InputDecoration(
-                        labelText: 'Duration',
-                        border: OutlineInputBorder(),
-                      ),
+                      decoration: const InputDecoration(labelText: 'Duration'),
                       items: const [
                         DropdownMenuItem(value: 45, child: Text('45 min')),
                         DropdownMenuItem(value: 60, child: Text('1 hr')),
@@ -259,12 +249,7 @@ class _SessionAddPageState extends ConsumerState<SessionAddPage> {
                 ],
               ),
               const SizedBox(height: 32),
-              Text(
-                'Details',
-                style: Theme.of(
-                  context,
-                ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
-              ),
+              Text('DETAILS', style: AppTextStyles.sectionHeader(context)),
               const SizedBox(height: 16),
               SegmentedButton<SessionType>(
                 segments: const [
@@ -291,7 +276,6 @@ class _SessionAddPageState extends ConsumerState<SessionAddPage> {
                 decoration: const InputDecoration(
                   labelText: 'Room Number',
                   hintText: 'e.g., B-201',
-                  border: OutlineInputBorder(),
                   prefixIcon: Icon(Icons.location_on),
                 ),
                 validator: (val) =>

@@ -10,9 +10,19 @@ Read `lib/core/core.dart` barrel export to see everything available:
 |---------|----------|-------|
 | `AppColors.hexToColor()` | `core/theme/app_colors.dart` | Convert hex string → Color |
 | `AppColors.colorToHex()` | `core/theme/app_colors.dart` | Convert Color → hex string |
-| `AppColors.cardDark` | `core/theme/app_colors.dart` | Card/nav bar background |
+| `AppColors.cardDark` | `core/theme/app_colors.dart` | Card/nav bar background (dark) |
 | `AppColors.liveGreen` | `core/theme/app_colors.dart` | "NOW" badge / live indicator |
 | `AppColors.navInactive` | `core/theme/app_colors.dart` | Inactive nav icon/label color |
+| `AppColors.cardSurface(ctx)` | `core/theme/app_colors.dart` | Theme-aware card background |
+| `AppColors.mutedText(ctx)` | `core/theme/app_colors.dart` | Theme-aware muted text color |
+| `AppColors.primaryText(ctx)` | `core/theme/app_colors.dart` | Theme-aware primary text color |
+| `AppColors.dividerColor(ctx)` | `core/theme/app_colors.dart` | Theme-aware divider color |
+| `AppColors.cardRadius` | `core/theme/app_colors.dart` | 20px — standard card border radius |
+| `AppColors.formRadius` | `core/theme/app_colors.dart` | 16px — standard form border radius |
+| `AppTextStyles.sectionHeader(ctx)` | `core/theme/app_text_styles.dart` | Uppercase section labels |
+| `AppTextStyles.labelUppercase(ctx)` | `core/theme/app_text_styles.dart` | Small uppercase tracking labels |
+| `AppTextStyles.cardTitle(ctx)` | `core/theme/app_text_styles.dart` | Bold card title |
+| `AppTextStyles.cardSubtitle(ctx)` | `core/theme/app_text_styles.dart` | Muted card subtitle |
 | `formatTime()` | `core/utils/time_utils.dart` | Minutes → "10:30 AM" |
 | `formatTimeOnly()` | `core/utils/time_utils.dart` | Minutes → "10:30" |
 | `formatAmPm()` | `core/utils/time_utils.dart` | Minutes → "AM"/"PM" |
@@ -40,10 +50,16 @@ Read `lib/core/core.dart` barrel export to see everything available:
 - `timeProvider` stream must `yield` immediately before entering periodic loop
 
 ## Theming & Colors
-- **Never hardcode colors** (`Colors.white`, `Color(0xFF222224)`) — use `AppColors.*` constants
+- **Never hardcode colors** (`Colors.white`, `Color(0xFF222224)`) — use `AppColors.*` constants or context-aware helpers
 - All course-specific colors come from `course.colorHex` via `AppColors.hexToColor()` — never derive from course code letters
-- Define shared text styles for recurring patterns (e.g., uppercase tracking labels)
+- Use `AppColors.cardSurface(context)` for card/container backgrounds (adapts to light/dark)
+- Use `AppColors.mutedText(context)` for secondary/muted text (adapts to light/dark)
+- Use `AppColors.dividerColor(context)` for dividers and separators
+- Use `theme.colorScheme.onSurface` for primary text instead of `Colors.white`
+- Use `theme.colorScheme.error` for destructive actions instead of `Colors.red`
+- Use `AppTextStyles.sectionHeader(context)` for section labels — never create ad-hoc uppercase styles
 - New color constants go in `AppColors` with semantic names
+- Border radii: `AppColors.cardRadius` (20px) for cards, `AppColors.cardRadius` for containers, `AppColors.formRadius` (16px) for form inputs
 
 ## Code Organization
 - Color utilities and constants are in `AppColors` (`core/theme/app_colors.dart`) — NOT a separate utils file

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_text_styles.dart';
 import '../providers/course_provider.dart';
 import 'course_add_page.dart';
 import 'course_detail_page.dart';
@@ -12,13 +13,12 @@ class CourseListPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final coursesAsync = ref.watch(coursesProvider);
+    final onSurface = Theme.of(context).colorScheme.onSurface;
+    final muted = AppColors.mutedText(context);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Courses',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
+        title: const Text('Courses'),
         actions: [
           IconButton(
             icon: const Icon(Icons.add_circle),
@@ -38,14 +38,17 @@ class CourseListPage extends ConsumerWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Icon(Icons.menu_book, size: 64, color: Colors.grey),
+                  Icon(Icons.menu_book, size: 64, color: muted),
                   const SizedBox(height: 16),
                   Text(
                     'No Courses Yet',
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                   const SizedBox(height: 8),
-                  const Text('Tap the + button to add your first course.'),
+                  Text(
+                    'Tap the + button to add your first course.',
+                    style: AppTextStyles.cardSubtitle(context),
+                  ),
                 ],
               ),
             );
@@ -66,10 +69,13 @@ class CourseListPage extends ConsumerWidget {
                   alignment: Alignment.centerRight,
                   padding: const EdgeInsets.only(right: 20),
                   decoration: BoxDecoration(
-                    color: Colors.red,
-                    borderRadius: BorderRadius.circular(12),
+                    color: Theme.of(context).colorScheme.error,
+                    borderRadius: BorderRadius.circular(AppColors.cardRadius),
                   ),
-                  child: const Icon(Icons.delete, color: Colors.white),
+                  child: Icon(
+                    Icons.delete,
+                    color: Theme.of(context).colorScheme.onError,
+                  ),
                 ),
                 confirmDismiss: (direction) async {
                   return await showDialog(
@@ -87,9 +93,11 @@ class CourseListPage extends ConsumerWidget {
                           ),
                           TextButton(
                             onPressed: () => Navigator.of(context).pop(true),
-                            child: const Text(
+                            child: Text(
                               'DELETE',
-                              style: TextStyle(color: Colors.red),
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.error,
+                              ),
                             ),
                           ),
                         ],
@@ -105,13 +113,13 @@ class CourseListPage extends ConsumerWidget {
                 },
                 child: Container(
                   decoration: BoxDecoration(
-                    color: AppColors.cardDark,
-                    borderRadius: BorderRadius.circular(24),
+                    color: AppColors.cardSurface(context),
+                    borderRadius: BorderRadius.circular(AppColors.cardRadius),
                   ),
                   child: Material(
                     color: Colors.transparent,
                     child: InkWell(
-                      borderRadius: BorderRadius.circular(24),
+                      borderRadius: BorderRadius.circular(AppColors.cardRadius),
                       onTap: () {
                         Navigator.push(
                           context,
@@ -159,7 +167,7 @@ class CourseListPage extends ConsumerWidget {
                                           .titleLarge
                                           ?.copyWith(
                                             fontWeight: FontWeight.bold,
-                                            color: Colors.white,
+                                            color: onSurface,
                                           ),
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
@@ -191,9 +199,7 @@ class CourseListPage extends ConsumerWidget {
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .labelMedium
-                                                ?.copyWith(
-                                                  color: Colors.grey[400],
-                                                ),
+                                                ?.copyWith(color: muted),
                                             maxLines: 1,
                                             overflow: TextOverflow.ellipsis,
                                           ),
@@ -210,7 +216,7 @@ class CourseListPage extends ConsumerWidget {
                               child: Center(
                                 child: Icon(
                                   Icons.chevron_right_rounded,
-                                  color: Colors.grey[500],
+                                  color: muted,
                                   size: 28,
                                 ),
                               ),

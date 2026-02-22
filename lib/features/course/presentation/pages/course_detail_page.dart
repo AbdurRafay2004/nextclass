@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/utils/time_utils.dart';
 import '../../../schedule/data/models/class_session.dart';
 import '../../../schedule/presentation/pages/session_add_page.dart';
@@ -36,7 +37,9 @@ class CourseDetailPage extends ConsumerWidget {
     showModalBottomSheet(
       context: context,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(AppColors.cardRadius),
+        ),
       ),
       builder: (bottomSheetContext) {
         return SafeArea(
@@ -76,10 +79,13 @@ class CourseDetailPage extends ConsumerWidget {
                 },
               ),
               ListTile(
-                leading: const Icon(Icons.delete, color: Colors.red),
-                title: const Text(
+                leading: Icon(
+                  Icons.delete,
+                  color: Theme.of(context).colorScheme.error,
+                ),
+                title: Text(
                   'Delete',
-                  style: TextStyle(color: Colors.red),
+                  style: TextStyle(color: Theme.of(context).colorScheme.error),
                 ),
                 onTap: () {
                   Navigator.pop(bottomSheetContext);
@@ -117,13 +123,16 @@ class CourseDetailPage extends ConsumerWidget {
                 if (context.mounted) {
                   ref.invalidate(sessionsByCourseProvider(course.uuid));
                   ref.invalidate(dayScheduleProvider);
-                  Navigator.pop(dialogContext); // Close dialog
+                  Navigator.pop(dialogContext);
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Session deleted')),
                   );
                 }
               },
-              child: const Text('Delete', style: TextStyle(color: Colors.red)),
+              child: Text(
+                'Delete',
+                style: TextStyle(color: Theme.of(context).colorScheme.error),
+              ),
             ),
           ],
         );
@@ -156,14 +165,17 @@ class CourseDetailPage extends ConsumerWidget {
                 if (context.mounted) {
                   ref.invalidate(coursesProvider);
                   ref.invalidate(dayScheduleProvider);
-                  Navigator.pop(dialogContext); // Close dialog
-                  Navigator.pop(context); // Go back to course list
+                  Navigator.pop(dialogContext);
+                  Navigator.pop(context);
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Course deleted')),
                   );
                 }
               },
-              child: const Text('Delete', style: TextStyle(color: Colors.red)),
+              child: Text(
+                'Delete',
+                style: TextStyle(color: Theme.of(context).colorScheme.error),
+              ),
             ),
           ],
         );
@@ -175,13 +187,12 @@ class CourseDetailPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final sessionsAsync = ref.watch(sessionsByCourseProvider(course.uuid));
     final courseColor = AppColors.hexToColor(course.colorHex);
+    final onSurface = Theme.of(context).colorScheme.onSurface;
+    final muted = AppColors.mutedText(context);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          course.code,
-          style: const TextStyle(fontWeight: FontWeight.bold),
-        ),
+        title: Text(course.code),
         actions: [
           IconButton(
             icon: const Icon(Icons.edit),
@@ -195,7 +206,10 @@ class CourseDetailPage extends ConsumerWidget {
             },
           ),
           IconButton(
-            icon: const Icon(Icons.delete, color: Colors.red),
+            icon: Icon(
+              Icons.delete,
+              color: Theme.of(context).colorScheme.error,
+            ),
             onPressed: () {
               _showCourseDeleteConfirmationDialog(context, ref);
             },
@@ -206,54 +220,93 @@ class CourseDetailPage extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Header Section
+            // Header Section — redesigned as a card with left color pill
             Container(
-              padding: const EdgeInsets.all(24),
-              color: courseColor.withValues(alpha: 0.1),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    course.name,
-                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Row(
-                    children: [
-                      const Icon(Icons.person, size: 20, color: Colors.grey),
-                      const SizedBox(width: 8),
-                      Text(
-                        course.facultyAcronym,
-                        style: Theme.of(
-                          context,
-                        ).textTheme.titleMedium?.copyWith(color: Colors.grey),
+              margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              decoration: BoxDecoration(
+                color: AppColors.cardSurface(context),
+                borderRadius: BorderRadius.circular(AppColors.cardRadius),
+              ),
+              child: IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    // Left color pill
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        left: 12.0,
+                        top: 12.0,
+                        bottom: 12.0,
                       ),
-                    ],
-                  ),
-                  const SizedBox(height: 24),
-                  Row(
-                    children: [
-                      Text(
-                        'Theme Color',
-                        style: Theme.of(context).textTheme.titleSmall,
-                      ),
-                      const SizedBox(width: 16),
-                      Container(
-                        width: 24,
-                        height: 24,
+                      child: Container(
+                        width: 14,
                         decoration: BoxDecoration(
                           color: courseColor,
-                          shape: BoxShape.circle,
+                          borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                    ],
-                  ),
-                ],
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              course.name,
+                              style: Theme.of(context).textTheme.headlineMedium
+                                  ?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                    color: onSurface,
+                                  ),
+                            ),
+                            const SizedBox(height: 12),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.person_outline,
+                                  size: 18,
+                                  color: muted,
+                                ),
+                                const SizedBox(width: 8),
+                                Text(
+                                  course.facultyAcronym,
+                                  style: Theme.of(context).textTheme.titleMedium
+                                      ?.copyWith(color: muted),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 16),
+                            Row(
+                              children: [
+                                Text(
+                                  'Theme Color',
+                                  style: TextStyle(
+                                    color: muted,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 13,
+                                  ),
+                                ),
+                                const SizedBox(width: 12),
+                                Container(
+                                  width: 24,
+                                  height: 24,
+                                  decoration: BoxDecoration(
+                                    color: courseColor,
+                                    shape: BoxShape.circle,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 16),
             // Sessions Section
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -261,10 +314,8 @@ class CourseDetailPage extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Class Sessions',
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+                    'CLASS SESSIONS',
+                    style: AppTextStyles.sectionHeader(context),
                   ),
                   TextButton.icon(
                     onPressed: () {
@@ -285,11 +336,11 @@ class CourseDetailPage extends ConsumerWidget {
             sessionsAsync.when(
               data: (sessions) {
                 if (sessions.isEmpty) {
-                  return const Padding(
-                    padding: EdgeInsets.all(24),
+                  return Padding(
+                    padding: const EdgeInsets.all(24),
                     child: Text(
                       'No sessions added yet.',
-                      style: TextStyle(color: Colors.grey),
+                      style: AppTextStyles.cardSubtitle(context),
                     ),
                   );
                 }
@@ -298,7 +349,7 @@ class CourseDetailPage extends ConsumerWidget {
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   padding: const EdgeInsets.symmetric(
-                    horizontal: 24,
+                    horizontal: 16,
                     vertical: 8,
                   ),
                   itemCount: sessions.length,
@@ -307,25 +358,30 @@ class CourseDetailPage extends ConsumerWidget {
                     final session = sessions[index];
                     return Container(
                       decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.surface,
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(
-                          color: Theme.of(
-                            context,
-                          ).colorScheme.outline.withValues(alpha: 0.5),
+                        color: AppColors.cardSurface(context),
+                        borderRadius: BorderRadius.circular(
+                          AppColors.cardRadius,
                         ),
                       ),
                       child: ListTile(
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 8,
+                        ),
                         title: Text(
                           '${_dayOfWeekToString(session.dayOfWeek)}s',
-                          style: const TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: onSurface,
+                          ),
                         ),
                         subtitle: Text(
                           '${formatTime(session.startTimeMinutes)} - ${formatTime(session.startTimeMinutes + session.durationMinutes)}\nRoom: ${session.room} · ${session.type.name.toUpperCase()}',
+                          style: TextStyle(color: muted),
                         ),
                         isThreeLine: true,
                         trailing: IconButton(
-                          icon: const Icon(Icons.more_vert),
+                          icon: Icon(Icons.more_vert, color: muted),
                           onPressed: () {
                             _showSessionOptionsBottomSheet(
                               context,

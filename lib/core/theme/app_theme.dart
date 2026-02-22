@@ -4,23 +4,52 @@ import 'package:google_fonts/google_fonts.dart';
 import 'app_colors.dart';
 
 class AppTheme {
-  static ThemeData get lightTheme {
-    return ThemeData(
-      useMaterial3: true,
-      brightness: Brightness.light,
-      colorScheme: const ColorScheme.light(
-        surface: AppColors.surfaceLight,
-        onSurface: AppColors.fgLight,
-        primary: AppColors.brandSkyBlue,
-        outline: AppColors.borderLight,
-      ),
-      scaffoldBackgroundColor: AppColors.bgLight,
-      textTheme: GoogleFonts.interTextTheme().apply(
-        bodyColor: AppColors.fgLight,
-        displayColor: AppColors.fgLight,
-      ),
-    );
-  }
+  // ── Shared component themes ─────────────────────────────────────────
+
+  static final AppBarTheme _appBarTheme = AppBarTheme(
+    elevation: 0,
+    scrolledUnderElevation: 0,
+    backgroundColor: Colors.transparent,
+    titleTextStyle: GoogleFonts.inter(
+      fontSize: 18,
+      fontWeight: FontWeight.bold,
+      color: AppColors.fgDark,
+    ),
+    iconTheme: const IconThemeData(color: AppColors.fgDark),
+  );
+
+  static final CardThemeData _cardTheme = CardThemeData(
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(AppColors.cardRadius),
+    ),
+    elevation: 0,
+  );
+
+  static final InputDecorationTheme _inputTheme = InputDecorationTheme(
+    filled: true,
+    fillColor: AppColors.surfaceDark,
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(AppColors.formRadius),
+      borderSide: const BorderSide(color: AppColors.borderDark),
+    ),
+    enabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(AppColors.formRadius),
+      borderSide: const BorderSide(color: AppColors.borderDark),
+    ),
+    focusedBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(AppColors.formRadius),
+      borderSide: const BorderSide(color: AppColors.brandSkyBlue, width: 2),
+    ),
+    contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+  );
+
+  static final DialogThemeData _dialogTheme = DialogThemeData(
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(AppColors.cardRadius),
+    ),
+  );
+
+  // ── Dark Theme (only theme) ─────────────────────────────────────────
 
   static ThemeData get darkTheme {
     return ThemeData(
@@ -36,6 +65,15 @@ class AppTheme {
       textTheme: GoogleFonts.interTextTheme(
         ThemeData.dark().textTheme,
       ).apply(bodyColor: AppColors.fgDark, displayColor: AppColors.fgDark),
+      appBarTheme: _appBarTheme,
+      cardTheme: _cardTheme,
+      inputDecorationTheme: _inputTheme,
+      dialogTheme: _dialogTheme,
+      dividerTheme: const DividerThemeData(
+        color: AppColors.borderDark,
+        thickness: 1,
+        space: 1,
+      ),
     );
   }
 }

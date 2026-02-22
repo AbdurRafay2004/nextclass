@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_text_styles.dart';
 import '../../data/models/course.dart';
 import '../providers/course_provider.dart';
 
@@ -79,10 +80,7 @@ class _CourseAddPageState extends ConsumerState<CourseAddPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          widget.courseToEdit != null ? 'Edit Course' : 'Add Course',
-          style: const TextStyle(fontWeight: FontWeight.bold),
-        ),
+        title: Text(widget.courseToEdit != null ? 'Edit Course' : 'Add Course'),
         actions: [
           TextButton(
             onPressed: _saveCourse,
@@ -101,10 +99,8 @@ class _CourseAddPageState extends ConsumerState<CourseAddPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Course Details',
-                style: Theme.of(
-                  context,
-                ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+                'COURSE DETAILS',
+                style: AppTextStyles.sectionHeader(context),
               ),
               const SizedBox(height: 16),
               TextFormField(
@@ -112,7 +108,6 @@ class _CourseAddPageState extends ConsumerState<CourseAddPage> {
                 decoration: const InputDecoration(
                   labelText: 'Course Name',
                   hintText: 'e.g., Computer Graphics',
-                  border: OutlineInputBorder(),
                 ),
                 validator: (val) =>
                     val == null || val.isEmpty ? 'Required' : null,
@@ -135,7 +130,6 @@ class _CourseAddPageState extends ConsumerState<CourseAddPage> {
                       decoration: const InputDecoration(
                         labelText: 'Course Code',
                         hintText: 'CSE-401',
-                        border: OutlineInputBorder(),
                       ),
                       validator: (val) =>
                           val == null || val.isEmpty ? 'Required' : null,
@@ -157,7 +151,6 @@ class _CourseAddPageState extends ConsumerState<CourseAddPage> {
                       decoration: const InputDecoration(
                         labelText: 'Faculty Acronym',
                         hintText: 'e.g., MMH',
-                        border: OutlineInputBorder(),
                       ),
                       validator: (val) =>
                           val == null || val.isEmpty ? 'Required' : null,
@@ -166,12 +159,7 @@ class _CourseAddPageState extends ConsumerState<CourseAddPage> {
                 ],
               ),
               const SizedBox(height: 32),
-              Text(
-                'Theme Color',
-                style: Theme.of(
-                  context,
-                ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
-              ),
+              Text('THEME COLOR', style: AppTextStyles.sectionHeader(context)),
               const SizedBox(height: 16),
               Wrap(
                 spacing: 12,

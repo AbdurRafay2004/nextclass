@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/providers/time_provider.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/utils/time_utils.dart';
 import '../providers/session_provider.dart';
 
@@ -13,7 +14,6 @@ class LiveStatusCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Calculate progress for the Live Card
     final nowAsync = ref.watch(timeProvider);
     final now = nowAsync.value ?? DateTime.now();
     final currentMinutes = now.hour * 60 + now.minute;
@@ -26,17 +26,17 @@ class LiveStatusCard extends ConsumerWidget {
     final clampedProgress = progress.clamp(0.0, 1.0);
     final remainingMinutes = endMinutes - currentMinutes;
 
-    // Use the course's user-chosen color from the model
     final courseColor = AppColors.hexToColor(item.course.colorHex);
+    final onSurface = Theme.of(context).colorScheme.onSurface;
+    final muted = AppColors.mutedText(context);
 
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
-        color: AppColors.cardDark,
-        borderRadius: BorderRadius.circular(24),
+        color: AppColors.cardSurface(context),
+        borderRadius: BorderRadius.circular(AppColors.cardRadius),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.2),
+            color: Colors.black.withValues(alpha: 0.1),
             spreadRadius: 0,
             blurRadius: 10,
             offset: const Offset(0, 4),
@@ -97,7 +97,7 @@ class LiveStatusCard extends ConsumerWidget {
                     Text(
                       item.course.code.toUpperCase(),
                       style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                        color: Colors.grey[600],
+                        color: muted,
                         fontWeight: FontWeight.w900,
                         letterSpacing: 1.5,
                       ),
@@ -109,7 +109,7 @@ class LiveStatusCard extends ConsumerWidget {
                       style: Theme.of(context).textTheme.headlineMedium
                           ?.copyWith(
                             fontWeight: FontWeight.w900,
-                            color: Colors.white,
+                            color: onSurface,
                             height: 1.1,
                             letterSpacing: -0.5,
                           ),
@@ -127,16 +127,13 @@ class LiveStatusCard extends ConsumerWidget {
                                   Icon(
                                     Icons.location_on_outlined,
                                     size: 14,
-                                    color: Colors.grey[600],
+                                    color: muted,
                                   ),
                                   const SizedBox(width: 4),
                                   Text(
                                     'ROOM',
-                                    style: TextStyle(
-                                      color: Colors.grey[600],
-                                      fontWeight: FontWeight.w900,
-                                      fontSize: 10,
-                                      letterSpacing: 1.0,
+                                    style: AppTextStyles.labelUppercase(
+                                      context,
                                     ),
                                   ),
                                 ],
@@ -146,7 +143,7 @@ class LiveStatusCard extends ConsumerWidget {
                                 item.session.room,
                                 style: Theme.of(context).textTheme.titleMedium
                                     ?.copyWith(
-                                      color: Colors.white,
+                                      color: onSurface,
                                       fontWeight: FontWeight.w900,
                                     ),
                               ),
@@ -162,16 +159,13 @@ class LiveStatusCard extends ConsumerWidget {
                                   Icon(
                                     Icons.person_outline,
                                     size: 14,
-                                    color: Colors.grey[600],
+                                    color: muted,
                                   ),
                                   const SizedBox(width: 4),
                                   Text(
                                     'FACULTY ACRONYM',
-                                    style: TextStyle(
-                                      color: Colors.grey[600],
-                                      fontWeight: FontWeight.w900,
-                                      fontSize: 10,
-                                      letterSpacing: 1.0,
+                                    style: AppTextStyles.labelUppercase(
+                                      context,
                                     ),
                                   ),
                                 ],
@@ -181,7 +175,7 @@ class LiveStatusCard extends ConsumerWidget {
                                 item.course.facultyAcronym,
                                 style: Theme.of(context).textTheme.titleMedium
                                     ?.copyWith(
-                                      color: Colors.white,
+                                      color: onSurface,
                                       fontWeight: FontWeight.w900,
                                     ),
                               ),
@@ -192,7 +186,10 @@ class LiveStatusCard extends ConsumerWidget {
                     ),
                     const SizedBox(height: 16),
                     // Divider
-                    Divider(color: Colors.grey[900], thickness: 1.0),
+                    Divider(
+                      color: AppColors.dividerColor(context),
+                      thickness: 1.0,
+                    ),
                     const SizedBox(height: 12),
                     // Time Remaining and Ends At
                     Row(
@@ -204,12 +201,7 @@ class LiveStatusCard extends ConsumerWidget {
                           children: [
                             Text(
                               'TIME REMAINING',
-                              style: TextStyle(
-                                color: Colors.grey[600],
-                                fontWeight: FontWeight.w900,
-                                fontSize: 10,
-                                letterSpacing: 1.0,
-                              ),
+                              style: AppTextStyles.labelUppercase(context),
                             ),
                             const SizedBox(height: 4),
                             Row(
@@ -222,7 +214,7 @@ class LiveStatusCard extends ConsumerWidget {
                                       .textTheme
                                       .headlineLarge
                                       ?.copyWith(
-                                        color: Colors.white,
+                                        color: onSurface,
                                         fontWeight: FontWeight.w900,
                                       ),
                                 ),
@@ -230,7 +222,7 @@ class LiveStatusCard extends ConsumerWidget {
                                 Text(
                                   'min',
                                   style: TextStyle(
-                                    color: Colors.grey[500],
+                                    color: muted,
                                     fontWeight: FontWeight.w900,
                                     fontSize: 14,
                                   ),
@@ -244,19 +236,14 @@ class LiveStatusCard extends ConsumerWidget {
                           children: [
                             Text(
                               'ENDS AT',
-                              style: TextStyle(
-                                color: Colors.grey[600],
-                                fontWeight: FontWeight.w900,
-                                fontSize: 10,
-                                letterSpacing: 1.0,
-                              ),
+                              style: AppTextStyles.labelUppercase(context),
                             ),
                             const SizedBox(height: 8),
                             Text(
                               formatTime(endMinutes),
                               style: Theme.of(context).textTheme.titleMedium
                                   ?.copyWith(
-                                    color: Colors.white,
+                                    color: onSurface,
                                     fontWeight: FontWeight.bold,
                                   ),
                             ),
@@ -269,10 +256,8 @@ class LiveStatusCard extends ConsumerWidget {
                     // Progress bar
                     LinearProgressIndicator(
                       value: clampedProgress,
-                      backgroundColor: Colors.grey[900],
-                      valueColor: const AlwaysStoppedAnimation<Color>(
-                        Colors.white,
-                      ),
+                      backgroundColor: AppColors.dividerColor(context),
+                      valueColor: AlwaysStoppedAnimation<Color>(onSurface),
                       minHeight: 4,
                       borderRadius: BorderRadius.circular(2),
                     ),

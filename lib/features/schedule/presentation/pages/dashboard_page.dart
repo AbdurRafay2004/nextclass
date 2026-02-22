@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/providers/time_provider.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/dynamic_nav_bar.dart';
 import '../../../course/presentation/pages/course_add_page.dart';
 import '../../../course/presentation/pages/course_list_page.dart';
@@ -37,7 +39,6 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
-      // App came back from background — refresh schedule immediately
       ref.invalidate(dayScheduleProvider);
     }
   }
@@ -60,11 +61,11 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
                   ).format(now).toUpperCase();
                   return Text(
                     '$formattedDate • $formattedTime',
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontWeight: FontWeight.w900,
                       fontSize: 10,
                       letterSpacing: 2.0,
-                      color: Colors.grey,
+                      color: AppColors.mutedText(context),
                     ),
                   );
                 },
@@ -113,22 +114,28 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
             final liveItem = data.liveItem;
             final upcomingItems = data.upcomingItems;
 
-            // If there's no live item and no upcoming items left today
             if (liveItem == null && upcomingItems.isEmpty) {
               return Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(Icons.weekend, size: 64, color: Colors.grey),
+                    Icon(
+                      Icons.weekend,
+                      size: 64,
+                      color: AppColors.mutedText(context),
+                    ),
                     const SizedBox(height: 16),
                     Text(
                       'All Caught Up',
                       style: Theme.of(context).textTheme.headlineSmall,
                     ),
                     const SizedBox(height: 8),
-                    const Text('No more classes scheduled for today.'),
+                    Text(
+                      'No more classes scheduled for today.',
+                      style: AppTextStyles.cardSubtitle(context),
+                    ),
                     const SizedBox(height: 24),
-                    ElevatedButton.icon(
+                    FilledButton.tonalIcon(
                       onPressed: () {
                         Navigator.push(
                           context,
@@ -147,9 +154,6 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
 
             return RefreshIndicator(
               onRefresh: () async {
-                // Only invalidate the schedule data — NOT timeProvider.
-                // Invalidating a StreamProvider restarts the stream from zero,
-                // which means a 30-second wait before the first emission.
                 ref.invalidate(dayScheduleProvider);
               },
               child: ListView(
@@ -163,11 +167,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
                     const SizedBox(height: 8),
                     Text(
                       'UP NEXT TODAY',
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.w900,
-                        letterSpacing: 2.0,
-                        color: Colors.grey[500],
-                      ),
+                      style: AppTextStyles.sectionHeader(context),
                     ),
                     const SizedBox(height: 16),
                     ...upcomingItems.map(

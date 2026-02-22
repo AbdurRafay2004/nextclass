@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'core/database/database_manager.dart';
 import 'core/theme/app_theme.dart';
 import 'features/schedule/presentation/pages/dashboard_page.dart';
-import 'features/settings/presentation/providers/settings_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,20 +19,17 @@ void main() async {
   );
 }
 
-class NextClassApp extends ConsumerWidget {
+class NextClassApp extends StatelessWidget {
   const NextClassApp({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    // We will later read ThemeMode from a Settings provider, but use system for now.
-    final settings = ref.watch(settingsProvider);
-
+  Widget build(BuildContext context) {
     return MaterialApp(
       title: 'NextClass',
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.lightTheme,
+      theme: AppTheme.darkTheme,
       darkTheme: AppTheme.darkTheme,
-      themeMode: settings.themeMode,
+      themeMode: ThemeMode.dark,
       home: const DashboardPage(),
     );
   }

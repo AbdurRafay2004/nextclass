@@ -14,15 +14,17 @@ class DynamicNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final activeColor = Theme.of(context).colorScheme.onSurface;
+
     return Container(
       margin: const EdgeInsets.only(bottom: 24, left: 24, right: 24),
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
       decoration: BoxDecoration(
-        color: AppColors.cardDark,
+        color: AppColors.cardSurface(context),
         borderRadius: BorderRadius.circular(32),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.5),
+            color: Colors.black.withValues(alpha: 0.25),
             blurRadius: 20,
             offset: const Offset(0, 10),
           ),
@@ -36,18 +38,21 @@ class DynamicNavBar extends StatelessWidget {
             label: 'FOCUS',
             isSelected: currentIndex == 0,
             onTap: () => onTap(0),
+            activeColor: activeColor,
           ),
           _NavBarItem(
             icon: Icons.view_day,
             label: 'COURSES',
             isSelected: currentIndex == 1,
             onTap: () => onTap(1),
+            activeColor: activeColor,
           ),
           _NavBarItem(
             icon: Icons.person,
             label: 'SETTINGS',
             isSelected: currentIndex == 2,
             onTap: () => onTap(2),
+            activeColor: activeColor,
           ),
         ],
       ),
@@ -60,12 +65,14 @@ class _NavBarItem extends StatelessWidget {
   final String label;
   final bool isSelected;
   final VoidCallback onTap;
+  final Color activeColor;
 
   const _NavBarItem({
     required this.icon,
     required this.label,
     required this.isSelected,
     required this.onTap,
+    required this.activeColor,
   });
 
   @override
@@ -82,18 +89,17 @@ class _NavBarItem extends StatelessWidget {
           children: [
             Icon(
               icon,
-              size: 24, // Slightly larger icon to match reference
-              color: isSelected ? Colors.white : AppColors.navInactive,
+              size: 24,
+              color: isSelected ? activeColor : AppColors.navInactive,
             ),
             const SizedBox(height: 6),
             Text(
               label,
               style: TextStyle(
-                color: isSelected ? Colors.white : AppColors.navInactive,
+                color: isSelected ? activeColor : AppColors.navInactive,
                 fontWeight: FontWeight.w900,
-                fontSize: 9, // Slightly larger text
-                letterSpacing:
-                    2.0, // Increased letter spacing to match reference
+                fontSize: 9,
+                letterSpacing: 2.0,
               ),
             ),
           ],

@@ -12,11 +12,13 @@ class TimelineEventCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final courseColor = AppColors.hexToColor(item.course.colorHex);
+    final onSurface = Theme.of(context).colorScheme.onSurface;
+    final muted = AppColors.mutedText(context);
 
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.cardDark,
-        borderRadius: BorderRadius.circular(24),
+        color: AppColors.cardSurface(context),
+        borderRadius: BorderRadius.circular(AppColors.cardRadius),
       ),
       child: IntrinsicHeight(
         child: Row(
@@ -53,14 +55,14 @@ class TimelineEventCard extends StatelessWidget {
                     formatTimeOnly(item.session.startTimeMinutes),
                     style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                       fontWeight: FontWeight.w900,
-                      color: Colors.white,
+                      color: onSurface,
                     ),
                   ),
                   Text(
                     formatAmPm(item.session.startTimeMinutes),
                     style: Theme.of(context).textTheme.labelSmall?.copyWith(
                       fontWeight: FontWeight.bold,
-                      color: Colors.grey[500],
+                      color: muted,
                       letterSpacing: 1.2,
                     ),
                   ),
@@ -73,7 +75,7 @@ class TimelineEventCard extends StatelessWidget {
                       Text(
                         item.session.room.toUpperCase(),
                         style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                          color: Colors.grey[400],
+                          color: muted,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -88,7 +90,7 @@ class TimelineEventCard extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 24),
               child: Container(
                 width: 1,
-                color: Colors.white.withValues(alpha: 0.1),
+                color: AppColors.dividerColor(context),
               ),
             ),
 
@@ -109,7 +111,7 @@ class TimelineEventCard extends StatelessWidget {
                       item.course.name,
                       style: Theme.of(context).textTheme.titleLarge?.copyWith(
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: onSurface,
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -135,8 +137,9 @@ class TimelineEventCard extends StatelessWidget {
                         Expanded(
                           child: Text(
                             item.course.facultyAcronym,
-                            style: Theme.of(context).textTheme.labelMedium
-                                ?.copyWith(color: Colors.grey[400]),
+                            style: Theme.of(
+                              context,
+                            ).textTheme.labelMedium?.copyWith(color: muted),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -152,11 +155,7 @@ class TimelineEventCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(right: 20),
               child: Center(
-                child: Icon(
-                  Icons.edit_note_rounded,
-                  color: Colors.grey[500],
-                  size: 28,
-                ),
+                child: Icon(Icons.edit_note_rounded, color: muted, size: 28),
               ),
             ),
           ],
