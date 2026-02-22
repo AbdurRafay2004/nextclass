@@ -23,6 +23,8 @@ Read `lib/core/core.dart` barrel export to see everything available:
 | `AppTextStyles.labelUppercase(ctx)` | `core/theme/app_text_styles.dart` | Small uppercase tracking labels |
 | `AppTextStyles.cardTitle(ctx)` | `core/theme/app_text_styles.dart` | Bold card title |
 | `AppTextStyles.cardSubtitle(ctx)` | `core/theme/app_text_styles.dart` | Muted card subtitle |
+| `AppFonts.style(...)` | `core/theme/app_fonts.dart` | Centralized font — replaces `GoogleFonts.inter()` |
+| `AppFonts.textTheme(...)` | `core/theme/app_fonts.dart` | Centralized font text theme — used in AppTheme |
 | `formatTime()` | `core/utils/time_utils.dart` | Minutes → "10:30 AM" |
 | `formatTimeOnly()` | `core/utils/time_utils.dart` | Minutes → "10:30" |
 | `formatAmPm()` | `core/utils/time_utils.dart` | Minutes → "AM"/"PM" |

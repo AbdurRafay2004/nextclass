@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
 import 'app_colors.dart';
+import 'app_fonts.dart';
 
 /// Shared text styles for consistent typography across all pages.
 class AppTextStyles {
-  /// Uppercase section headers (e.g., "UP NEXT TODAY", "APPEARANCE", "CLASS SESSIONS").
+  /// Uppercase section headers (e.g., "UP NEXT TODAY", "CLASS SESSIONS").
   static TextStyle sectionHeader(BuildContext context) {
-    return TextStyle(
+    return AppFonts.style(
       fontSize: 12,
       fontWeight: FontWeight.w900,
       letterSpacing: 1.5,
@@ -14,9 +15,9 @@ class AppTextStyles {
     );
   }
 
-  /// Small uppercase tracking labels (e.g., "ROOM", "FACULTY ACRONYM", "TIME REMAINING").
+  /// Small uppercase tracking labels (e.g., "ROOM", "FACULTY ACRONYM").
   static TextStyle labelUppercase(BuildContext context) {
-    return TextStyle(
+    return AppFonts.style(
       fontSize: 10,
       fontWeight: FontWeight.w900,
       letterSpacing: 1.0,
@@ -26,7 +27,8 @@ class AppTextStyles {
 
   /// Bold card/tile title.
   static TextStyle cardTitle(BuildContext context) {
-    return Theme.of(context).textTheme.titleLarge!.copyWith(
+    return AppFonts.style(
+      fontSize: 22,
       fontWeight: FontWeight.bold,
       color: Theme.of(context).colorScheme.onSurface,
     );
@@ -34,8 +36,6 @@ class AppTextStyles {
 
   /// Muted card subtitle / secondary info.
   static TextStyle cardSubtitle(BuildContext context) {
-    return Theme.of(
-      context,
-    ).textTheme.labelMedium!.copyWith(color: AppColors.mutedText(context));
+    return AppFonts.style(fontSize: 12, color: AppColors.mutedText(context));
   }
 }

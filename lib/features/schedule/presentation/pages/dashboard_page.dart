@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 
 import '../../../../core/providers/time_provider.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_fonts.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/widgets/dynamic_nav_bar.dart';
 import '../../../course/presentation/pages/course_add_page.dart';
@@ -61,7 +62,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
                   ).format(now).toUpperCase();
                   return Text(
                     '$formattedDate • $formattedTime',
-                    style: TextStyle(
+                    style: AppFonts.style(
                       fontWeight: FontWeight.w900,
                       fontSize: 10,
                       letterSpacing: 2.0,

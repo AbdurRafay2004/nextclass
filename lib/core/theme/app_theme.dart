@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import 'app_colors.dart';
+import 'app_fonts.dart';
 
 class AppTheme {
   // ── Shared component themes ─────────────────────────────────────────
@@ -10,7 +10,7 @@ class AppTheme {
     elevation: 0,
     scrolledUnderElevation: 0,
     backgroundColor: Colors.transparent,
-    titleTextStyle: GoogleFonts.inter(
+    titleTextStyle: AppFonts.style(
       fontSize: 18,
       fontWeight: FontWeight.bold,
       color: AppColors.fgDark,
@@ -62,7 +62,7 @@ class AppTheme {
         outline: AppColors.borderDark,
       ),
       scaffoldBackgroundColor: AppColors.bgDark,
-      textTheme: GoogleFonts.interTextTheme(
+      textTheme: AppFonts.textTheme(
         ThemeData.dark().textTheme,
       ).apply(bodyColor: AppColors.fgDark, displayColor: AppColors.fgDark),
       appBarTheme: _appBarTheme,

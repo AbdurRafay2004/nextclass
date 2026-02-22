@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_fonts.dart';
 import '../../../../core/theme/app_text_styles.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -25,9 +26,9 @@ class SettingsPage extends StatelessWidget {
             child: Column(
               children: [
                 ListTile(
-                  title: const Text(
+                  title: Text(
                     'Time Format',
-                    style: TextStyle(fontWeight: FontWeight.w600),
+                    style: AppFonts.style(fontWeight: FontWeight.w600),
                   ),
                   leading: Container(
                     padding: const EdgeInsets.all(8),
@@ -44,7 +45,7 @@ class SettingsPage extends StatelessWidget {
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text('12-Hour', style: TextStyle(color: muted)),
+                      Text('12-Hour', style: AppFonts.style(color: muted)),
                       const SizedBox(width: 8),
                       Icon(Icons.chevron_right, color: muted),
                     ],
@@ -65,9 +66,9 @@ class SettingsPage extends StatelessWidget {
             child: Column(
               children: [
                 ListTile(
-                  title: const Text(
+                  title: Text(
                     'About',
-                    style: TextStyle(fontWeight: FontWeight.w600),
+                    style: AppFonts.style(fontWeight: FontWeight.w600),
                   ),
                   leading: Container(
                     padding: const EdgeInsets.all(8),
@@ -89,7 +90,7 @@ class SettingsPage extends StatelessWidget {
           Center(
             child: Text(
               'Version 2.0.0 (beta)',
-              style: TextStyle(color: muted, fontSize: 12),
+              style: AppFonts.style(color: muted, fontSize: 12),
             ),
           ),
           const SizedBox(height: 24),

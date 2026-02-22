@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_fonts.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../providers/course_provider.dart';
 import 'course_add_page.dart';
@@ -95,7 +96,7 @@ class CourseListPage extends ConsumerWidget {
                             onPressed: () => Navigator.of(context).pop(true),
                             child: Text(
                               'DELETE',
-                              style: TextStyle(
+                              style: AppFonts.style(
                                 color: Theme.of(context).colorScheme.error,
                               ),
                             ),
