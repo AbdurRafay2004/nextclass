@@ -71,9 +71,6 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
                   );
                 },
               ),
-              actions: [
-                IconButton(icon: const Icon(Icons.person), onPressed: () {}),
-              ],
             )
           : null,
       body: Stack(

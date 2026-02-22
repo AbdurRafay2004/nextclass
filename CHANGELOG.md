@@ -1,7 +1,7 @@
 # Changelog
 
 ## Current Status
-✅ Phase 16 Complete: Removed light theme and notification feature (dark-only, v2.0.0)
+✅ Phase 17 Complete: Removed human icon from Focus page AppBar
 
 ## ChangeLog
 - **2026-02-21**: Analyzed NextClass design workflows. Selected Flutter, Riverpod, and Isar tech stack. Bootstrapped clean architecture plan.
@@ -54,6 +54,8 @@
 - **2026-02-23**: Centralized font configuration into `AppFonts` class (`core/theme/app_fonts.dart`). All `GoogleFonts.inter()` calls across 9 files replaced with `AppFonts.style()`. To change the app font, update the two methods in `AppFonts` — one place, whole-app change.
 
 ## Immediate Next Steps
+- **2026-02-23**: Removed the person icon from the Dashboard (FOCUS) page `AppBar` actions to simplify the UI, as requested by the user.
+
 1. Test local notifications scheduling.
 2. Implement Class Session Conflict detection.
 3. Visual QA: run the app in both light/dark mode and verify all pages.
