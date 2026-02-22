@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../theme/app_colors.dart';
-import '../theme/app_fonts.dart';
+import '../theme/app_text_styles.dart';
 
 class DynamicNavBar extends StatelessWidget {
   final int currentIndex;
@@ -96,11 +96,8 @@ class _NavBarItem extends StatelessWidget {
             const SizedBox(height: 6),
             Text(
               label,
-              style: AppFonts.style(
+              style: AppTextStyles.navLabel(
                 color: isSelected ? activeColor : AppColors.navInactive,
-                fontWeight: FontWeight.w900,
-                fontSize: 9,
-                letterSpacing: 2.0,
               ),
             ),
           ],

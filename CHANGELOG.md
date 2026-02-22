@@ -55,6 +55,8 @@
 
 ## Immediate Next Steps
 - **2026-02-23**: Removed the person icon from the Dashboard (FOCUS) page `AppBar` actions to simplify the UI, as requested by the user.
+- **2026-02-23**: Switched app font from Inter to **Bricolage Grotesque** (variable axes: weight 200–800, width 75–100). Updated `AppFonts` (2-file change thanks to centralization). Tuned `AppTextStyles` weights for Bricolage's axis range.
+- **2026-02-23**: Fully centralized all text styles into `AppTextStyles` (16 named styles). Removed every inline `AppFonts.style()` call from all 8 page/widget files. All typography is now editable from one file (`app_text_styles.dart`).
 
 1. Test local notifications scheduling.
 2. Implement Class Session Conflict detection.

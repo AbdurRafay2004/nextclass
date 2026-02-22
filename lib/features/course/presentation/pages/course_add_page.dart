@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/theme/app_colors.dart';
-import '../../../../core/theme/app_fonts.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../data/models/course.dart';
 import '../providers/course_provider.dart';
@@ -85,10 +84,7 @@ class _CourseAddPageState extends ConsumerState<CourseAddPage> {
         actions: [
           TextButton(
             onPressed: _saveCourse,
-            child: Text(
-              'Save',
-              style: AppFonts.style(fontWeight: FontWeight.bold, fontSize: 16),
-            ),
+            child: Text('Save', style: AppTextStyles.actionButton()),
           ),
         ],
       ),

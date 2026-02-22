@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/theme/app_colors.dart';
-import '../../../../core/theme/app_fonts.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/utils/time_utils.dart';
 import '../../../schedule/data/models/class_session.dart';
@@ -86,9 +85,7 @@ class CourseDetailPage extends ConsumerWidget {
                 ),
                 title: Text(
                   'Delete',
-                  style: AppFonts.style(
-                    color: Theme.of(context).colorScheme.error,
-                  ),
+                  style: AppTextStyles.destructiveAction(context),
                 ),
                 onTap: () {
                   Navigator.pop(bottomSheetContext);
@@ -134,9 +131,7 @@ class CourseDetailPage extends ConsumerWidget {
               },
               child: Text(
                 'Delete',
-                style: AppFonts.style(
-                  color: Theme.of(context).colorScheme.error,
-                ),
+                style: AppTextStyles.destructiveAction(context),
               ),
             ),
           ],
@@ -179,9 +174,7 @@ class CourseDetailPage extends ConsumerWidget {
               },
               child: Text(
                 'Delete',
-                style: AppFonts.style(
-                  color: Theme.of(context).colorScheme.error,
-                ),
+                style: AppTextStyles.destructiveAction(context),
               ),
             ),
           ],
@@ -288,11 +281,7 @@ class CourseDetailPage extends ConsumerWidget {
                               children: [
                                 Text(
                                   'Theme Color',
-                                  style: AppFonts.style(
-                                    color: muted,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 13,
-                                  ),
+                                  style: AppTextStyles.infoLabel(context),
                                 ),
                                 const SizedBox(width: 12),
                                 Container(
@@ -377,14 +366,11 @@ class CourseDetailPage extends ConsumerWidget {
                         ),
                         title: Text(
                           '${_dayOfWeekToString(session.dayOfWeek)}s',
-                          style: AppFonts.style(
-                            fontWeight: FontWeight.bold,
-                            color: onSurface,
-                          ),
+                          style: AppTextStyles.sessionDayTitle(context),
                         ),
                         subtitle: Text(
                           '${formatTime(session.startTimeMinutes)} - ${formatTime(session.startTimeMinutes + session.durationMinutes)}\nRoom: ${session.room} · ${session.type.name.toUpperCase()}',
-                          style: AppFonts.style(color: muted),
+                          style: AppTextStyles.sessionDetail(context),
                         ),
                         isThreeLine: true,
                         trailing: IconButton(

@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/providers/time_provider.dart';
 import '../../../../core/theme/app_colors.dart';
-import '../../../../core/theme/app_fonts.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/utils/time_utils.dart';
 import '../providers/session_provider.dart';
@@ -85,12 +84,7 @@ class LiveStatusCard extends ConsumerWidget {
                       ),
                       child: Text(
                         'NOW',
-                        style: AppFonts.style(
-                          color: AppColors.liveGreen,
-                          fontWeight: FontWeight.w900,
-                          fontSize: 8,
-                          letterSpacing: 1.5,
-                        ),
+                        style: AppTextStyles.badge(AppColors.liveGreen),
                       ),
                     ),
                     const SizedBox(height: 8),
@@ -222,11 +216,7 @@ class LiveStatusCard extends ConsumerWidget {
                                 const SizedBox(width: 4),
                                 Text(
                                   'min',
-                                  style: AppFonts.style(
-                                    color: muted,
-                                    fontWeight: FontWeight.w900,
-                                    fontSize: 14,
-                                  ),
+                                  style: AppTextStyles.unitSuffix(context),
                                 ),
                               ],
                             ),
