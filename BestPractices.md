@@ -1,6 +1,6 @@
 # Best Practices — NextClass
 
-> **AI Pre-Flight:** Read this file AND `CHANGELOG.md` before making ANY code changes.
+> **AI Pre-Flight:** Read this file AND `CHANGELOG.md` and `README.md` before making ANY code changes.
 
 ## Existing Shared Utilities (DO NOT DUPLICATE)
 
@@ -65,6 +65,10 @@ Read `lib/core/core.dart` barrel export to see everything available:
 - Always dispose `TextEditingController` instances in `dispose()`
 - Use `TextInputFormatter` for formatting constraints (e.g., uppercase)
 - Confirm destructive actions with dialogs before executing
+
+## Project Structure
+- For Android-only builds, keep only the `android` platform folder. Unused platform folders (`ios`, `web`, etc.) should be removed to keep the project lean.
+- Use `flutter create --platforms android .` if you ever need to reset or restrict platform support.
 
 ## After Making Changes
 - Run `flutter analyze --no-pub` — must show zero issues

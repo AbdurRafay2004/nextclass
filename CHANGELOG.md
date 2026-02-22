@@ -1,7 +1,7 @@
 # Changelog
 
 ## Current Status
-✅ Phase 13 Complete: Performance fixes, strict lints, barrel exports, app lifecycle handling
+✅ Phase 14 Complete: Platform reduction (Android-only) and cleanup
 
 ## ChangeLog
 - **2026-02-21**: Analyzed NextClass design workflows. Selected Flutter, Riverpod, and Isar tech stack. Bootstrapped clean architecture plan.
@@ -44,6 +44,7 @@
 - **2026-02-23**: Added `WidgetsBindingObserver` to `DashboardPage` with `didChangeAppLifecycleState`. When the app resumes from background, `dayScheduleProvider` is invalidated to immediately recompute the schedule.
 - **2026-02-23**: Tightened `analysis_options.yaml` with 20+ strict lint rules. `unused_import` and `duplicate_import` are now treated as errors. Added rules for type safety, code quality, and style consistency.
 - **2026-02-23**: Created barrel export files: `core/core.dart`, `core/theme/theme.dart`, `core/utils/utils.dart` for discoverability of shared utilities.
+- **2026-02-23**: Performed project cleanup by identifying and planning the removal of unused target platforms (`ios`, `macos`, `linux`, `windows`, `web`). NextClass is now explicitly configured as an Android-only application to reduce noise and maintain a lean project structure.
 
 ## Immediate Next Steps
 1. Test local notifications scheduling.
