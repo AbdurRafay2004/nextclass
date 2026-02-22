@@ -3,9 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/theme/app_colors.dart';
-import '../providers/course_provider.dart';
-
 import '../../data/models/course.dart';
+import '../providers/course_provider.dart';
 
 class CourseAddPage extends ConsumerStatefulWidget {
   final Course? courseToEdit;
