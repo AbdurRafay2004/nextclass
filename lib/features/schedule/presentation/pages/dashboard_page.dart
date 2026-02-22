@@ -18,8 +18,29 @@ class DashboardPage extends ConsumerStatefulWidget {
   ConsumerState<DashboardPage> createState() => _DashboardPageState();
 }
 
-class _DashboardPageState extends ConsumerState<DashboardPage> {
+class _DashboardPageState extends ConsumerState<DashboardPage>
+    with WidgetsBindingObserver {
   int _currentIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      // App came back from background — refresh schedule immediately
+      ref.invalidate(dayScheduleProvider);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

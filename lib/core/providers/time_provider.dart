@@ -1,8 +1,14 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// A stream that emits the current system time every 30 seconds.
-/// The UI only displays minute-level granularity (h:mm), so polling
-/// every 30 seconds is sufficient to stay in sync while saving battery.
+/// Emits the current system time immediately on subscribe, then every
+/// 30 seconds. The immediate emission is critical — without it the
+/// dashboard blocks for up to 30 s on app launch because
+/// [Stream.periodic] waits one full interval before its first tick.
 final timeProvider = StreamProvider<DateTime>((ref) {
-  return Stream.periodic(const Duration(seconds: 30), (_) => DateTime.now());
+  return _timeStream();
 });
+
+Stream<DateTime> _timeStream() async* {
+  yield DateTime.now(); // ← Instant first emission
+  yield* Stream.periodic(const Duration(seconds: 30), (_) => DateTime.now());
+}
