@@ -1,7 +1,7 @@
 # Changelog
 
 ## Current Status
-✅ Phase 20 Complete: Fully centralized design system (font, colors, text styles)
+✅ Phase 21 Complete: Focus page shows upcoming class days
 
 ## ChangeLog
 - **2026-02-21**: Analyzed NextClass design workflows. Selected Flutter, Riverpod, and Isar tech stack. Bootstrapped clean architecture plan.
@@ -60,6 +60,7 @@
 - **2026-02-23**: Updated bottom navigation inactive icon color to `#9BA1A6` for better visibility and consistency.
 - **2026-02-23**: Removed unused/stub "Time Format" preference from Settings page UI to clean up redundant features.
 - **2026-02-23**: Configured and generated a custom Android app launcher icon from `assets/icon.png` using the `flutter_launcher_icons` package.
+- **2026-02-23**: Focus page now shows upcoming class days beyond today. The dashboard fetches the next 6 days of sessions and displays them grouped under day-name headers (e.g., "TOMORROW", "WEDNESDAY"). Empty state updated to "No classes scheduled this week." Added prominent "No classes today" message when today is empty but future classes exist. Added centralized `emptyStateMessage` text style for consistent empty state typography.
 
 ## Immediate Next Steps
 1. Implement Class Session Conflict detection.

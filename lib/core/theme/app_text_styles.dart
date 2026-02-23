@@ -192,4 +192,17 @@ class AppTextStyles {
       fontSize: 12,
     );
   }
+
+  /// Style for empty state messages (e.g., "No classes today").
+  static TextStyle emptyStateMessage(
+    BuildContext context, {
+    String? fontFamily,
+  }) {
+    return AppFonts.style(
+      fontFamily: fontFamily,
+      fontSize: 16,
+      fontWeight: FontWeight.w500,
+      color: AppColors.mutedText(context),
+    );
+  }
 }

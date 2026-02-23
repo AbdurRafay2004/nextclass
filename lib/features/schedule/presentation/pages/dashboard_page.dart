@@ -102,8 +102,11 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
           data: (data) {
             final liveItem = data.liveItem;
             final upcomingItems = data.upcomingItems;
+            final upcomingDays = data.upcomingDays;
 
-            if (liveItem == null && upcomingItems.isEmpty) {
+            if (liveItem == null &&
+                upcomingItems.isEmpty &&
+                upcomingDays.isEmpty) {
               return Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -120,8 +123,8 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'No more classes scheduled for today.',
-                      style: AppTextStyles.cardSubtitle(context),
+                      'No classes scheduled this week.',
+                      style: AppTextStyles.emptyStateMessage(context),
                     ),
                     const SizedBox(height: 24),
                     FilledButton.tonalIcon(
@@ -152,6 +155,17 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
                     LiveStatusCard(item: liveItem),
                     const SizedBox(height: 16),
                   ],
+                  if (liveItem == null && upcomingItems.isEmpty) ...[
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 24.0),
+                      child: Center(
+                        child: Text(
+                          'No classes today',
+                          style: AppTextStyles.emptyStateMessage(context),
+                        ),
+                      ),
+                    ),
+                  ],
                   if (upcomingItems.isNotEmpty) ...[
                     const SizedBox(height: 8),
                     Text(
@@ -160,6 +174,21 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
                     ),
                     const SizedBox(height: 16),
                     ...upcomingItems.map(
+                      (item) => Padding(
+                        padding: const EdgeInsets.only(bottom: 16.0),
+                        child: TimelineEventCard(item: item),
+                      ),
+                    ),
+                  ],
+                  // Upcoming days beyond today
+                  for (final day in upcomingDays) ...[
+                    const SizedBox(height: 8),
+                    Text(
+                      day.dayLabel.toUpperCase(),
+                      style: AppTextStyles.sectionHeader(context),
+                    ),
+                    const SizedBox(height: 16),
+                    ...day.items.map(
                       (item) => Padding(
                         padding: const EdgeInsets.only(bottom: 16.0),
                         child: TimelineEventCard(item: item),

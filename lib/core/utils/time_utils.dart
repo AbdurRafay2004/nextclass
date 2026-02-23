@@ -38,3 +38,22 @@ String formatAmPm(int minutesSinceMidnight) {
   );
   return DateFormat('a').format(time);
 }
+
+/// Returns a human-readable day label relative to [currentWeekday].
+/// "Tomorrow" if [targetWeekday] is the next day, otherwise the full
+/// day name (e.g. "Wednesday").
+String dayLabel(int currentWeekday, int targetWeekday) {
+  final tomorrow = (currentWeekday % 7) + 1;
+  if (targetWeekday == tomorrow) return 'Tomorrow';
+
+  const dayNames = {
+    1: 'Monday',
+    2: 'Tuesday',
+    3: 'Wednesday',
+    4: 'Thursday',
+    5: 'Friday',
+    6: 'Saturday',
+    7: 'Sunday',
+  };
+  return dayNames[targetWeekday] ?? 'Day $targetWeekday';
+}

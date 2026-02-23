@@ -3,6 +3,7 @@ import 'package:isar/isar.dart';
 
 import '../../../../core/database/database_manager.dart';
 import '../../../../core/providers/time_provider.dart';
+import '../../../../core/utils/time_utils.dart';
 import '../../../course/data/models/course.dart';
 import '../../data/models/class_session.dart';
 
@@ -135,11 +136,15 @@ final sessionControllerProvider = Provider<SessionController>((ref) {
   return SessionController(isar: isar);
 });
 
-// A computed provider that yields the current live class and upcoming classes
-// based on the realtime clock.
+// Represents one future day's schedule with a readable label.
+typedef UpcomingDay = ({String dayLabel, List<ScheduleItem> items});
+
+// A computed provider that yields the current live class, upcoming classes
+// today, and upcoming days' schedules based on the realtime clock.
 typedef DashboardSchedule = ({
   ScheduleItem? liveItem,
   List<ScheduleItem> upcomingItems,
+  List<UpcomingDay> upcomingDays,
 });
 
 final dashboardScheduleProvider = Provider<AsyncValue<DashboardSchedule>>((
@@ -178,5 +183,26 @@ final dashboardScheduleProvider = Provider<AsyncValue<DashboardSchedule>>((
     return currentMinutes < endMinutes;
   }).toList();
 
-  return AsyncValue.data((liveItem: liveItem, upcomingItems: upcomingItems));
+  // Fetch the next 6 days' schedules
+  final List<UpcomingDay> upcomingDays = [];
+  for (var offset = 1; offset <= 6; offset++) {
+    final targetDay = ((currentDay - 1 + offset) % 7) + 1;
+    final dayAsync = ref.watch(dayScheduleProvider(targetDay));
+    if (dayAsync.isLoading) return const AsyncValue.loading();
+    if (dayAsync.hasError) continue;
+
+    final dayItems = dayAsync.value ?? [];
+    if (dayItems.isNotEmpty) {
+      upcomingDays.add((
+        dayLabel: dayLabel(currentDay, targetDay),
+        items: dayItems,
+      ));
+    }
+  }
+
+  return AsyncValue.data((
+    liveItem: liveItem,
+    upcomingItems: upcomingItems,
+    upcomingDays: upcomingDays,
+  ));
 });
