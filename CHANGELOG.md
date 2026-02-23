@@ -59,6 +59,7 @@
 - **2026-02-23**: Added persistent dynamic font selection feature matching user preference. Users can now choose from a curated list of high-quality UI fonts in the Settings page, and the selection is saved across sessions using `shared_preferences`.
 - **2026-02-23**: Updated bottom navigation inactive icon color to `#9BA1A6` for better visibility and consistency.
 - **2026-02-23**: Removed unused/stub "Time Format" preference from Settings page UI to clean up redundant features.
+- **2026-02-23**: Configured and generated a custom Android app launcher icon from `assets/icon.png` using the `flutter_launcher_icons` package.
 
 ## Immediate Next Steps
 1. Implement Class Session Conflict detection.

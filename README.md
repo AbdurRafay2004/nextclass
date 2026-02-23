@@ -58,5 +58,9 @@ To run the project locally, ensure you have the Flutter SDK installed.
     ```bash
     flutter run
     ```
+4.  **Generate App Icon:**
+    ```bash
+    dart run flutter_launcher_icons
+    ```
 
 For detailed progress, refer to [CHANGELOG.md](file:///y:/Antigravity%20workspace/NextClass/nextclass/CHANGELOG.md).

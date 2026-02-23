@@ -98,7 +98,7 @@ class SettingsPage extends ConsumerWidget {
           const SizedBox(height: 32),
           Center(
             child: Text(
-              'Version 2.3.1 (beta)',
+              'Version 3.4.1 (beta)',
               style: AppTextStyles.versionText(context),
             ),
           ),
