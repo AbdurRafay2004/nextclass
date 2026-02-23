@@ -33,12 +33,12 @@ class SettingsPage extends ConsumerWidget {
                   leading: Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: AppColors.brandSkyBlue.withValues(alpha: 0.15),
+                      color: AppColors.mutedDark.withValues(alpha: 0.15),
                       shape: BoxShape.circle,
                     ),
                     child: const Icon(
                       Icons.font_download,
-                      color: AppColors.brandSkyBlue,
+                      color: AppColors.mutedDark,
                       size: 20,
                     ),
                   ),
@@ -80,12 +80,14 @@ class SettingsPage extends ConsumerWidget {
                   leading: Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: AppColors.mutedText(
-                        context,
-                      ).withValues(alpha: 0.15),
+                      color: AppColors.mutedDark.withValues(alpha: 0.15),
                       shape: BoxShape.circle,
                     ),
-                    child: Icon(Icons.info, color: muted, size: 20),
+                    child: const Icon(
+                      Icons.info,
+                      color: AppColors.mutedDark,
+                      size: 20,
+                    ),
                   ),
                   trailing: Icon(Icons.chevron_right, color: muted),
                   onTap: () {},
