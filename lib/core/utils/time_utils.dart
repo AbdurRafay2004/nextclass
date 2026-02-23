@@ -39,21 +39,20 @@ String formatAmPm(int minutesSinceMidnight) {
   return DateFormat('a').format(time);
 }
 
-/// Returns a human-readable day label relative to [currentWeekday].
-/// "Tomorrow" if [targetWeekday] is the next day, otherwise the full
-/// day name (e.g. "Wednesday").
-String dayLabel(int currentWeekday, int targetWeekday) {
-  final tomorrow = (currentWeekday % 7) + 1;
-  if (targetWeekday == tomorrow) return 'Tomorrow';
+/// Returns a human-readable day label with date relative to [now].
+/// "Tomorrow, Oct 25" if [targetDate] is the next day, otherwise the full
+/// day name and date (e.g. "Wednesday, Oct 26").
+String dayLabel(DateTime now, DateTime targetDate) {
+  final tomorrow = DateTime(now.year, now.month, now.day + 1);
+  final isTomorrow =
+      targetDate.year == tomorrow.year &&
+      targetDate.month == tomorrow.month &&
+      targetDate.day == tomorrow.day;
 
-  const dayNames = {
-    1: 'Monday',
-    2: 'Tuesday',
-    3: 'Wednesday',
-    4: 'Thursday',
-    5: 'Friday',
-    6: 'Saturday',
-    7: 'Sunday',
-  };
-  return dayNames[targetWeekday] ?? 'Day $targetWeekday';
+  if (isTomorrow) {
+    final dateFormat = DateFormat('MMM d');
+    return 'Tomorrow, ${dateFormat.format(targetDate)}';
+  }
+
+  return DateFormat('EEEE, MMM d').format(targetDate);
 }

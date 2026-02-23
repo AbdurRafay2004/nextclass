@@ -61,6 +61,7 @@
 - **2026-02-23**: Removed unused/stub "Time Format" preference from Settings page UI to clean up redundant features.
 - **2026-02-23**: Configured and generated a custom Android app launcher icon from `assets/icon.png` using the `flutter_launcher_icons` package.
 - **2026-02-23**: Focus page now shows upcoming class days beyond today. The dashboard fetches the next 6 days of sessions and displays them grouped under day-name headers (e.g., "TOMORROW", "WEDNESDAY"). Empty state updated to "No classes scheduled this week." Added prominent "No classes today" message when today is empty but future classes exist. Added centralized `emptyStateMessage` text style for consistent empty state typography.
+- **2026-02-23**: Appended dates to the Focus page upcoming day labels (e.g., "TOMORROW, OCT 25", "WEDNESDAY, OCT 26") to exactly match the header formatting style.
 
 ## Immediate Next Steps
 1. Implement Class Session Conflict detection.

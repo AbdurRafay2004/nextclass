@@ -186,17 +186,16 @@ final dashboardScheduleProvider = Provider<AsyncValue<DashboardSchedule>>((
   // Fetch the next 6 days' schedules
   final List<UpcomingDay> upcomingDays = [];
   for (var offset = 1; offset <= 6; offset++) {
-    final targetDay = ((currentDay - 1 + offset) % 7) + 1;
+    final targetDate = DateTime(now.year, now.month, now.day + offset);
+    final targetDay = targetDate.weekday;
+
     final dayAsync = ref.watch(dayScheduleProvider(targetDay));
     if (dayAsync.isLoading) return const AsyncValue.loading();
     if (dayAsync.hasError) continue;
 
     final dayItems = dayAsync.value ?? [];
     if (dayItems.isNotEmpty) {
-      upcomingDays.add((
-        dayLabel: dayLabel(currentDay, targetDay),
-        items: dayItems,
-      ));
+      upcomingDays.add((dayLabel: dayLabel(now, targetDate), items: dayItems));
     }
   }
 
