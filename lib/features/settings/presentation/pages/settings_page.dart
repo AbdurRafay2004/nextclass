@@ -11,7 +11,7 @@ class SettingsPage extends StatelessWidget {
     final muted = AppColors.mutedText(context);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Settings')),
+      appBar: AppBar(title: const Text('SETTINGS')),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(24, 24, 24, 100),
         children: [

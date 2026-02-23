@@ -59,10 +59,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
                   final formattedTime = DateFormat(
                     'h:mm a',
                   ).format(now).toUpperCase();
-                  return Text(
-                    '$formattedDate • $formattedTime',
-                    style: AppTextStyles.sectionHeader(context),
-                  );
+                  return Text('$formattedDate • $formattedTime');
                 },
               ),
             )

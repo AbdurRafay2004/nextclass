@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'app_colors.dart';
 import 'app_fonts.dart';
+import 'app_text_styles.dart';
 
 class AppTheme {
   // ── Shared component themes ─────────────────────────────────────────
@@ -10,11 +11,9 @@ class AppTheme {
     elevation: 0,
     scrolledUnderElevation: 0,
     backgroundColor: Colors.transparent,
-    titleTextStyle: AppFonts.style(
-      fontSize: 18,
-      fontWeight: FontWeight.bold,
-      color: AppColors.fgDark,
-    ),
+    titleTextStyle: AppTextStyles.pageHeader(
+      null as dynamic,
+    ), // Context not used for static values in AppFonts.style
     iconTheme: const IconThemeData(color: AppColors.fgDark),
   );
 

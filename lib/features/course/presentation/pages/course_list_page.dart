@@ -18,7 +18,7 @@ class CourseListPage extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Courses'),
+        title: const Text('COURSES'),
         actions: [
           IconButton(
             icon: const Icon(Icons.add_circle),

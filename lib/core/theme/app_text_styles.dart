@@ -27,8 +27,19 @@ class AppTextStyles {
   // ── Page Headers ────────────────────────────────────────────────────
 
   /// Uppercase section headers (e.g., "UP NEXT TODAY", "CLASS SESSIONS",
-  /// dashboard date/time, "APPEARANCE").
+  /// "APPEARANCE").
   static TextStyle sectionHeader(BuildContext context) {
+    return AppFonts.style(
+      fontSize: 12,
+      fontWeight: FontWeight.w700,
+      letterSpacing: 1.5,
+      color: AppColors.mutedText(context),
+    );
+  }
+
+  /// Consistent style for all page titles in the AppBar.
+  /// Matches the minimal, uppercase, and muted look of the Focus page.
+  static TextStyle pageHeader(BuildContext context) {
     return AppFonts.style(
       fontSize: 12,
       fontWeight: FontWeight.w700,
