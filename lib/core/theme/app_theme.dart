@@ -7,13 +7,11 @@ import 'app_text_styles.dart';
 class AppTheme {
   // ── Shared component themes ─────────────────────────────────────────
 
-  static final AppBarTheme _appBarTheme = AppBarTheme(
+  static AppBarTheme _appBarTheme(String fontFamily) => AppBarTheme(
     elevation: 0,
     scrolledUnderElevation: 0,
     backgroundColor: Colors.transparent,
-    titleTextStyle: AppTextStyles.pageHeader(
-      null as dynamic,
-    ), // Context not used for static values in AppFonts.style
+    titleTextStyle: AppTextStyles.pageHeader(null, fontFamily: fontFamily),
     iconTheme: const IconThemeData(color: AppColors.fgDark),
   );
 
@@ -50,7 +48,7 @@ class AppTheme {
 
   // ── Dark Theme (only theme) ─────────────────────────────────────────
 
-  static ThemeData get darkTheme {
+  static ThemeData darkTheme(String fontFamily) {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.dark,
@@ -62,9 +60,10 @@ class AppTheme {
       ),
       scaffoldBackgroundColor: AppColors.bgDark,
       textTheme: AppFonts.textTheme(
-        ThemeData.dark().textTheme,
+        fontFamily: fontFamily,
+        base: ThemeData.dark().textTheme,
       ).apply(bodyColor: AppColors.fgDark, displayColor: AppColors.fgDark),
-      appBarTheme: _appBarTheme,
+      appBarTheme: _appBarTheme(fontFamily),
       cardTheme: _cardTheme,
       inputDecorationTheme: _inputTheme,
       dialogTheme: _dialogTheme,

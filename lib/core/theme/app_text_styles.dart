@@ -15,8 +15,9 @@ class AppTextStyles {
   // ── Navigation ──────────────────────────────────────────────────────
 
   /// Nav bar item labels (e.g., "FOCUS", "COURSES", "SETTINGS").
-  static TextStyle navLabel({required Color color}) {
+  static TextStyle navLabel({required Color color, String? fontFamily}) {
     return AppFonts.style(
+      fontFamily: fontFamily,
       color: color,
       fontWeight: FontWeight.w800,
       fontSize: 9,
@@ -28,8 +29,9 @@ class AppTextStyles {
 
   /// Uppercase section headers (e.g., "UP NEXT TODAY", "CLASS SESSIONS",
   /// "APPEARANCE").
-  static TextStyle sectionHeader(BuildContext context) {
+  static TextStyle sectionHeader(BuildContext context, {String? fontFamily}) {
     return AppFonts.style(
+      fontFamily: fontFamily,
       fontSize: 12,
       fontWeight: FontWeight.w700,
       letterSpacing: 1.5,
@@ -39,20 +41,24 @@ class AppTextStyles {
 
   /// Consistent style for all page titles in the AppBar.
   /// Matches the minimal, uppercase, and muted look of the Focus page.
-  static TextStyle pageHeader(BuildContext context) {
+  static TextStyle pageHeader(BuildContext? context, {String? fontFamily}) {
     return AppFonts.style(
+      fontFamily: fontFamily,
       fontSize: 12,
       fontWeight: FontWeight.w700,
       letterSpacing: 1.5,
-      color: AppColors.mutedText(context),
+      color: context != null
+          ? AppColors.mutedText(context)
+          : AppColors.mutedDark,
     );
   }
 
   // ── Cards ───────────────────────────────────────────────────────────
 
   /// Bold card/tile title (e.g., course name, session day).
-  static TextStyle cardTitle(BuildContext context) {
+  static TextStyle cardTitle(BuildContext context, {String? fontFamily}) {
     return AppFonts.style(
+      fontFamily: fontFamily,
       fontSize: 22,
       fontWeight: FontWeight.w700,
       color: Theme.of(context).colorScheme.onSurface,
@@ -60,8 +66,9 @@ class AppTextStyles {
   }
 
   /// Muted card subtitle / secondary info.
-  static TextStyle cardSubtitle(BuildContext context) {
+  static TextStyle cardSubtitle(BuildContext context, {String? fontFamily}) {
     return AppFonts.style(
+      fontFamily: fontFamily,
       fontSize: 12,
       fontWeight: FontWeight.w400,
       color: AppColors.mutedText(context),
@@ -71,8 +78,9 @@ class AppTextStyles {
   // ── Labels ──────────────────────────────────────────────────────────
 
   /// Small uppercase tracking labels (e.g., "ROOM", "FACULTY ACRONYM").
-  static TextStyle labelUppercase(BuildContext context) {
+  static TextStyle labelUppercase(BuildContext context, {String? fontFamily}) {
     return AppFonts.style(
+      fontFamily: fontFamily,
       fontSize: 10,
       fontWeight: FontWeight.w600,
       letterSpacing: 1.0,
@@ -81,8 +89,9 @@ class AppTextStyles {
   }
 
   /// Inline badge text (e.g., "NOW" live indicator).
-  static TextStyle badge(Color color) {
+  static TextStyle badge(Color color, {String? fontFamily}) {
     return AppFonts.style(
+      fontFamily: fontFamily,
       color: color,
       fontWeight: FontWeight.w800,
       fontSize: 8,
@@ -91,8 +100,9 @@ class AppTextStyles {
   }
 
   /// Unit suffix text (e.g., "min" next to a number).
-  static TextStyle unitSuffix(BuildContext context) {
+  static TextStyle unitSuffix(BuildContext context, {String? fontFamily}) {
     return AppFonts.style(
+      fontFamily: fontFamily,
       color: AppColors.mutedText(context),
       fontWeight: FontWeight.w700,
       fontSize: 14,
@@ -102,18 +112,22 @@ class AppTextStyles {
   // ── List Tiles & Settings ───────────────────────────────────────────
 
   /// Settings / list tile title (e.g., "Dark Mode", "Time Format").
-  static TextStyle tileTitle() {
-    return AppFonts.style(fontWeight: FontWeight.w600);
+  static TextStyle tileTitle({String? fontFamily}) {
+    return AppFonts.style(fontFamily: fontFamily, fontWeight: FontWeight.w600);
   }
 
   /// Settings trailing value text (e.g., "12-Hour", "Default").
-  static TextStyle tileTrailing(BuildContext context) {
-    return AppFonts.style(color: AppColors.mutedText(context));
+  static TextStyle tileTrailing(BuildContext context, {String? fontFamily}) {
+    return AppFonts.style(
+      fontFamily: fontFamily,
+      color: AppColors.mutedText(context),
+    );
   }
 
   /// Secondary info label (e.g., "Theme Color" on course detail).
-  static TextStyle infoLabel(BuildContext context) {
+  static TextStyle infoLabel(BuildContext context, {String? fontFamily}) {
     return AppFonts.style(
+      fontFamily: fontFamily,
       color: AppColors.mutedText(context),
       fontWeight: FontWeight.w600,
       fontSize: 13,
@@ -123,37 +137,59 @@ class AppTextStyles {
   // ── Buttons & Actions ──────────────────────────────────────────────
 
   /// Action button text (e.g., "Save" on AppBar).
-  static TextStyle actionButton() {
-    return AppFonts.style(fontWeight: FontWeight.w700, fontSize: 16);
+  static TextStyle actionButton({String? fontFamily}) {
+    return AppFonts.style(
+      fontFamily: fontFamily,
+      fontWeight: FontWeight.w700,
+      fontSize: 16,
+    );
   }
 
   /// Destructive action text (e.g., "DELETE", "Delete").
-  static TextStyle destructiveAction(BuildContext context) {
-    return AppFonts.style(color: Theme.of(context).colorScheme.error);
+  static TextStyle destructiveAction(
+    BuildContext context, {
+    String? fontFamily,
+  }) {
+    return AppFonts.style(
+      fontFamily: fontFamily,
+      color: Theme.of(context).colorScheme.error,
+    );
   }
 
   /// Day selector chip text (e.g., "M", "T", "W").
-  static TextStyle dayChip({required Color color}) {
-    return AppFonts.style(fontWeight: FontWeight.w700, color: color);
+  static TextStyle dayChip({required Color color, String? fontFamily}) {
+    return AppFonts.style(
+      fontFamily: fontFamily,
+      fontWeight: FontWeight.w700,
+      color: color,
+    );
   }
 
   // ── Misc ────────────────────────────────────────────────────────────
 
   /// Session detail subtitle (e.g., "10:00 AM - 11:30 AM\nRoom: B-201").
-  static TextStyle sessionDetail(BuildContext context) {
-    return AppFonts.style(color: AppColors.mutedText(context));
+  static TextStyle sessionDetail(BuildContext context, {String? fontFamily}) {
+    return AppFonts.style(
+      fontFamily: fontFamily,
+      color: AppColors.mutedText(context),
+    );
   }
 
   /// Session day title in list (e.g., "Mondays").
-  static TextStyle sessionDayTitle(BuildContext context) {
+  static TextStyle sessionDayTitle(BuildContext context, {String? fontFamily}) {
     return AppFonts.style(
+      fontFamily: fontFamily,
       fontWeight: FontWeight.w700,
       color: Theme.of(context).colorScheme.onSurface,
     );
   }
 
   /// Version text at bottom of settings.
-  static TextStyle versionText(BuildContext context) {
-    return AppFonts.style(color: AppColors.mutedText(context), fontSize: 12);
+  static TextStyle versionText(BuildContext context, {String? fontFamily}) {
+    return AppFonts.style(
+      fontFamily: fontFamily,
+      color: AppColors.mutedText(context),
+      fontSize: 12,
+    );
   }
 }

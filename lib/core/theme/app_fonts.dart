@@ -9,10 +9,11 @@ import 'package:google_fonts/google_fonts.dart';
 ///
 /// To change the app font, update [style] and [textTheme] below.
 class AppFonts {
-  /// Returns a [TextStyle] using the app font (Bricolage Grotesque).
+  /// Returns a [TextStyle] using the provided app font.
   ///
-  /// Use this instead of `GoogleFonts.bricolageGrotesque(...)` or raw `TextStyle(...)`.
+  /// Defaults to 'Bricolage Grotesque'.
   static TextStyle style({
+    String? fontFamily,
     double? fontSize,
     FontWeight? fontWeight,
     Color? color,
@@ -21,7 +22,19 @@ class AppFonts {
     TextDecoration? decoration,
     FontStyle? fontStyle,
   }) {
-    return GoogleFonts.bricolageGrotesque(
+    if (fontFamily != null) {
+      return GoogleFonts.getFont(
+        fontFamily,
+        fontSize: fontSize,
+        fontWeight: fontWeight,
+        color: color,
+        letterSpacing: letterSpacing,
+        height: height,
+        decoration: decoration,
+        fontStyle: fontStyle,
+      );
+    }
+    return TextStyle(
       fontSize: fontSize,
       fontWeight: fontWeight,
       color: color,
@@ -35,7 +48,10 @@ class AppFonts {
   /// Returns a complete [TextTheme] using the app font.
   ///
   /// Used in [AppTheme] to set the base typography.
-  static TextTheme textTheme([TextTheme? base]) {
-    return GoogleFonts.bricolageGrotesqueTextTheme(base);
+  static TextTheme textTheme({
+    String fontFamily = 'Bricolage Grotesque',
+    TextTheme? base,
+  }) {
+    return GoogleFonts.getTextTheme(fontFamily, base);
   }
 }

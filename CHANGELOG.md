@@ -56,6 +56,7 @@
 - **2026-02-23**: Switched app font from Inter to **Bricolage Grotesque** (variable axes: weight 200–800, width 75–100). Updated `AppFonts` (2-file change thanks to centralization). Tuned `AppTextStyles` weights for Bricolage's axis range.
 - **2026-02-23**: Fully centralized all text styles into `AppTextStyles` (16 named styles). Removed every inline `AppFonts.style()` call from all 8 page/widget files. All typography is now editable from one file (`app_text_styles.dart`).
 - **2026-02-23**: Harmonized all page headers. Added `AppTextStyles.pageHeader` and updated `AppTheme` to apply it globally. Updated Focus, Courses, and Settings pages to ensure consistent typography and capitalization.
+- **2026-02-23**: Added persistent dynamic font selection feature matching user preference. Users can now choose from a curated list of high-quality UI fonts in the Settings page, and the selection is saved across sessions using `shared_preferences`.
 
 ## Immediate Next Steps
 1. Implement Class Session Conflict detection.
