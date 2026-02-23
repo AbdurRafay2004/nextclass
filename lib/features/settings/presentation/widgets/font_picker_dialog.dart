@@ -10,12 +10,12 @@ class FontPickerDialog extends ConsumerWidget {
 
   static const List<String> availableFonts = [
     'Bricolage Grotesque',
-    'Inter',
-    'Outfit',
-    'Plus Jakarta Sans',
     'Manrope',
     'Amarante',
     'Federo',
+    'Limelight',
+    'Pompiere',
+    'DM Serif Display',
   ];
 
   @override
