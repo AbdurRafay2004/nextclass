@@ -28,6 +28,7 @@ class AppColors {
   static const Color brandSageGreen = Color(0xFF9DC183);
   static const Color brandPeriwinkle = Color(0xFFCCCCFF);
   static const Color brandSalmon = Color(0xFFFA8072);
+  static const Color brandGray = Color(0xFF9BA1A6);
 
   static const List<Color> courseColors = [
     brandSkyBlue,
@@ -40,7 +41,7 @@ class AppColors {
     brandSageGreen,
     brandPeriwinkle,
     brandSalmon,
-  ];
+  ]; 
 
   // ── UI Palette - Shared ──────────────────────────────────────────────
 
@@ -52,7 +53,7 @@ class AppColors {
   static const Color liveGreen = Color(0xFF00E676);
 
   /// Inactive icon/label color in the navigation bar.
-  static const Color navInactive = Color(0xFF64748B);
+  static const Color navInactive = Color(0xFF9BA1A6);
 
   // ── UI Palette - Light Mode (retained for potential future use) ─────
 
