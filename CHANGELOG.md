@@ -65,6 +65,9 @@
 - **2026-02-24**: Fixed bug where custom fonts failed to load and apply on physical Android devices running the Release APK. Added `android.permission.INTERNET` to the main Android manifest to allow the `google_fonts` package to dynamically fetch missing font data at runtime.
 - **2026-02-24**: Documented App Size Reduction build flags (`--split-per-abi`, `--obfuscate`) in `BestPractices.md` to resolve the 80MB+ fat APK issue caused by native binaries like `isar_flutter_libs`.
 - **2026-02-24**: Removed the shadow effect from the floating bottom navigation bar (`DynamicNavBar`) for a cleaner, flatter aesthetic.
+- **2026-02-24**: Added a subtle bottom shadow to the floating navigation bar (`DynamicNavBar`) for a premium layout feel.
+- **2026-02-24**: Fixed a hard-edge clipping rendering bug on the `DynamicNavBar` shadow (caused by `spreadRadius` on Android/Impeller) by migrating to a smooth double-layered shadow effect.
+- **2026-02-24**: Fixed `ListTile` InkWell ripple effect clipping over rounded container corners in `SettingsPage` by wrapping tiles in `Material` widgets and enabling `Clip.hardEdge`.
 
 ## Immediate Next Steps
 1. Implement Class Session Conflict detection.

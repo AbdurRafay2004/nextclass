@@ -21,11 +21,12 @@ class SettingsPage extends ConsumerWidget {
         children: [
           Text('APPEARANCE', style: AppTextStyles.sectionHeader(context)),
           const SizedBox(height: 16),
-          Container(
-            decoration: BoxDecoration(
-              color: AppColors.cardSurface(context),
+          Material(
+            color: AppColors.cardSurface(context),
+            shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(AppColors.cardRadius),
             ),
+            clipBehavior: Clip.hardEdge,
             child: Column(
               children: [
                 ListTile(
@@ -68,11 +69,12 @@ class SettingsPage extends ConsumerWidget {
           const SizedBox(height: 32),
           Text('INFORMATION', style: AppTextStyles.sectionHeader(context)),
           const SizedBox(height: 16),
-          Container(
-            decoration: BoxDecoration(
-              color: AppColors.cardSurface(context),
+          Material(
+            color: AppColors.cardSurface(context),
+            shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(AppColors.cardRadius),
             ),
+            clipBehavior: Clip.hardEdge,
             child: Column(
               children: [
                 ListTile(
@@ -98,7 +100,7 @@ class SettingsPage extends ConsumerWidget {
           const SizedBox(height: 32),
           Center(
             child: Text(
-              'Version 3.4.1 (beta)',
+              'Version 3.5.1 (beta)',
               style: AppTextStyles.versionText(context),
             ),
           ),
