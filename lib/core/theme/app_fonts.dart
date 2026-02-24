@@ -22,19 +22,9 @@ class AppFonts {
     TextDecoration? decoration,
     FontStyle? fontStyle,
   }) {
-    if (fontFamily != null) {
-      return GoogleFonts.getFont(
-        fontFamily,
-        fontSize: fontSize,
-        fontWeight: fontWeight,
-        color: color,
-        letterSpacing: letterSpacing,
-        height: height,
-        decoration: decoration,
-        fontStyle: fontStyle,
-      );
-    }
-    return TextStyle(
+    final effectiveFamily = fontFamily ?? 'Bricolage Grotesque';
+    return GoogleFonts.getFont(
+      effectiveFamily,
       fontSize: fontSize,
       fontWeight: fontWeight,
       color: color,
