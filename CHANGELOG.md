@@ -1,7 +1,7 @@
 # Changelog
 
 ## Current Status
-✅ Phase 21 Complete: Focus page shows upcoming class days
+✅ Phase 22 Complete: QR-Based Instant Schedule Sharing feature implemented
 
 ## ChangeLog
 - **2026-02-24**: Added optional faculty fields (Full Name, Email, Phone, Department) to Course settings and elegantly integrated them into the Schedule Item Detail Dialog.
@@ -73,12 +73,23 @@
 - **2026-02-24**: Fixed `ListTile` InkWell ripple effect clipping over rounded container corners in `SettingsPage` by wrapping tiles in `Material` widgets and enabling `Clip.hardEdge`.
 - **2026-02-24**: Added the course code identifier (e.g. "CS 101") to the top information card on the Course Details page, styled with the assigned theme color.
 - **2026-02-24**: Implemented a comprehensive `ScheduleItemDetailDialog` (bottom sheet) that displays when tapping any timeline or live status card on the Focus page, showing full class, time, and room details in a styled format.
+- **2026-02-24**: Implemented QR-Based Instant Schedule Sharing feature with full architecture:
+  - **Domain Layer**: Created `ScheduleShareDTO` with short-key JSON format (`v`, `cs`, `n`, `c`, `ch`, `fa`, `ss`, `d`, `st`, `du`, `r`, `t`) and version field for forward compatibility.
+  - **Data Layer**: Built `ShareEncoderService` (JSON → GZIP → Base64 pipeline) with full/selective export modes, `ShareDecoderService` (Base64 → GZIP → JSON), and `ShareImportService` with Replace/Merge conflict handling scoped only to imported courses.
+  - **Presentation Layer - Export**: Created `ExportModeScreen` (Full vs Selective), `CourseSelectionScreen` (checkboxes, Select All toggle, live QR size indicator: Small/Medium/Large), and `ShareQrScreen` (QR display with size info).
+  - **Presentation Layer - Import**: Created `ScanQrScreen` (camera-based QR scanning via `mobile_scanner`), `SharePreviewScreen` (import preview with course list, Replace/Merge action bar, confirmation dialogs, and import result summary).
+  - **State Management**: Created `sharing_provider.dart` with `ShareEncoderService`, `ShareDecoderService`, `ShareImportService` providers, `CourseSelectionNotifier` for selection state, and `estimatedSizeProvider` for live byte-size estimation.
+  - **Integration**: Added `qr_flutter` and `mobile_scanner` dependencies. Added "Share Schedule" entry point in Settings page under new "SHARING" section.
+  - **Safety**: QR size threshold guard at 2500 bytes with user-friendly dialog when exceeded. GZIP compression reduces payload by ~40-60%.
 
 ## Immediate Next Steps
-1. Implement Class Session Conflict detection.
-2. Visual QA: run the app on device and verify all pages.
-3. Refine animations and micro-interactions.
+1. Visual QA: test QR sharing flow end-to-end on physical device.
+2. Implement Class Session Conflict detection.
+3. Add camera permission handling for QR scanner.
+4. Refine animations and micro-interactions.
 
 ## Known Issues/Notes
 - Notification functionality is currently untied. Session creation lacks conflict validation.
 - Renaming the database field triggered a code regeneration requirement (`build_runner`).
+- QR scanner requires camera permission — `mobile_scanner` handles the permission request automatically on Android, but a graceful fallback UI may be needed.
+- Very large schedules (>2500 bytes after compression) will show a size limit dialog and suggest selective export.

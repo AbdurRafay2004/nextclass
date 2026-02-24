@@ -31,6 +31,12 @@ Read `lib/core/core.dart` barrel export to see everything available:
 | `timeProvider` | `core/providers/time_provider.dart` | Global clock stream (30s interval, emits immediately) |
 | `CourseController` | `course/presentation/providers/course_provider.dart` | Course CRUD |
 | `SessionController` | `schedule/presentation/providers/session_provider.dart` | Session CRUD |
+| `ShareEncoderService` | `sharing/data/share_encoder_service.dart` | Encode schedule → QR payload |
+| `ShareDecoderService` | `sharing/data/share_decoder_service.dart` | Decode QR payload → DTO |
+| `ShareImportService` | `sharing/data/share_import_service.dart` | Import DTO into Isar (Replace/Merge) |
+| `ScheduleShareDTO` | `sharing/domain/schedule_share_dto.dart` | Short-key DTO for QR sharing |
+| `courseSelectionProvider` | `sharing/presentation/providers/sharing_provider.dart` | Track selected courses for export |
+| `estimatedSizeProvider` | `sharing/presentation/providers/sharing_provider.dart` | Live QR byte-size estimate |
 
 ## Architecture
 - Feature-based clean architecture: `data/models → presentation/providers → presentation/pages|widgets`
@@ -84,6 +90,19 @@ Read `lib/core/core.dart` barrel export to see everything available:
 ## Data Persistence
 - Settings persisted via `SharedPreferences` — never rely on in-memory-only state
 - Isar models use UUID for cross-collection references
+
+## QR Schedule Sharing
+- **Encoding pipeline**: `Isar models → ScheduleShareDTO → JSON → GZIP → Base64 → QR`
+- **Decoding pipeline**: `QR → Base64 → GZIP → JSON → ScheduleShareDTO`
+- **Short keys**: DTO uses single/double-letter JSON keys (`v`, `cs`, `n`, `c`, `ch`, `fa`, `ss`, `d`, `st`, `du`, `r`, `t`) to minimize payload size
+- **Version field**: Always include `v` (version) in the DTO for forward compatibility
+- **QR safety threshold**: 2500 bytes max — disable QR and show fallback dialog if exceeded
+- **Size labels**: Small (<800 bytes), Medium (800–1600), Large (>1600)
+- **Selective export**: When user selects all courses, treat same as full export
+- **Conflict scope**: Replace/Merge only affects imported courses — never touch existing courses not in the payload
+- **Merge logic**: Skip sessions that match on all 5 fields (dayOfWeek, startTimeMinutes, durationMinutes, room, type)
+- **Course matching**: Import matches existing courses by `code` field (not UUID, since UUIDs differ across devices)
+- **Edge cases**: Allow export of courses with zero sessions (useful for sharing subject lists)
 
 ## Forms & Validation
 - Always dispose `TextEditingController` instances in `dispose()`

@@ -31,7 +31,8 @@ lib/
 ├── features/         # Domain-specific modules
 │   ├── course/       # Course CRUD and management
 │   ├── schedule/     # Timeline and dashboard views
-│   └── settings/     # App settings
+│   ├── settings/     # App settings
+│   └── sharing/      # QR-based schedule sharing (export/import)
 └── main.dart         # Entry point and global providers setup
 ```
 
@@ -42,6 +43,7 @@ lib/
 - **Dark-Only Theme:** Single dark theme for visual consistency and battery efficiency.
 - **Centralized Design System:** Font (`AppFonts`), colors (`AppColors`), and text styles (`AppTextStyles`) are each editable from one file.
 - **Isolated Real-Time Updates:** For clock-dependent UI components (e.g., current time, class active duration), a standalone `StreamProvider` emitting updates every minute is used. By wrapping specific components in `Consumer` or `ConsumerWidget`, this prevents full-app rebuilds, ensuring battery efficiency while keeping data highly accurate.
+- **QR Schedule Sharing:** Fully offline QR-based sharing using compressed payloads (JSON → GZIP → Base64). Supports full and selective course export, with a 2500-byte safety threshold. Import supports Replace and Merge conflict modes scoped only to imported courses.
 
 ## 📝 Getting Started
 To run the project locally, ensure you have the Flutter SDK installed.
