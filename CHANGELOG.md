@@ -64,6 +64,7 @@
 - **2026-02-23**: Appended dates to the Focus page upcoming day labels (e.g., "TOMORROW, OCT 25", "WEDNESDAY, OCT 26") to exactly match the header formatting style.
 - **2026-02-24**: Fixed bug where custom fonts failed to load and apply on physical Android devices running the Release APK. Added `android.permission.INTERNET` to the main Android manifest to allow the `google_fonts` package to dynamically fetch missing font data at runtime.
 - **2026-02-24**: Documented App Size Reduction build flags (`--split-per-abi`, `--obfuscate`) in `BestPractices.md` to resolve the 80MB+ fat APK issue caused by native binaries like `isar_flutter_libs`.
+- **2026-02-24**: Removed the shadow effect from the floating bottom navigation bar (`DynamicNavBar`) for a cleaner, flatter aesthetic.
 
 ## Immediate Next Steps
 1. Implement Class Session Conflict detection.

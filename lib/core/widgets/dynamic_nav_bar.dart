@@ -23,13 +23,6 @@ class DynamicNavBar extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.cardSurface(context),
         borderRadius: BorderRadius.circular(32),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.25),
-            blurRadius: 20,
-            offset: const Offset(0, 10),
-          ),
-        ],
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
