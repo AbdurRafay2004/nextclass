@@ -239,7 +239,7 @@ class _CourseAddPageState extends ConsumerState<CourseAddPage> {
                       controller: _facultyDepartmentController,
                       decoration: const InputDecoration(
                         labelText: 'Department',
-                        hintText: 'e.g., Computer Science',
+                        hintText: 'e.g., CSE',
                         prefixIcon: Icon(Icons.business_outlined),
                       ),
                     ),
