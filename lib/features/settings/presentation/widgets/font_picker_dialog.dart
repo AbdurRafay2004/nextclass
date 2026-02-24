@@ -71,12 +71,12 @@ class FontPickerDialog extends ConsumerWidget {
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
                       color: isSelected
-                          ? AppColors.brandSkyBlue.withValues(alpha: 0.1)
+                          ? AppColors.brandBlue.withValues(alpha: 0.1)
                           : Colors.transparent,
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(
                         color: isSelected
-                            ? AppColors.brandSkyBlue
+                            ? AppColors.brandBlue
                             : Colors.transparent,
                       ),
                     ),
@@ -88,7 +88,7 @@ class FontPickerDialog extends ConsumerWidget {
                             style: GoogleFonts.getFont(font).copyWith(
                               fontSize: 18,
                               color: isSelected
-                                  ? AppColors.brandSkyBlue
+                                  ? AppColors.brandBlue
                                   : AppColors.fgDark,
                               fontWeight: isSelected
                                   ? FontWeight.w700
@@ -99,7 +99,7 @@ class FontPickerDialog extends ConsumerWidget {
                         if (isSelected)
                           const Icon(
                             Icons.check_circle,
-                            color: AppColors.brandSkyBlue,
+                            color: AppColors.brandBlue,
                           ),
                       ],
                     ),

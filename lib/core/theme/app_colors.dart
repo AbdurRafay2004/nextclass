@@ -16,32 +16,31 @@ class AppColors {
     return '#${color.toARGB32().toRadixString(16).substring(2, 8).toUpperCase()}';
   }
 
-  // ── Brand Palette (Pastels for Course Colors) ────────────────────────
+  // ── Brand Palette (Vibrant for varied Course Colors) ─────────────────
 
-  static const Color brandSkyBlue = Color(0xFF87CEEB);
-  static const Color brandSoftPink = Color(0xFFFFB6C1);
-  static const Color brandMintGreen = Color(0xFF98FF98);
-  static const Color brandPeach = Color(0xFFFFCBA4);
-  static const Color brandLavender = Color(0xFFE6D5FF);
-  static const Color brandCoral = Color(0xFFFF7F7F);
-  static const Color brandButterYellow = Color(0xFFFFFACD);
-  static const Color brandSageGreen = Color(0xFF9DC183);
-  static const Color brandPeriwinkle = Color(0xFFCCCCFF);
-  static const Color brandSalmon = Color(0xFFFA8072);
-  static const Color brandGray = Color(0xFF9BA1A6);
+  static const Color brandBlue = Color(0xFF38BDF8);
+  static const Color brandPink = Color(0xFFF472B6);
+  static const Color brandGreen = Color(0xFF4ADE80);
+  static const Color brandOrange = Color(0xFFFB923C);
+  static const Color brandPurple = Color(0xFFA78BFA);
+  static const Color brandRed = Color(0xFFF87171);
+  static const Color brandYellow = Color(0xFFFBBF24);
+  static const Color brandTeal = Color(0xFF2DD4BF);
+  static const Color brandIndigo = Color(0xFF818CF8);
+  static const Color brandRose = Color(0xFFFB7185);
 
   static const List<Color> courseColors = [
-    brandSkyBlue,
-    brandSoftPink,
-    brandMintGreen,
-    brandPeach,
-    brandLavender,
-    brandCoral,
-    brandButterYellow,
-    brandSageGreen,
-    brandPeriwinkle,
-    brandSalmon,
-  ]; 
+    brandBlue,
+    brandPink,
+    brandGreen,
+    brandOrange,
+    brandPurple,
+    brandRed,
+    brandYellow,
+    brandTeal,
+    brandIndigo,
+    brandRose,
+  ];
 
   // ── UI Palette - Shared ──────────────────────────────────────────────
 
@@ -54,6 +53,9 @@ class AppColors {
 
   /// Inactive icon/label color in the navigation bar.
   static const Color navInactive = Color(0xFF9BA1A6);
+
+  /// General purpose muted gray used in settings and secondary elements
+  static const Color brandGray = Color(0xFF9BA1A6);
 
   // ── UI Palette - Light Mode (retained for potential future use) ─────
 

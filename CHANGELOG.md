@@ -68,6 +68,8 @@
 - **2026-02-24**: Added a subtle bottom shadow to the floating navigation bar (`DynamicNavBar`) for a premium layout feel.
 - **2026-02-24**: Fixed a hard-edge clipping rendering bug on the `DynamicNavBar` shadow (caused by `spreadRadius` on Android/Impeller) by migrating to a smooth double-layered shadow effect.
 - **2026-02-24**: Fixed `ListTile` InkWell ripple effect clipping over rounded container corners in `SettingsPage` by wrapping tiles in `Material` widgets and enabling `Clip.hardEdge`.
+- **2026-02-24**: Replaced the 10 pastel course theme colors with a vibrant, high-contrast palette (Sky Blue, Pink, Green, Orange, Purple, Red, Yellow, Teal, Indigo, Rose) for better visual distinction across the app.
+- **2026-02-24**: Added the course code identifier (e.g. "CS 101") to the top information card on the Course Details page, styled with the assigned theme color.
 
 ## Immediate Next Steps
 1. Implement Class Session Conflict detection.

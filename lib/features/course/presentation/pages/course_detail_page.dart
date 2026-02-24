@@ -253,6 +253,16 @@ class CourseDetailPage extends ConsumerWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
+                              course.code.toUpperCase(),
+                              style: Theme.of(context).textTheme.titleSmall
+                                  ?.copyWith(
+                                    color: courseColor,
+                                    fontWeight: FontWeight.bold,
+                                    letterSpacing: 1.2,
+                                  ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
                               course.name,
                               style: Theme.of(context).textTheme.headlineMedium
                                   ?.copyWith(
