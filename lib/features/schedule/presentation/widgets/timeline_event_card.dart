@@ -172,7 +172,7 @@ class TimelineEventCard extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(right: 20),
                   child: Center(
-                    child: Icon(Icons.info_outline, color: muted, size: 28),
+                    child: Icon(Icons.arrow_right, color: muted, size: 28),
                   ),
                 ),
               ],

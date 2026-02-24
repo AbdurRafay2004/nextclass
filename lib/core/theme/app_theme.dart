@@ -35,7 +35,7 @@ class AppTheme {
     ),
     focusedBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(AppColors.formRadius),
-      borderSide: const BorderSide(color: AppColors.brandBlue, width: 2),
+      borderSide: const BorderSide(color: AppColors.skyBlue, width: 2),
     ),
     contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
   );
@@ -55,7 +55,7 @@ class AppTheme {
       colorScheme: const ColorScheme.dark(
         surface: AppColors.surfaceDark,
         onSurface: AppColors.fgDark,
-        primary: AppColors.brandBlue,
+        primary: AppColors.skyBlue,
         outline: AppColors.borderDark,
       ),
       scaffoldBackgroundColor: AppColors.bgDark,

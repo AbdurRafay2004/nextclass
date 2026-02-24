@@ -29,7 +29,7 @@ class _SessionAddPageState extends ConsumerState<SessionAddPage> {
 
   int _selectedDay = 1; // 1 = Monday, 7 = Sunday
   TimeOfDay _startTime = const TimeOfDay(hour: 10, minute: 0);
-  int _durationMinutes = 90; // Default 1.5 hrs
+  int _durationMinutes = 80; // Default 1 hr 20 min
   SessionType _selectedType = SessionType.lecture;
 
   final List<String> _days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
@@ -229,7 +229,12 @@ class _SessionAddPageState extends ConsumerState<SessionAddPage> {
                       items: const [
                         DropdownMenuItem(value: 45, child: Text('45 min')),
                         DropdownMenuItem(value: 60, child: Text('1 hr')),
+                        DropdownMenuItem(value: 80, child: Text('1 hr 20 min')),
                         DropdownMenuItem(value: 90, child: Text('1 hr 30 min')),
+                        DropdownMenuItem(
+                          value: 105,
+                          child: Text('1 hr 45 min'),
+                        ),
                         DropdownMenuItem(value: 120, child: Text('2 hrs')),
                         DropdownMenuItem(
                           value: 150,

@@ -125,7 +125,7 @@ class ScheduleItemDetailDialog extends StatelessWidget {
                   _buildDetailRow(
                     context,
                     icon: Icons.person_outline,
-                    color: AppColors.brandBlue,
+                    color: AppColors.skyBlue,
                     label: 'Faculty Acronym',
                     value: item.course.facultyAcronym,
                   ),
@@ -133,7 +133,7 @@ class ScheduleItemDetailDialog extends StatelessWidget {
                   _buildDetailRow(
                     context,
                     icon: Icons.location_on_outlined,
-                    color: AppColors.brandOrange,
+                    color: AppColors.apricotGlow,
                     label: 'Room',
                     value: item.session.room,
                   ),
@@ -141,7 +141,7 @@ class ScheduleItemDetailDialog extends StatelessWidget {
                   _buildDetailRow(
                     context,
                     icon: Icons.category_outlined,
-                    color: AppColors.brandPurple,
+                    color: AppColors.lavenderMist,
                     label: 'Session Type',
                     value: item.session.type.name.toUpperCase(),
                   ),
@@ -149,15 +149,15 @@ class ScheduleItemDetailDialog extends StatelessWidget {
                   _buildDetailRow(
                     context,
                     icon: Icons.calendar_today_outlined,
-                    color: AppColors.brandGreen,
+                    color: AppColors.mintGreen,
                     label: 'Day',
-                    value: '${_dayOfWeekToString(item.session.dayOfWeek)}s',
+                    value: _dayOfWeekToString(item.session.dayOfWeek),
                   ),
                   const SizedBox(height: 24),
                   _buildDetailRow(
                     context,
                     icon: Icons.access_time,
-                    color: AppColors.brandPink,
+                    color: AppColors.blushPink,
                     label: 'Time',
                     value: '$startTime — $endTime',
                     subValue: '($durationLabel)',

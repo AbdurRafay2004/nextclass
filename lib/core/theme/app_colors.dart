@@ -18,28 +18,32 @@ class AppColors {
 
   // ── Brand Palette (Vibrant for varied Course Colors) ─────────────────
 
-  static const Color brandBlue = Color(0xFF38BDF8);
-  static const Color brandPink = Color(0xFFF472B6);
-  static const Color brandGreen = Color(0xFF4ADE80);
-  static const Color brandOrange = Color(0xFFFB923C);
-  static const Color brandPurple = Color(0xFFA78BFA);
-  static const Color brandRed = Color(0xFFF87171);
-  static const Color brandYellow = Color(0xFFFBBF24);
-  static const Color brandTeal = Color(0xFF2DD4BF);
-  static const Color brandIndigo = Color(0xFF818CF8);
-  static const Color brandRose = Color(0xFFFB7185);
+  static const Color blushPink = Color(0xFFF7C6C7);
+  static const Color peachCream = Color(0xFFFFD9B3);
+  static const Color butterYellow = Color(0xFFFFF5B1);
+  static const Color mintGreen = Color(0xFFC8E6C9);
+  static const Color skyBlue = Color(0xFFB3E5FC);
+  static const Color lavenderMist = Color(0xFFD1C4E9);
+  static const Color coralRose = Color(0xFFFFB6A0);
+  static const Color pistachio = Color(0xFFD7F2BA);
+  static const Color powderBlue = Color(0xFFAEC6CF);
+  static const Color lilac = Color(0xFFE6CCE6);
+  static const Color apricotGlow = Color(0xFFFDD7AA);
+  static const Color softTeal = Color(0xFFA7D8D6);
 
   static const List<Color> courseColors = [
-    brandBlue,
-    brandPink,
-    brandGreen,
-    brandOrange,
-    brandPurple,
-    brandRed,
-    brandYellow,
-    brandTeal,
-    brandIndigo,
-    brandRose,
+    blushPink,
+    peachCream,
+    butterYellow,
+    mintGreen,
+    skyBlue,
+    lavenderMist,
+    coralRose,
+    pistachio,
+    powderBlue,
+    lilac,
+    apricotGlow,
+    softTeal,
   ];
 
   // ── UI Palette - Shared ──────────────────────────────────────────────

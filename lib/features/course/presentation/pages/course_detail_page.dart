@@ -375,7 +375,7 @@ class CourseDetailPage extends ConsumerWidget {
                           vertical: 8,
                         ),
                         title: Text(
-                          '${_dayOfWeekToString(session.dayOfWeek)}s',
+                          _dayOfWeekToString(session.dayOfWeek),
                           style: AppTextStyles.sessionDayTitle(context),
                         ),
                         subtitle: Text(
