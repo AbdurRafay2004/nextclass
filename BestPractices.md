@@ -94,6 +94,12 @@ Read `lib/core/core.dart` barrel export to see everything available:
 - For Android-only builds, keep only the `android` platform folder. Unused platform folders (`ios`, `web`, etc.) should be removed to keep the project lean.
 - Use `flutter create --platforms android .` if you ever need to reset or restrict platform support.
 
+## Building for Release
+- **App Size**: By default, `flutter build apk` generates a "fat" APK containing binaries for all Android architectures (arm32, arm64, x86_64). Because of native libraries like `isar_flutter_libs`, this results in a very large file size (80MB+).
+- **Split APKs**: To generate much smaller APKs tailored to specific devices, run: `flutter build apk --split-per-abi`
+- **App Bundles**: For Google Play Store deployment, run: `flutter build appbundle`
+- **Obfuscation**: For release builds, you can further shrink the Dart code by adding obfuscation flags: `flutter build apk --split-per-abi --obfuscate --split-debug-info=build/app/outputs/symbols`
+
 ## After Making Changes
 - Run `flutter analyze --no-pub` — must show zero issues
 - Update `CHANGELOG.md` with what changed, why, and next steps
