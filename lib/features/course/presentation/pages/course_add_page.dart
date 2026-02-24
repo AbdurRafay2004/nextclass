@@ -237,6 +237,14 @@ class _CourseAddPageState extends ConsumerState<CourseAddPage> {
                   Expanded(
                     child: TextFormField(
                       controller: _facultyDepartmentController,
+                      textCapitalization: TextCapitalization.characters,
+                      inputFormatters: [
+                        TextInputFormatter.withFunction((oldValue, newValue) {
+                          return newValue.copyWith(
+                            text: newValue.text.toUpperCase(),
+                          );
+                        }),
+                      ],
                       decoration: const InputDecoration(
                         labelText: 'Department',
                         hintText: 'e.g., CSE',
