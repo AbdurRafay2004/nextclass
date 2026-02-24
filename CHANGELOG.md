@@ -70,6 +70,7 @@
 - **2026-02-24**: Fixed `ListTile` InkWell ripple effect clipping over rounded container corners in `SettingsPage` by wrapping tiles in `Material` widgets and enabling `Clip.hardEdge`.
 - **2026-02-24**: Replaced the 10 pastel course theme colors with a vibrant, high-contrast palette (Sky Blue, Pink, Green, Orange, Purple, Red, Yellow, Teal, Indigo, Rose) for better visual distinction across the app.
 - **2026-02-24**: Added the course code identifier (e.g. "CS 101") to the top information card on the Course Details page, styled with the assigned theme color.
+- **2026-02-24**: Implemented a comprehensive `ScheduleItemDetailDialog` (bottom sheet) that displays when tapping any timeline or live status card on the Focus page, showing full class, time, and room details in a styled format.
 
 ## Immediate Next Steps
 1. Implement Class Session Conflict detection.
