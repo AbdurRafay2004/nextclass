@@ -4,6 +4,7 @@
 ✅ Phase 21 Complete: Focus page shows upcoming class days
 
 ## ChangeLog
+- **2026-02-24**: Added optional faculty fields (Full Name, Email, Phone, Department) to Course settings and elegantly integrated them into the Schedule Item Detail Dialog.
 - **2026-02-24**: Added "1 hr 20 min" and "1 hr 45 min" to the session duration options, making "1 hr 20 min" the default.
 - **2026-02-24**: Replaced vibrant course color palette with a softer, varied pastel selection (Blush Pink, Peach Cream, Butter Yellow, Mint Green, Sky Blue, Lavender Mist, Coral Rose, Pistachio, Powder Blue, Lilac, Apricot Glow, Soft Teal).
 - **2026-02-21**: Analyzed NextClass design workflows. Selected Flutter, Riverpod, and Isar tech stack. Bootstrapped clean architecture plan.

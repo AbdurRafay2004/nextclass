@@ -21,6 +21,10 @@ class _CourseAddPageState extends ConsumerState<CourseAddPage> {
   final _nameController = TextEditingController();
   final _codeController = TextEditingController();
   final _facultyAcronymController = TextEditingController();
+  final _facultyFullNameController = TextEditingController();
+  final _facultyEmailController = TextEditingController();
+  final _facultyPhoneController = TextEditingController();
+  final _facultyDepartmentController = TextEditingController();
 
   Color _selectedColor = AppColors.courseColors.first;
 
@@ -31,6 +35,12 @@ class _CourseAddPageState extends ConsumerState<CourseAddPage> {
       _nameController.text = widget.courseToEdit!.name;
       _codeController.text = widget.courseToEdit!.code;
       _facultyAcronymController.text = widget.courseToEdit!.facultyAcronym;
+      _facultyFullNameController.text =
+          widget.courseToEdit!.facultyFullName ?? '';
+      _facultyEmailController.text = widget.courseToEdit!.facultyEmail ?? '';
+      _facultyPhoneController.text = widget.courseToEdit!.facultyPhone ?? '';
+      _facultyDepartmentController.text =
+          widget.courseToEdit!.facultyDepartment ?? '';
       _selectedColor = AppColors.hexToColor(widget.courseToEdit!.colorHex);
     }
   }
@@ -46,6 +56,19 @@ class _CourseAddPageState extends ConsumerState<CourseAddPage> {
               name: _nameController.text.trim(),
               code: _codeController.text.trim(),
               facultyAcronym: _facultyAcronymController.text.trim(),
+              facultyFullName: _facultyFullNameController.text.trim().isEmpty
+                  ? null
+                  : _facultyFullNameController.text.trim(),
+              facultyEmail: _facultyEmailController.text.trim().isEmpty
+                  ? null
+                  : _facultyEmailController.text.trim(),
+              facultyPhone: _facultyPhoneController.text.trim().isEmpty
+                  ? null
+                  : _facultyPhoneController.text.trim(),
+              facultyDepartment:
+                  _facultyDepartmentController.text.trim().isEmpty
+                  ? null
+                  : _facultyDepartmentController.text.trim(),
               colorHex: AppColors.colorToHex(_selectedColor),
             );
       } else {
@@ -55,6 +78,19 @@ class _CourseAddPageState extends ConsumerState<CourseAddPage> {
               name: _nameController.text.trim(),
               code: _codeController.text.trim(),
               facultyAcronym: _facultyAcronymController.text.trim(),
+              facultyFullName: _facultyFullNameController.text.trim().isEmpty
+                  ? null
+                  : _facultyFullNameController.text.trim(),
+              facultyEmail: _facultyEmailController.text.trim().isEmpty
+                  ? null
+                  : _facultyEmailController.text.trim(),
+              facultyPhone: _facultyPhoneController.text.trim().isEmpty
+                  ? null
+                  : _facultyPhoneController.text.trim(),
+              facultyDepartment:
+                  _facultyDepartmentController.text.trim().isEmpty
+                  ? null
+                  : _facultyDepartmentController.text.trim(),
               colorHex: AppColors.colorToHex(_selectedColor),
             );
       }
@@ -73,6 +109,10 @@ class _CourseAddPageState extends ConsumerState<CourseAddPage> {
     _nameController.dispose();
     _codeController.dispose();
     _facultyAcronymController.dispose();
+    _facultyFullNameController.dispose();
+    _facultyEmailController.dispose();
+    _facultyPhoneController.dispose();
+    _facultyDepartmentController.dispose();
     super.dispose();
   }
 
@@ -151,6 +191,57 @@ class _CourseAddPageState extends ConsumerState<CourseAddPage> {
                       ),
                       validator: (val) =>
                           val == null || val.isEmpty ? 'Required' : null,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 32),
+              Text(
+                'FACULTY DETAILS (OPTIONAL)',
+                style: AppTextStyles.sectionHeader(context),
+              ),
+              const SizedBox(height: 16),
+              TextFormField(
+                controller: _facultyFullNameController,
+                decoration: const InputDecoration(
+                  labelText: 'Faculty Full Name',
+                  hintText: 'e.g., Prof. Michael House',
+                  prefixIcon: Icon(Icons.person_outline),
+                ),
+              ),
+              const SizedBox(height: 16),
+              TextFormField(
+                controller: _facultyEmailController,
+                keyboardType: TextInputType.emailAddress,
+                decoration: const InputDecoration(
+                  labelText: 'Email Address',
+                  hintText: 'e.g., mhouse@university.edu',
+                  prefixIcon: Icon(Icons.email_outlined),
+                ),
+              ),
+              const SizedBox(height: 16),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextFormField(
+                      controller: _facultyPhoneController,
+                      keyboardType: TextInputType.phone,
+                      decoration: const InputDecoration(
+                        labelText: 'Phone Number',
+                        hintText: 'e.g., 555-0123',
+                        prefixIcon: Icon(Icons.phone_outlined),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: TextFormField(
+                      controller: _facultyDepartmentController,
+                      decoration: const InputDecoration(
+                        labelText: 'Department',
+                        hintText: 'e.g., Computer Science',
+                        prefixIcon: Icon(Icons.business_outlined),
+                      ),
                     ),
                   ),
                 ],

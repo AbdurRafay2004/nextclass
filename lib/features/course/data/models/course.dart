@@ -13,4 +13,9 @@ class Course {
   late String code;
   late String colorHex;
   late String facultyAcronym;
+
+  String? facultyFullName;
+  String? facultyEmail;
+  String? facultyPhone;
+  String? facultyDepartment;
 }

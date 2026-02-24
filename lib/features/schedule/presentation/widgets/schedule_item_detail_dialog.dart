@@ -122,12 +122,23 @@ class ScheduleItemDetailDialog extends StatelessWidget {
                   const SizedBox(height: 32),
 
                   // Detail Rows
+                  // Faculty Details Group
                   _buildDetailRow(
                     context,
                     icon: Icons.person_outline,
                     color: AppColors.skyBlue,
                     label: 'Faculty Acronym',
                     value: item.course.facultyAcronym,
+                    additionalLines: [
+                      if (item.course.facultyFullName != null)
+                        item.course.facultyFullName!,
+                      if (item.course.facultyDepartment != null)
+                        item.course.facultyDepartment!,
+                      if (item.course.facultyEmail != null)
+                        item.course.facultyEmail!,
+                      if (item.course.facultyPhone != null)
+                        item.course.facultyPhone!,
+                    ],
                   ),
                   const SizedBox(height: 24),
                   _buildDetailRow(
@@ -179,6 +190,7 @@ class ScheduleItemDetailDialog extends StatelessWidget {
     required String label,
     required String value,
     String? subValue,
+    List<String>? additionalLines,
   }) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -220,6 +232,20 @@ class ScheduleItemDetailDialog extends StatelessWidget {
                     ),
                 ],
               ),
+              if (additionalLines != null && additionalLines.isNotEmpty) ...[
+                const SizedBox(height: 4),
+                ...additionalLines.map(
+                  (line) => Padding(
+                    padding: const EdgeInsets.only(top: 2),
+                    child: Text(
+                      line,
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: AppColors.mutedText(context),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ],
           ),
         ),

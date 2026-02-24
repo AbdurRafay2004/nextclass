@@ -31,13 +31,21 @@ class CourseController {
     required String code,
     required String colorHex,
     required String facultyAcronym,
+    String? facultyFullName,
+    String? facultyEmail,
+    String? facultyPhone,
+    String? facultyDepartment,
   }) async {
     final course = Course()
       ..uuid = const Uuid().v4()
       ..name = name
       ..code = code
       ..colorHex = colorHex
-      ..facultyAcronym = facultyAcronym;
+      ..facultyAcronym = facultyAcronym
+      ..facultyFullName = facultyFullName
+      ..facultyEmail = facultyEmail
+      ..facultyPhone = facultyPhone
+      ..facultyDepartment = facultyDepartment;
 
     await isar.writeTxn(() async {
       await isar.courses.put(course);
@@ -51,6 +59,10 @@ class CourseController {
     required String code,
     required String colorHex,
     required String facultyAcronym,
+    String? facultyFullName,
+    String? facultyEmail,
+    String? facultyPhone,
+    String? facultyDepartment,
   }) async {
     final course = Course()
       ..id = id
@@ -58,7 +70,11 @@ class CourseController {
       ..name = name
       ..code = code
       ..colorHex = colorHex
-      ..facultyAcronym = facultyAcronym;
+      ..facultyAcronym = facultyAcronym
+      ..facultyFullName = facultyFullName
+      ..facultyEmail = facultyEmail
+      ..facultyPhone = facultyPhone
+      ..facultyDepartment = facultyDepartment;
 
     await isar.writeTxn(() async {
       await isar.courses.put(course);
