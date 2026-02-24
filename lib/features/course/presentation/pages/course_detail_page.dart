@@ -186,13 +186,16 @@ class CourseDetailPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final sessionsAsync = ref.watch(sessionsByCourseProvider(course.uuid));
-    final courseColor = AppColors.hexToColor(course.colorHex);
+    final courseAsync = ref.watch(courseByUuidProvider(course.uuid));
+    final displayCourse = courseAsync.value ?? course;
+
+    final courseColor = AppColors.hexToColor(displayCourse.colorHex);
     final onSurface = Theme.of(context).colorScheme.onSurface;
     final muted = AppColors.mutedText(context);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(course.code),
+        title: Text(displayCourse.code),
         actions: [
           IconButton(
             icon: const Icon(Icons.edit),
@@ -200,7 +203,7 @@ class CourseDetailPage extends ConsumerWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (_) => CourseAddPage(courseToEdit: course),
+                  builder: (_) => CourseAddPage(courseToEdit: displayCourse),
                 ),
               );
             },
@@ -253,7 +256,7 @@ class CourseDetailPage extends ConsumerWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              course.code.toUpperCase(),
+                              displayCourse.code.toUpperCase(),
                               style: Theme.of(context).textTheme.titleSmall
                                   ?.copyWith(
                                     color: courseColor,
@@ -263,7 +266,7 @@ class CourseDetailPage extends ConsumerWidget {
                             ),
                             const SizedBox(height: 4),
                             Text(
-                              course.name,
+                              displayCourse.name,
                               style: Theme.of(context).textTheme.headlineMedium
                                   ?.copyWith(
                                     fontWeight: FontWeight.bold,
@@ -280,7 +283,7 @@ class CourseDetailPage extends ConsumerWidget {
                                 ),
                                 const SizedBox(width: 8),
                                 Text(
-                                  course.facultyAcronym,
+                                  displayCourse.facultyAcronym,
                                   style: Theme.of(context).textTheme.titleMedium
                                       ?.copyWith(color: muted),
                                 ),
@@ -328,7 +331,7 @@ class CourseDetailPage extends ConsumerWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (_) => SessionAddPage(course: course),
+                          builder: (_) => SessionAddPage(course: displayCourse),
                         ),
                       );
                     },

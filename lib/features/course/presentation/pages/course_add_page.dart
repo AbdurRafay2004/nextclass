@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
+import '../../../schedule/presentation/providers/session_provider.dart';
 import '../../data/models/course.dart';
 import '../providers/course_provider.dart';
 
@@ -96,6 +97,10 @@ class _CourseAddPageState extends ConsumerState<CourseAddPage> {
       }
 
       if (mounted) {
+        // Invalidate the FutureProviders that cache Course objects
+        ref.invalidate(courseByUuidProvider);
+        ref.invalidate(dayScheduleProvider);
+
         Navigator.pop(context);
         ScaffoldMessenger.of(
           context,
