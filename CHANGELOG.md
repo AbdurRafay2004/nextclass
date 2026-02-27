@@ -4,6 +4,7 @@
 ✅ Phase 22 Complete: QR-Based Instant Schedule Sharing feature implemented
 
 ## ChangeLog
+- **2026-02-28**: Fixed Isar `MdbxError (11) "Try again"` database lock issue by implementing a centralized `_withRetry` mechanism in `CourseController` and `SessionController` to gracefully handle transient storage contention.
 - **2026-02-26**: Fixed Skeptic report issues: Added CAMERA permission for QR scanner, synchronized app versioning to 2.0.0, optimized N+1 queries in session_provider, added input validation to controllers, and fixed early return bug on Dashboard.
 - **2026-02-24**: Added optional faculty fields (Full Name, Email, Phone, Department) to Course settings and elegantly integrated them into the Schedule Item Detail Dialog.
 - **2026-02-24**: Added "1 hr 20 min" and "1 hr 45 min" to the session duration options, making "1 hr 20 min" the default.

@@ -88,6 +88,27 @@ class SessionController {
   final Isar isar;
   SessionController({required this.isar});
 
+  Future<T> _withRetry<T>(Future<T> Function() operation) async {
+    const maxRetries = 3;
+    const baseDelay = Duration(milliseconds: 50);
+
+    for (var attempt = 1; attempt <= maxRetries; attempt++) {
+      try {
+        return await operation();
+      } catch (e) {
+        if (e is IsarError &&
+            (e.toString().contains('11') ||
+                e.toString().contains('Try again'))) {
+          if (attempt == maxRetries) rethrow;
+          await Future.delayed(baseDelay * attempt);
+        } else {
+          rethrow;
+        }
+      }
+    }
+    throw StateError('Unreachable retry state');
+  }
+
   Future<void> addSession({
     required String courseUuid,
     required int dayOfWeek,
@@ -117,8 +138,10 @@ class SessionController {
       ..room = room
       ..type = type;
 
-    await isar.writeTxn(() async {
-      await isar.classSessions.put(session);
+    await _withRetry(() async {
+      await isar.writeTxn(() async {
+        await isar.classSessions.put(session);
+      });
     });
   }
 
@@ -153,14 +176,18 @@ class SessionController {
       ..room = room
       ..type = type;
 
-    await isar.writeTxn(() async {
-      await isar.classSessions.put(session);
+    await _withRetry(() async {
+      await isar.writeTxn(() async {
+        await isar.classSessions.put(session);
+      });
     });
   }
 
   Future<void> deleteSession(int id) async {
-    await isar.writeTxn(() async {
-      await isar.classSessions.delete(id);
+    await _withRetry(() async {
+      await isar.writeTxn(() async {
+        await isar.classSessions.delete(id);
+      });
     });
   }
 }

@@ -26,6 +26,27 @@ class CourseController {
   final Isar isar;
   CourseController({required this.isar});
 
+  Future<T> _withRetry<T>(Future<T> Function() operation) async {
+    const maxRetries = 3;
+    const baseDelay = Duration(milliseconds: 50);
+
+    for (var attempt = 1; attempt <= maxRetries; attempt++) {
+      try {
+        return await operation();
+      } catch (e) {
+        if (e is IsarError &&
+            (e.toString().contains('11') ||
+                e.toString().contains('Try again'))) {
+          if (attempt == maxRetries) rethrow;
+          await Future.delayed(baseDelay * attempt);
+        } else {
+          rethrow;
+        }
+      }
+    }
+    throw StateError('Unreachable retry state');
+  }
+
   Future<void> addCourse({
     required String name,
     required String code,
@@ -60,8 +81,10 @@ class CourseController {
       ..facultyPhone = facultyPhone
       ..facultyDepartment = facultyDepartment;
 
-    await isar.writeTxn(() async {
-      await isar.courses.put(course);
+    await _withRetry(() async {
+      await isar.writeTxn(() async {
+        await isar.courses.put(course);
+      });
     });
   }
 
@@ -102,21 +125,28 @@ class CourseController {
       ..facultyPhone = facultyPhone
       ..facultyDepartment = facultyDepartment;
 
-    await isar.writeTxn(() async {
-      await isar.courses.put(course);
+    await _withRetry(() async {
+      await isar.writeTxn(() async {
+        await isar.courses.put(course);
+      });
     });
   }
 
   Future<void> deleteCourse(String uuid) async {
-    await isar.writeTxn(() async {
-      // Find the course id
-      final course = await isar.courses.filter().uuidEqualTo(uuid).findFirst();
-      if (course != null) {
-        await isar.courses.delete(course.id);
+    await _withRetry(() async {
+      await isar.writeTxn(() async {
+        // Find the course id
+        final course = await isar.courses
+            .filter()
+            .uuidEqualTo(uuid)
+            .findFirst();
+        if (course != null) {
+          await isar.courses.delete(course.id);
 
-        // Cascade delete all sessions tied to this course
-        await isar.classSessions.filter().courseUuidEqualTo(uuid).deleteAll();
-      }
+          // Cascade delete all sessions tied to this course
+          await isar.classSessions.filter().courseUuidEqualTo(uuid).deleteAll();
+        }
+      });
     });
   }
 }
