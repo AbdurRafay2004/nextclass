@@ -36,6 +36,19 @@ class CourseController {
     String? facultyPhone,
     String? facultyDepartment,
   }) async {
+    if (name.trim().isEmpty) {
+      throw ArgumentError('Course name cannot be empty.');
+    }
+    if (code.trim().isEmpty) {
+      throw ArgumentError('Course code cannot be empty.');
+    }
+    if (colorHex.trim().isEmpty) {
+      throw ArgumentError('Course color cannot be empty.');
+    }
+    if (facultyAcronym.trim().isEmpty) {
+      throw ArgumentError('Faculty acronym cannot be empty.');
+    }
+
     final course = Course()
       ..uuid = const Uuid().v4()
       ..name = name
@@ -64,6 +77,19 @@ class CourseController {
     String? facultyPhone,
     String? facultyDepartment,
   }) async {
+    if (name.trim().isEmpty) {
+      throw ArgumentError('Course name cannot be empty.');
+    }
+    if (code.trim().isEmpty) {
+      throw ArgumentError('Course code cannot be empty.');
+    }
+    if (colorHex.trim().isEmpty) {
+      throw ArgumentError('Course color cannot be empty.');
+    }
+    if (facultyAcronym.trim().isEmpty) {
+      throw ArgumentError('Faculty acronym cannot be empty.');
+    }
+
     final course = Course()
       ..id = id
       ..uuid = uuid

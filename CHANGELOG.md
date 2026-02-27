@@ -4,6 +4,7 @@
 ✅ Phase 22 Complete: QR-Based Instant Schedule Sharing feature implemented
 
 ## ChangeLog
+- **2026-02-26**: Fixed Skeptic report issues: Added CAMERA permission for QR scanner, synchronized app versioning to 2.0.0, optimized N+1 queries in session_provider, added input validation to controllers, and fixed early return bug on Dashboard.
 - **2026-02-24**: Added optional faculty fields (Full Name, Email, Phone, Department) to Course settings and elegantly integrated them into the Schedule Item Detail Dialog.
 - **2026-02-24**: Added "1 hr 20 min" and "1 hr 45 min" to the session duration options, making "1 hr 20 min" the default.
 - **2026-02-24**: Replaced vibrant course color palette with a softer, varied pastel selection (Blush Pink, Peach Cream, Butter Yellow, Mint Green, Sky Blue, Lavender Mist, Coral Rose, Pistachio, Powder Blue, Lilac, Apricot Glow, Soft Teal).
@@ -87,6 +88,7 @@
 2. Implement Class Session Conflict detection.
 3. Add camera permission handling for QR scanner.
 4. Refine animations and micro-interactions.
+5. Run `dart run build_runner build --delete-conflicting-outputs` to regenerate Isar database files.
 
 ## Known Issues/Notes
 - Notification functionality is currently untied. Session creation lacks conflict validation.

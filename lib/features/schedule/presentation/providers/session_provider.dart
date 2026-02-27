@@ -36,13 +36,22 @@ final dayScheduleProvider = FutureProvider.family<List<ScheduleItem>, int>((
       .sortByStartTimeMinutes()
       .findAll();
 
-  // For each session, fetch the associated course
+  // Extract unique course UUIDs
+  final courseUuids = sessions.map((s) => s.courseUuid).toSet().toList();
+
+  // Fetch all related courses in a single query
+  final courses = await isar.courses
+      .filter()
+      .anyOf(courseUuids, (q, String uuid) => q.uuidEqualTo(uuid))
+      .findAll();
+
+  // Create a map for fast lookup
+  final courseMap = {for (var c in courses) c.uuid: c};
+
+  // Construct ScheduleItems
   final List<ScheduleItem> scheduleItems = [];
   for (var session in sessions) {
-    final course = await isar.courses
-        .filter()
-        .uuidEqualTo(session.courseUuid)
-        .findFirst();
+    final course = courseMap[session.courseUuid];
     if (course != null) {
       scheduleItems.add(ScheduleItem(session: session, course: course));
     }
@@ -87,6 +96,19 @@ class SessionController {
     required String room,
     required SessionType type,
   }) async {
+    if (startTimeMinutes < 0 || startTimeMinutes >= 24 * 60) {
+      throw ArgumentError('Start time must be between 0 and 1439 minutes.');
+    }
+    if (durationMinutes <= 0) {
+      throw ArgumentError('Duration must be greater than 0.');
+    }
+    if (dayOfWeek < 1 || dayOfWeek > 7) {
+      throw ArgumentError('Day of week must be between 1 and 7.');
+    }
+    if (room.trim().isEmpty) {
+      throw ArgumentError('Room cannot be empty.');
+    }
+
     final session = ClassSession()
       ..courseUuid = courseUuid
       ..dayOfWeek = dayOfWeek
@@ -109,6 +131,19 @@ class SessionController {
     required String room,
     required SessionType type,
   }) async {
+    if (startTimeMinutes < 0 || startTimeMinutes >= 24 * 60) {
+      throw ArgumentError('Start time must be between 0 and 1439 minutes.');
+    }
+    if (durationMinutes <= 0) {
+      throw ArgumentError('Duration must be greater than 0.');
+    }
+    if (dayOfWeek < 1 || dayOfWeek > 7) {
+      throw ArgumentError('Day of week must be between 1 and 7.');
+    }
+    if (room.trim().isEmpty) {
+      throw ArgumentError('Room cannot be empty.');
+    }
+
     final session = ClassSession()
       ..id = id
       ..courseUuid = courseUuid
@@ -190,8 +225,7 @@ final dashboardScheduleProvider = Provider<AsyncValue<DashboardSchedule>>((
     final targetDay = targetDate.weekday;
 
     final dayAsync = ref.watch(dayScheduleProvider(targetDay));
-    if (dayAsync.isLoading) return const AsyncValue.loading();
-    if (dayAsync.hasError) continue;
+    if (dayAsync.isLoading || dayAsync.hasError) continue;
 
     final dayItems = dayAsync.value ?? [];
     if (dayItems.isNotEmpty) {
