@@ -47,7 +47,7 @@ class CourseController {
     throw StateError('Unreachable retry state');
   }
 
-  Future<void> addCourse({
+  Future<Course> addCourse({
     required String name,
     required String code,
     required String colorHex,
@@ -86,6 +86,8 @@ class CourseController {
         await isar.courses.put(course);
       });
     });
+
+    return course;
   }
 
   Future<void> updateCourse({

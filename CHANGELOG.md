@@ -4,11 +4,6 @@
 ✅ Phase 22 Complete: QR-Based Instant Schedule Sharing feature implemented
 
 ## ChangeLog
-- **2026-02-28**: Fixed Isar `MdbxError (11) "Try again"` database lock issue by implementing a centralized `_withRetry` mechanism in `CourseController` and `SessionController` to gracefully handle transient storage contention.
-- **2026-02-26**: Fixed Skeptic report issues: Added CAMERA permission for QR scanner, synchronized app versioning to 2.0.0, optimized N+1 queries in session_provider, added input validation to controllers, and fixed early return bug on Dashboard.
-- **2026-02-24**: Added optional faculty fields (Full Name, Email, Phone, Department) to Course settings and elegantly integrated them into the Schedule Item Detail Dialog.
-- **2026-02-24**: Added "1 hr 20 min" and "1 hr 45 min" to the session duration options, making "1 hr 20 min" the default.
-- **2026-02-24**: Replaced vibrant course color palette with a softer, varied pastel selection (Blush Pink, Peach Cream, Butter Yellow, Mint Green, Sky Blue, Lavender Mist, Coral Rose, Pistachio, Powder Blue, Lilac, Apricot Glow, Soft Teal).
 - **2026-02-21**: Analyzed NextClass design workflows. Selected Flutter, Riverpod, and Isar tech stack. Bootstrapped clean architecture plan.
 - **2026-02-21**: Added pubspec dependencies (Riverpod, Isar). Created Google Fonts theme, brand color palettes. Generated initial `Course` and `ClassSession` Isar models.
 - **2026-02-21**: Setup offline Isar Database initialization and provided it globally via Riverpod `databaseProvider`.
@@ -75,6 +70,9 @@
 - **2026-02-24**: Fixed `ListTile` InkWell ripple effect clipping over rounded container corners in `SettingsPage` by wrapping tiles in `Material` widgets and enabling `Clip.hardEdge`.
 - **2026-02-24**: Added the course code identifier (e.g. "CS 101") to the top information card on the Course Details page, styled with the assigned theme color.
 - **2026-02-24**: Implemented a comprehensive `ScheduleItemDetailDialog` (bottom sheet) that displays when tapping any timeline or live status card on the Focus page, showing full class, time, and room details in a styled format.
+- **2026-02-24**: Added "1 hr 20 min" and "1 hr 45 min" to the session duration options, making "1 hr 20 min" the default.
+- **2026-02-24**: Replaced vibrant course color palette with a softer, varied pastel selection (Blush Pink, Peach Cream, Butter Yellow, Mint Green, Sky Blue, Lavender Mist, Coral Rose, Pistachio, Powder Blue, Lilac, Apricot Glow, Soft Teal).
+- **2026-02-24**: Added optional faculty fields (Full Name, Email, Phone, Department) to Course settings and elegantly integrated them into the Schedule Item Detail Dialog.
 - **2026-02-24**: Implemented QR-Based Instant Schedule Sharing feature with full architecture:
   - **Domain Layer**: Created `ScheduleShareDTO` with short-key JSON format (`v`, `cs`, `n`, `c`, `ch`, `fa`, `ss`, `d`, `st`, `du`, `r`, `t`) and version field for forward compatibility.
   - **Data Layer**: Built `ShareEncoderService` (JSON → GZIP → Base64 pipeline) with full/selective export modes, `ShareDecoderService` (Base64 → GZIP → JSON), and `ShareImportService` with Replace/Merge conflict handling scoped only to imported courses.
@@ -83,6 +81,10 @@
   - **State Management**: Created `sharing_provider.dart` with `ShareEncoderService`, `ShareDecoderService`, `ShareImportService` providers, `CourseSelectionNotifier` for selection state, and `estimatedSizeProvider` for live byte-size estimation.
   - **Integration**: Added `qr_flutter` and `mobile_scanner` dependencies. Added "Share Schedule" entry point in Settings page under new "SHARING" section.
   - **Safety**: QR size threshold guard at 2500 bytes with user-friendly dialog when exceeded. GZIP compression reduces payload by ~40-60%.
+- **2026-02-26**: Fixed Skeptic report issues: Added CAMERA permission for QR scanner, synchronized app versioning to 2.0.0, optimized N+1 queries in session_provider, added input validation to controllers, and fixed early return bug on Dashboard.
+- **2026-02-28**: Fixed Isar `MdbxError (11) "Try again"` database lock issue by implementing a centralized `_withRetry` mechanism in `CourseController` and `SessionController` to gracefully handle transient storage contention.
+- **2026-02-28**: Improved user flow by automatically redirecting to the "Add Session" page immediately after successfully creating a new course.
+- **2026-02-28**: Updated app version to 5.4.2 across the configuration and Settings page UI.
 
 ## Immediate Next Steps
 1. Visual QA: test QR sharing flow end-to-end on physical device.

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
+import '../../../schedule/presentation/pages/session_add_page.dart';
 import '../../../schedule/presentation/providers/session_provider.dart';
 import '../../data/models/course.dart';
 import '../providers/course_provider.dart';
@@ -73,7 +74,7 @@ class _CourseAddPageState extends ConsumerState<CourseAddPage> {
               colorHex: AppColors.colorToHex(_selectedColor),
             );
       } else {
-        await ref
+        final newCourse = await ref
             .read(courseControllerProvider)
             .addCourse(
               name: _nameController.text.trim(),
@@ -94,14 +95,29 @@ class _CourseAddPageState extends ConsumerState<CourseAddPage> {
                   : _facultyDepartmentController.text.trim(),
               colorHex: AppColors.colorToHex(_selectedColor),
             );
+
+        if (mounted) {
+          // Invalidate the FutureProviders that cache Course objects
+          ref.invalidate(courseByUuidProvider);
+          ref.invalidate(dayScheduleProvider);
+
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => SessionAddPage(course: newCourse),
+            ),
+          );
+        }
       }
 
-      if (mounted) {
+      if (mounted && widget.courseToEdit != null) {
         // Invalidate the FutureProviders that cache Course objects
         ref.invalidate(courseByUuidProvider);
         ref.invalidate(dayScheduleProvider);
-
         Navigator.pop(context);
+      }
+
+      if (mounted) {
         ScaffoldMessenger.of(
           context,
         ).showSnackBar(const SnackBar(content: Text('Course saved!')));
