@@ -1,7 +1,7 @@
 # Changelog
 
 ## Current Status
-✅ Phase 22 Complete: QR-Based Instant Schedule Sharing feature implemented
+✅ Phase 23 Complete: Hardened database layer against MdbxError (11) on low-end devices
 
 ## ChangeLog
 - **2026-02-21**: Analyzed NextClass design workflows. Selected Flutter, Riverpod, and Isar tech stack. Bootstrapped clean architecture plan.
@@ -85,6 +85,12 @@
 - **2026-02-28**: Fixed Isar `MdbxError (11) "Try again"` database lock issue by implementing a centralized `_withRetry` mechanism in `CourseController` and `SessionController` to gracefully handle transient storage contention.
 - **2026-02-28**: Improved user flow by automatically redirecting to the "Add Session" page immediately after successfully creating a new course.
 - **2026-02-28**: Updated app version to 5.4.2 across the configuration and Settings page UI.
+- **2026-03-03**: Created `DatabaseWriteSerializer` (`core/database/database_write_serializer.dart`) with a zero-dependency async Mutex (future-chaining queue pattern) and exponential-backoff retry (5 attempts, 100ms base) targeting `MdbxError (11): Try again`. All Isar write paths now use `safeWrite()` for serialization + retry.
+- **2026-03-03**: Refactored `CourseController` and `SessionController` to remove duplicated `_withRetry` methods (20 lines each) in favor of the shared `DatabaseWriteSerializer.safeWrite()`.
+- **2026-03-03**: Added retry protection to `ShareImportService` — previously ran bare `writeTxn()` with no retry or serialization, making it the most vulnerable code path on low-end devices.
+- **2026-03-03**: Reduced `deleteCourse` transaction scope — reads (course lookup + session ID fetch) now happen outside `writeTxn`, minimizing MDBX lock hold time.
+- **2026-03-03**: Tuned `Isar.open` config: `maxSizeMiB: 64` (was default 1024) to reduce mmap pressure on 32-bit devices, `compactOnLaunch` to reclaim wasted space.
+- **2026-03-03**: Fixed fragile error detection — replaced `e.toString().contains('11')` with targeted `msg.contains('MdbxError') && msg.contains('Try again')` check.
 
 ## Immediate Next Steps
 1. Visual QA: test QR sharing flow end-to-end on physical device.

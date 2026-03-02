@@ -37,6 +37,8 @@ Read `lib/core/core.dart` barrel export to see everything available:
 | `ScheduleShareDTO` | `sharing/domain/schedule_share_dto.dart` | Short-key DTO for QR sharing |
 | `courseSelectionProvider` | `sharing/presentation/providers/sharing_provider.dart` | Track selected courses for export |
 | `estimatedSizeProvider` | `sharing/presentation/providers/sharing_provider.dart` | Live QR byte-size estimate |
+| `DatabaseWriteSerializer` | `core/database/database_write_serializer.dart` | Async Mutex + exponential retry for all Isar writes |
+| `databaseWriteSerializerProvider` | `core/database/database_write_serializer.dart` | Global singleton for the write serializer |
 
 ## Architecture
 - Feature-based clean architecture: `data/models → presentation/providers → presentation/pages|widgets`
@@ -56,6 +58,13 @@ Read `lib/core/core.dart` barrel export to see everything available:
 - Timer/stream intervals should match UI granularity (30s for minute-level display)
 - Batch database queries instead of N+1 patterns (fetch all, then join in-memory)
 - `timeProvider` stream must `yield` immediately before entering periodic loop
+
+## Database Writes
+- **Never call `isar.writeTxn()` directly** — always wrap with `DatabaseWriteSerializer.safeWrite()` to serialize and retry
+- MDBX uses a single-writer model; concurrent `writeTxn` calls cause `MdbxError (11): Try again`
+- Keep write transactions as short as possible — move reads (queries, filters) outside `writeTxn`
+- Low-end 32-bit (armeabi-v7a) devices with slow eMMC are most vulnerable to lock contention
+- `Isar.open` uses `maxSizeMiB: 64` to reduce mmap pressure on 32-bit address spaces
 
 ## Theming & Colors
 - **Never hardcode colors** (`Colors.white`, `Color(0xFF222224)`) — use `AppColors.*` constants or context-aware helpers

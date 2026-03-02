@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
 
 import '../../../../core/database/database_manager.dart';
+import '../../../../core/database/database_write_serializer.dart';
 import '../../../../core/providers/time_provider.dart';
 import '../../../../core/utils/time_utils.dart';
 import '../../../course/data/models/course.dart';
@@ -86,28 +87,12 @@ final sessionsByCourseProvider =
 // A Controller to handle Session mutations (mirrors CourseController)
 class SessionController {
   final Isar isar;
-  SessionController({required this.isar});
+  final DatabaseWriteSerializer _serializer;
 
-  Future<T> _withRetry<T>(Future<T> Function() operation) async {
-    const maxRetries = 3;
-    const baseDelay = Duration(milliseconds: 50);
-
-    for (var attempt = 1; attempt <= maxRetries; attempt++) {
-      try {
-        return await operation();
-      } catch (e) {
-        if (e is IsarError &&
-            (e.toString().contains('11') ||
-                e.toString().contains('Try again'))) {
-          if (attempt == maxRetries) rethrow;
-          await Future.delayed(baseDelay * attempt);
-        } else {
-          rethrow;
-        }
-      }
-    }
-    throw StateError('Unreachable retry state');
-  }
+  SessionController({
+    required this.isar,
+    required DatabaseWriteSerializer serializer,
+  }) : _serializer = serializer;
 
   Future<void> addSession({
     required String courseUuid,
@@ -138,7 +123,7 @@ class SessionController {
       ..room = room
       ..type = type;
 
-    await _withRetry(() async {
+    await _serializer.safeWrite(() async {
       await isar.writeTxn(() async {
         await isar.classSessions.put(session);
       });
@@ -176,7 +161,7 @@ class SessionController {
       ..room = room
       ..type = type;
 
-    await _withRetry(() async {
+    await _serializer.safeWrite(() async {
       await isar.writeTxn(() async {
         await isar.classSessions.put(session);
       });
@@ -184,7 +169,7 @@ class SessionController {
   }
 
   Future<void> deleteSession(int id) async {
-    await _withRetry(() async {
+    await _serializer.safeWrite(() async {
       await isar.writeTxn(() async {
         await isar.classSessions.delete(id);
       });
@@ -195,7 +180,8 @@ class SessionController {
 // Provider for the session controller
 final sessionControllerProvider = Provider<SessionController>((ref) {
   final isar = ref.watch(databaseProvider);
-  return SessionController(isar: isar);
+  final serializer = ref.watch(databaseWriteSerializerProvider);
+  return SessionController(isar: isar, serializer: serializer);
 });
 
 // Represents one future day's schedule with a readable label.

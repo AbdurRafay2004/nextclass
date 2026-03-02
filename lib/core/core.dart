@@ -5,6 +5,7 @@
 library;
 
 export 'database/database_manager.dart';
+export 'database/database_write_serializer.dart';
 export 'providers/time_provider.dart';
 export 'theme/theme.dart';
 export 'utils/utils.dart';

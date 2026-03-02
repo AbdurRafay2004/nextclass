@@ -3,6 +3,7 @@ import 'package:isar/isar.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../../core/database/database_manager.dart';
+import '../../../../core/database/database_write_serializer.dart';
 import '../../../schedule/data/models/class_session.dart';
 import '../../data/models/course.dart';
 
@@ -24,28 +25,12 @@ final courseByUuidProvider = FutureProvider.family<Course?, String>((
 // A Controller to handle Course mutations
 class CourseController {
   final Isar isar;
-  CourseController({required this.isar});
+  final DatabaseWriteSerializer _serializer;
 
-  Future<T> _withRetry<T>(Future<T> Function() operation) async {
-    const maxRetries = 3;
-    const baseDelay = Duration(milliseconds: 50);
-
-    for (var attempt = 1; attempt <= maxRetries; attempt++) {
-      try {
-        return await operation();
-      } catch (e) {
-        if (e is IsarError &&
-            (e.toString().contains('11') ||
-                e.toString().contains('Try again'))) {
-          if (attempt == maxRetries) rethrow;
-          await Future.delayed(baseDelay * attempt);
-        } else {
-          rethrow;
-        }
-      }
-    }
-    throw StateError('Unreachable retry state');
-  }
+  CourseController({
+    required this.isar,
+    required DatabaseWriteSerializer serializer,
+  }) : _serializer = serializer;
 
   Future<Course> addCourse({
     required String name,
@@ -81,7 +66,7 @@ class CourseController {
       ..facultyPhone = facultyPhone
       ..facultyDepartment = facultyDepartment;
 
-    await _withRetry(() async {
+    await _serializer.safeWrite(() async {
       await isar.writeTxn(() async {
         await isar.courses.put(course);
       });
@@ -127,7 +112,7 @@ class CourseController {
       ..facultyPhone = facultyPhone
       ..facultyDepartment = facultyDepartment;
 
-    await _withRetry(() async {
+    await _serializer.safeWrite(() async {
       await isar.writeTxn(() async {
         await isar.courses.put(course);
       });
@@ -135,19 +120,20 @@ class CourseController {
   }
 
   Future<void> deleteCourse(String uuid) async {
-    await _withRetry(() async {
-      await isar.writeTxn(() async {
-        // Find the course id
-        final course = await isar.courses
-            .filter()
-            .uuidEqualTo(uuid)
-            .findFirst();
-        if (course != null) {
-          await isar.courses.delete(course.id);
+    // Read outside the write transaction to minimize lock hold time
+    final course = await isar.courses.filter().uuidEqualTo(uuid).findFirst();
+    if (course == null) return;
 
-          // Cascade delete all sessions tied to this course
-          await isar.classSessions.filter().courseUuidEqualTo(uuid).deleteAll();
-        }
+    final sessionIds = await isar.classSessions
+        .filter()
+        .courseUuidEqualTo(uuid)
+        .idProperty()
+        .findAll();
+
+    await _serializer.safeWrite(() async {
+      await isar.writeTxn(() async {
+        await isar.courses.delete(course.id);
+        await isar.classSessions.deleteAll(sessionIds);
       });
     });
   }
@@ -156,5 +142,6 @@ class CourseController {
 // Provider for the controller
 final courseControllerProvider = Provider<CourseController>((ref) {
   final isar = ref.watch(databaseProvider);
-  return CourseController(isar: isar);
+  final serializer = ref.watch(databaseWriteSerializerProvider);
+  return CourseController(isar: isar, serializer: serializer);
 });

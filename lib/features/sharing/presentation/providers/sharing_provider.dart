@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/database/database_manager.dart';
+import '../../../../core/database/database_write_serializer.dart';
 import '../../data/share_decoder_service.dart';
 import '../../data/share_encoder_service.dart';
 import '../../data/share_import_service.dart';
@@ -19,7 +20,8 @@ final shareDecoderProvider = Provider<ShareDecoderService>((ref) {
 /// Provider for the [ShareImportService].
 final shareImportProvider = Provider<ShareImportService>((ref) {
   final isar = ref.watch(databaseProvider);
-  return ShareImportService(isar: isar);
+  final serializer = ref.watch(databaseWriteSerializerProvider);
+  return ShareImportService(isar: isar, serializer: serializer);
 });
 
 /// Tracks which course UUIDs are selected for selective export.
