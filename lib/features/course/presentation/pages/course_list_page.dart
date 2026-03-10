@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
+import '../../../../core/widgets/database_error_widget.dart';
 import '../providers/course_provider.dart';
 import 'course_add_page.dart';
 import 'course_detail_page.dart';
@@ -230,7 +231,10 @@ class CourseListPage extends ConsumerWidget {
           );
         },
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (err, st) => Center(child: Text('Error: $err')),
+        error: (err, st) => DatabaseErrorWidget(
+          error: err,
+          onRetry: () => ref.invalidate(coursesProvider),
+        ),
       ),
     );
   }

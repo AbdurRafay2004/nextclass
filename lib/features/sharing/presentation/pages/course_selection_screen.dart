@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
+import '../../../../core/widgets/database_error_widget.dart';
 import '../../../course/data/models/course.dart';
 import '../../../course/presentation/providers/course_provider.dart';
 import '../../data/share_encoder_service.dart';
@@ -30,7 +31,10 @@ class CourseSelectionScreen extends ConsumerWidget {
       appBar: AppBar(title: const Text('SELECT COURSES')),
       body: coursesAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => Center(child: Text('Error: $e')),
+        error: (e, _) => DatabaseErrorWidget(
+          error: e,
+          onRetry: () => ref.invalidate(coursesProvider),
+        ),
         data: (courses) {
           if (courses.isEmpty) {
             return Center(

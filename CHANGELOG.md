@@ -91,6 +91,10 @@
 - **2026-03-03**: Reduced `deleteCourse` transaction scope — reads (course lookup + session ID fetch) now happen outside `writeTxn`, minimizing MDBX lock hold time.
 - **2026-03-03**: Tuned `Isar.open` config: `maxSizeMiB: 64` (was default 1024) to reduce mmap pressure on 32-bit devices, `compactOnLaunch` to reclaim wasted space.
 - **2026-03-03**: Fixed fragile error detection — replaced `e.toString().contains('11')` with targeted `msg.contains('MdbxError') && msg.contains('Try again')` check.
+- **2026-03-03**: Reverted `compactOnLaunch` and `maxSizeMiB` Isar config — these extended startup time on slow eMMC (Vivo Y15S), widening the window for stale MDBX lock files on force-kill, causing permanent black screens.
+- **2026-03-03**: Increased retry budget to 8 attempts with 150ms exponential backoff (~19s total window) to accommodate extremely slow eMMC I/O on low-end 32-bit devices.
+- **2026-03-03**: Created `DatabaseErrorWidget` (`core/widgets/database_error_widget.dart`) — reusable error recovery widget with a "Retry" button that detects MdbxError and shows a user-friendly "Temporary Issue" message.
+- **2026-03-03**: Wired `DatabaseErrorWidget` into all 4 pages that display database-fetched data: `DashboardPage`, `CourseListPage`, `CourseDetailPage`, `CourseSelectionScreen`. Users can now tap "Retry" to recover from transient database errors instead of seeing raw error text.
 
 ## Immediate Next Steps
 1. Visual QA: test QR sharing flow end-to-end on physical device.

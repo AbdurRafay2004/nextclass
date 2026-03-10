@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import '../../../../core/providers/time_provider.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
+import '../../../../core/widgets/database_error_widget.dart';
 import '../../../../core/widgets/dynamic_nav_bar.dart';
 import '../../../course/presentation/pages/course_add_page.dart';
 import '../../../course/presentation/pages/course_list_page.dart';
@@ -200,7 +201,13 @@ class _DashboardPageState extends ConsumerState<DashboardPage>
             );
           },
           loading: () => const Center(child: CircularProgressIndicator()),
-          error: (e, st) => Center(child: Text('Error: $e')),
+          error: (e, st) => DatabaseErrorWidget(
+            error: e,
+            onRetry: () {
+              ref.invalidate(dayScheduleProvider);
+              ref.invalidate(dashboardScheduleProvider);
+            },
+          ),
         );
       },
     );

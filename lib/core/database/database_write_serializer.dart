@@ -47,8 +47,8 @@ class DatabaseWriteSerializer {
   /// Total maximum wait: ~1.5 seconds, which accommodates slow eMMC I/O.
   Future<T> withRetry<T>(
     Future<T> Function() operation, {
-    int maxRetries = 5,
-    Duration baseDelay = const Duration(milliseconds: 100),
+    int maxRetries = 8,
+    Duration baseDelay = const Duration(milliseconds: 150),
   }) async {
     for (var attempt = 1; attempt <= maxRetries; attempt++) {
       try {
