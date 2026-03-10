@@ -1,9 +1,13 @@
 # Changelog
 
 ## Current Status
-✅ Phase 23 Complete: Hardened database layer against MdbxError (11) on low-end devices
+✅ Phase 24 Complete: Addressed medium-priority code quality issues reported in Deep Code Analysis.
 
 ## ChangeLog
+- **2026-03-10**: Extracted duplicate validation logic from `CourseController` and `SessionController` into dedicated `CourseValidator` and `SessionValidator` domain classes to enforce DRY principles.
+- **2026-03-10**: Added input validation to `ShareImportService` to gracefully skip imported courses with empty names or codes.
+- **2026-03-10**: Removed dead BoxShadow code (zero alpha) from `DynamicNavBar` for cleaner widget rendering.
+- **2026-03-10**: Implemented standard Flutter `AboutDialog` on the Settings page to display app version and details.
 - **2026-02-21**: Analyzed NextClass design workflows. Selected Flutter, Riverpod, and Isar tech stack. Bootstrapped clean architecture plan.
 - **2026-02-21**: Added pubspec dependencies (Riverpod, Isar). Created Google Fonts theme, brand color palettes. Generated initial `Course` and `ClassSession` Isar models.
 - **2026-02-21**: Setup offline Isar Database initialization and provided it globally via Riverpod `databaseProvider`.

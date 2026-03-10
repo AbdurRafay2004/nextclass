@@ -7,6 +7,7 @@ import '../../../../core/providers/time_provider.dart';
 import '../../../../core/utils/time_utils.dart';
 import '../../../course/data/models/course.dart';
 import '../../data/models/class_session.dart';
+import '../../domain/session_validator.dart';
 
 // Represents a combined entity of Session + Course Details
 class ScheduleItem {
@@ -102,18 +103,12 @@ class SessionController {
     required String room,
     required SessionType type,
   }) async {
-    if (startTimeMinutes < 0 || startTimeMinutes >= 24 * 60) {
-      throw ArgumentError('Start time must be between 0 and 1439 minutes.');
-    }
-    if (durationMinutes <= 0) {
-      throw ArgumentError('Duration must be greater than 0.');
-    }
-    if (dayOfWeek < 1 || dayOfWeek > 7) {
-      throw ArgumentError('Day of week must be between 1 and 7.');
-    }
-    if (room.trim().isEmpty) {
-      throw ArgumentError('Room cannot be empty.');
-    }
+    SessionValidator.validate(
+      startTimeMinutes: startTimeMinutes,
+      durationMinutes: durationMinutes,
+      dayOfWeek: dayOfWeek,
+      room: room,
+    );
 
     final session = ClassSession()
       ..courseUuid = courseUuid
@@ -139,18 +134,12 @@ class SessionController {
     required String room,
     required SessionType type,
   }) async {
-    if (startTimeMinutes < 0 || startTimeMinutes >= 24 * 60) {
-      throw ArgumentError('Start time must be between 0 and 1439 minutes.');
-    }
-    if (durationMinutes <= 0) {
-      throw ArgumentError('Duration must be greater than 0.');
-    }
-    if (dayOfWeek < 1 || dayOfWeek > 7) {
-      throw ArgumentError('Day of week must be between 1 and 7.');
-    }
-    if (room.trim().isEmpty) {
-      throw ArgumentError('Room cannot be empty.');
-    }
+    SessionValidator.validate(
+      startTimeMinutes: startTimeMinutes,
+      durationMinutes: durationMinutes,
+      dayOfWeek: dayOfWeek,
+      room: room,
+    );
 
     final session = ClassSession()
       ..id = id

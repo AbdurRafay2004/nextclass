@@ -6,6 +6,7 @@ import '../../../../core/database/database_manager.dart';
 import '../../../../core/database/database_write_serializer.dart';
 import '../../../schedule/data/models/class_session.dart';
 import '../../data/models/course.dart';
+import '../../domain/course_validator.dart';
 
 // Stream of all courses to keep the list reactively updated
 final coursesProvider = StreamProvider<List<Course>>((ref) {
@@ -42,18 +43,12 @@ class CourseController {
     String? facultyPhone,
     String? facultyDepartment,
   }) async {
-    if (name.trim().isEmpty) {
-      throw ArgumentError('Course name cannot be empty.');
-    }
-    if (code.trim().isEmpty) {
-      throw ArgumentError('Course code cannot be empty.');
-    }
-    if (colorHex.trim().isEmpty) {
-      throw ArgumentError('Course color cannot be empty.');
-    }
-    if (facultyAcronym.trim().isEmpty) {
-      throw ArgumentError('Faculty acronym cannot be empty.');
-    }
+    CourseValidator.validate(
+      name: name,
+      code: code,
+      colorHex: colorHex,
+      facultyAcronym: facultyAcronym,
+    );
 
     final course = Course()
       ..uuid = const Uuid().v4()
@@ -87,18 +82,12 @@ class CourseController {
     String? facultyPhone,
     String? facultyDepartment,
   }) async {
-    if (name.trim().isEmpty) {
-      throw ArgumentError('Course name cannot be empty.');
-    }
-    if (code.trim().isEmpty) {
-      throw ArgumentError('Course code cannot be empty.');
-    }
-    if (colorHex.trim().isEmpty) {
-      throw ArgumentError('Course color cannot be empty.');
-    }
-    if (facultyAcronym.trim().isEmpty) {
-      throw ArgumentError('Faculty acronym cannot be empty.');
-    }
+    CourseValidator.validate(
+      name: name,
+      code: code,
+      colorHex: colorHex,
+      facultyAcronym: facultyAcronym,
+    );
 
     final course = Course()
       ..id = id

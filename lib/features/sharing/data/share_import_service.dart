@@ -58,6 +58,10 @@ class ShareImportService {
     await _serializer.safeWrite(() async {
       await isar.writeTxn(() async {
         for (final sharedCourse in dto.courses) {
+          if (sharedCourse.name.trim().isEmpty || sharedCourse.code.trim().isEmpty) {
+            continue; // Skip invalid courses
+          }
+
           // Check if a course with the same code already exists
           final existingCourse = await isar.courses
               .filter()

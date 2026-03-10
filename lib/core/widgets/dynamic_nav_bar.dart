@@ -25,12 +25,6 @@ class DynamicNavBar extends StatelessWidget {
         borderRadius: BorderRadius.circular(32),
         boxShadow: const [
           BoxShadow(
-            color: Color.fromARGB(0, 0, 0, 0),
-            blurRadius: 24,
-            spreadRadius: 0,
-            offset: Offset(0, 8),
-          ),
-          BoxShadow(
             color: Color.fromARGB(108, 0, 0, 0),
             blurRadius: 1,
             spreadRadius: 0,

@@ -133,7 +133,18 @@ class SettingsPage extends ConsumerWidget {
                     ),
                   ),
                   trailing: Icon(Icons.chevron_right, color: muted),
-                  onTap: () {},
+                  onTap: () {
+                    showAboutDialog(
+                      context: context,
+                      applicationName: 'NextClass',
+                      applicationVersion: '5.4.2',
+                      applicationLegalese: 'A clean, offline-first student schedule manager.',
+                      children: [
+                        const SizedBox(height: 16),
+                        const Text('Built with Flutter & Isar.'),
+                      ],
+                    );
+                  },
                 ),
               ],
             ),
