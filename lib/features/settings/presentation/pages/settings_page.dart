@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/constants/app_constants.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../sharing/presentation/pages/export_mode_screen.dart';
@@ -136,9 +137,9 @@ class SettingsPage extends ConsumerWidget {
                   onTap: () {
                     showAboutDialog(
                       context: context,
-                      applicationName: 'NextClass',
-                      applicationVersion: '5.5.0',
-                      applicationLegalese: 'A clean, offline-first student schedule manager.',
+                      applicationName: AppConstants.appName,
+                      applicationVersion: AppConstants.version,
+                      applicationLegalese: AppConstants.appDescription,
                       children: [
                         const SizedBox(height: 16),
                         const Text('Built with Flutter & Isar.'),
@@ -152,7 +153,7 @@ class SettingsPage extends ConsumerWidget {
           const SizedBox(height: 32),
           Center(
             child: Text(
-              'Version 5.5.0',
+              'Version ${AppConstants.version}',
               style: AppTextStyles.versionText(context),
             ),
           ),

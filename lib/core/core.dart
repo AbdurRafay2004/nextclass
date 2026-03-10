@@ -4,6 +4,7 @@
 /// This gives you database, providers, theme, utils, and widgets.
 library;
 
+export 'constants/app_constants.dart';
 export 'database/database_manager.dart';
 export 'database/database_write_serializer.dart';
 export 'providers/time_provider.dart';

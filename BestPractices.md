@@ -8,6 +8,9 @@ Read `lib/core/core.dart` barrel export to see everything available:
 
 | Utility | Location | Usage |
 |---------|----------|-------|
+| `AppConstants.version` | `core/constants/app_constants.dart` | App version (update in one place) |
+| `AppConstants.appName` | `core/constants/app_constants.dart` | App name |
+| `AppConstants.fullVersion` | `core/constants/app_constants.dart` | Version + build number |
 | `AppColors.hexToColor()` | `core/theme/app_colors.dart` | Convert hex string → Color |
 | `AppColors.colorToHex()` | `core/theme/app_colors.dart` | Convert Color → hex string |
 | `AppColors.cardDark` | `core/theme/app_colors.dart` | Card/nav bar background (dark) |
