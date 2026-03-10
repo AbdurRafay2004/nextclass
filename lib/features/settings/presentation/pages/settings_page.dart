@@ -137,7 +137,7 @@ class SettingsPage extends ConsumerWidget {
                     showAboutDialog(
                       context: context,
                       applicationName: 'NextClass',
-                      applicationVersion: '5.4.2',
+                      applicationVersion: '5.5.0',
                       applicationLegalese: 'A clean, offline-first student schedule manager.',
                       children: [
                         const SizedBox(height: 16),
@@ -152,7 +152,7 @@ class SettingsPage extends ConsumerWidget {
           const SizedBox(height: 32),
           Center(
             child: Text(
-              'Version 5.4.2',
+              'Version 5.5.0',
               style: AppTextStyles.versionText(context),
             ),
           ),

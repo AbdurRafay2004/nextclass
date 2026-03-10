@@ -55,6 +55,39 @@ class ShareImportService {
     int sessionsAdded = 0;
     int sessionsSkipped = 0;
 
+    final incomingCodes = dto.courses
+        .where((c) => c.name.trim().isNotEmpty && c.code.trim().isNotEmpty)
+        .map((c) => c.code)
+        .toList();
+
+    // 1. Pre-fetch existing courses
+    final matchedCourses = incomingCodes.isEmpty 
+        ? <Course>[]
+        : await isar.courses
+            .filter()
+            .anyOf(incomingCodes, (q, code) => q.codeEqualTo(code))
+            .findAll();
+
+    final existingCoursesMap = {for (final c in matchedCourses) c.code: c};
+
+    // 2. Pre-fetch existing sessions for matched courses
+    final Map<String, List<int>> existingSessionIdsMap = {};
+    final Map<String, List<ClassSession>> existingSessionsMap = {};
+
+    if (existingCoursesMap.isNotEmpty) {
+      final existingUuids = existingCoursesMap.values.map((c) => c.uuid).toList();
+      
+      final allExistingSessions = await isar.classSessions
+          .filter()
+          .anyOf(existingUuids, (q, uuid) => q.courseUuidEqualTo(uuid))
+          .findAll();
+
+      for (final session in allExistingSessions) {
+        existingSessionIdsMap.putIfAbsent(session.courseUuid, () => []).add(session.id);
+        existingSessionsMap.putIfAbsent(session.courseUuid, () => []).add(session);
+      }
+    }
+
     await _serializer.safeWrite(() async {
       await isar.writeTxn(() async {
         for (final sharedCourse in dto.courses) {
@@ -62,12 +95,8 @@ class ShareImportService {
             continue; // Skip invalid courses
           }
 
-          // Check if a course with the same code already exists
-          final existingCourse = await isar.courses
-              .filter()
-              .codeEqualTo(sharedCourse.code)
-              .findFirst();
-
+          // Lookup pre-fetched course
+          final existingCourse = existingCoursesMap[sharedCourse.code];
           String courseUuid;
 
           if (existingCourse != null) {
@@ -89,11 +118,11 @@ class ShareImportService {
 
               await isar.courses.put(updated);
 
-              // Delete all existing sessions for this course (replace)
-              await isar.classSessions
-                  .filter()
-                  .courseUuidEqualTo(courseUuid)
-                  .deleteAll();
+              // Delete all existing sessions using pre-fetched IDs
+              final idsToDelete = existingSessionIdsMap[courseUuid] ?? [];
+              if (idsToDelete.isNotEmpty) {
+                await isar.classSessions.deleteAll(idsToDelete);
+              }
 
               coursesUpdated++;
             } else {
@@ -135,10 +164,8 @@ class ShareImportService {
             }
           } else {
             // Merge mode with existing course: only add sessions that don't exist
-            final existingSessions = await isar.classSessions
-                .filter()
-                .courseUuidEqualTo(courseUuid)
-                .findAll();
+            // Use pre-fetched sessions
+            final existingSessions = existingSessionsMap[courseUuid] ?? [];
 
             for (final sharedSession in sharedCourse.sessions) {
               final isDuplicate = existingSessions.any(

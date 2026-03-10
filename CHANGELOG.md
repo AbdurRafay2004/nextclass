@@ -1,9 +1,11 @@
 # Changelog
 
 ## Current Status
-✅ Phase 24 Complete: Addressed medium-priority code quality issues reported in Deep Code Analysis.
+✅ Phase 25 Complete: Optimized Isar database transactions in `ShareImportService` to prevent `MdbxError` lock contention on low-end devices.
 
 ## ChangeLog
+- **2026-03-10**: Updated app version to **5.5.0** following the implementation of Phase 25.
+- **2026-03-10**: Extracted all read operations (`findFirst`, `findAll`) from the `writeTxn` block within `ShareImportService.import()`. Pre-fetching existing courses and sessions into memory maps prevents prolonged MDBX write locks and adheres strictly to the project's database concurrency rules.
 - **2026-03-10**: Extracted duplicate validation logic from `CourseController` and `SessionController` into dedicated `CourseValidator` and `SessionValidator` domain classes to enforce DRY principles.
 - **2026-03-10**: Added input validation to `ShareImportService` to gracefully skip imported courses with empty names or codes.
 - **2026-03-10**: Removed dead BoxShadow code (zero alpha) from `DynamicNavBar` for cleaner widget rendering.
