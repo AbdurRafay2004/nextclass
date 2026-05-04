@@ -275,21 +275,73 @@ class CourseDetailPage extends ConsumerWidget {
                                   ),
                             ),
                             const SizedBox(height: 12),
+                            if (displayCourse.facultyFullName != null && displayCourse.facultyFullName!.isNotEmpty) ...[
+                              Row(
+                                children: [
+                                  Icon(Icons.person, size: 18, color: muted),
+                                  const SizedBox(width: 8),
+                                  Expanded(
+                                    child: Text(
+                                      displayCourse.facultyFullName!,
+                                      style: Theme.of(context).textTheme.titleMedium?.copyWith(color: onSurface),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 4),
+                            ],
                             Row(
                               children: [
                                 Icon(
-                                  Icons.person_outline,
+                                  Icons.badge_outlined,
                                   size: 18,
                                   color: muted,
                                 ),
                                 const SizedBox(width: 8),
                                 Text(
                                   displayCourse.facultyAcronym,
-                                  style: Theme.of(context).textTheme.titleMedium
+                                  style: Theme.of(context).textTheme.titleSmall
                                       ?.copyWith(color: muted),
                                 ),
+                                if (displayCourse.facultyDepartment != null && displayCourse.facultyDepartment!.isNotEmpty) ...[
+                                  Text(
+                                    ' • ${displayCourse.facultyDepartment}',
+                                    style: Theme.of(context).textTheme.titleSmall
+                                        ?.copyWith(color: muted),
+                                  ),
+                                ],
                               ],
                             ),
+                            if (displayCourse.facultyEmail != null && displayCourse.facultyEmail!.isNotEmpty) ...[
+                              const SizedBox(height: 4),
+                              Row(
+                                children: [
+                                  Icon(Icons.email_outlined, size: 18, color: muted),
+                                  const SizedBox(width: 8),
+                                  Expanded(
+                                    child: Text(
+                                      displayCourse.facultyEmail!,
+                                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: muted),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                            if (displayCourse.facultyPhone != null && displayCourse.facultyPhone!.isNotEmpty) ...[
+                              const SizedBox(height: 4),
+                              Row(
+                                children: [
+                                  Icon(Icons.phone_outlined, size: 18, color: muted),
+                                  const SizedBox(width: 8),
+                                  Expanded(
+                                    child: Text(
+                                      displayCourse.facultyPhone!,
+                                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: muted),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
                             const SizedBox(height: 16),
                             Row(
                               children: [
