@@ -12,10 +12,15 @@ final databaseProvider = Provider<Isar>((ref) {
 class DatabaseManager {
   static Future<Isar> init() async {
     final dir = await getApplicationDocumentsDirectory();
-    final isar = await Isar.open([
-      CourseSchema,
-      ClassSessionSchema,
-    ], directory: dir.path);
+    final isar = await Isar.open(
+      [
+        CourseSchema,
+        ClassSessionSchema,
+      ],
+      directory: dir.path,
+      maxSizeMiB: 512, // Reduced from 1000MB to 512MB to help low-RAM devices
+      relaxedDurability: true, // Prevents intense disk locking on slow storage
+    );
     return isar;
   }
 }
