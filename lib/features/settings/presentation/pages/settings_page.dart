@@ -15,6 +15,11 @@ class SettingsPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final muted = AppColors.mutedText(context);
     final currentFont = ref.watch(fontFamilyProvider);
+    final packageInfo = ref.watch(packageInfoProvider);
+    final versionString = packageInfo.maybeWhen(
+      data: (info) => '${info.version}+${info.buildNumber}',
+      orElse: () => '...',
+    );
 
     return Scaffold(
       appBar: AppBar(title: const Text('SETTINGS')),
@@ -138,7 +143,7 @@ class SettingsPage extends ConsumerWidget {
                     showAboutDialog(
                       context: context,
                       applicationName: AppConstants.appName,
-                      applicationVersion: AppConstants.version,
+                      applicationVersion: versionString,
                       applicationLegalese: AppConstants.appDescription,
                       children: [
                         const SizedBox(height: 16),
@@ -153,7 +158,7 @@ class SettingsPage extends ConsumerWidget {
           const SizedBox(height: 32),
           Center(
             child: Text(
-              'Version ${AppConstants.version}',
+              'Version $versionString',
               style: AppTextStyles.versionText(context),
             ),
           ),

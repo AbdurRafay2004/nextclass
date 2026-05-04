@@ -1,0 +1,43 @@
+name: Flutter Release
+
+on:
+  push:
+    tags:
+      - 'v*' # Trigger the workflow when a tag starting with 'v' is pushed (e.g., v1.0.0)
+
+jobs:
+  build_and_release:
+    name: Build & Create Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Run Build Runner (Code Generation)
+        run: flutter pub run build_runner build --delete-conflicting-outputs
+
+      - name: Build Android APK (Split & Obfuscated)
+        run: flutter build apk --release --split-per-abi --obfuscate --split-debug-info=build/app/outputs/symbols
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: build/app/outputs/flutter-apk/app-*-release.apk
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

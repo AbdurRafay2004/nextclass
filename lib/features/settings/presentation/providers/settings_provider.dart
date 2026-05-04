@@ -1,6 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+/// Provides application package information (version, build number).
+final packageInfoProvider = FutureProvider<PackageInfo>((ref) async {
+  return await PackageInfo.fromPlatform();
+});
 /// Provides the globally accessible SharedPreferences instance.
 /// This MUST be overridden in ProviderScope before runApp.
 final sharedPreferencesProvider = Provider<SharedPreferences>((ref) {
