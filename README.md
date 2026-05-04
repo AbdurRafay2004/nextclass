@@ -65,4 +65,11 @@ To run the project locally, ensure you have the Flutter SDK installed.
     dart run flutter_launcher_icons
     ```
 
-For detailed progress, refer to [CHANGELOG.md](file:///y:/Antigravity%20workspace/NextClass/nextclass/CHANGELOG.md).
+For detailed progress, refer to [CHANGELOG.md](CHANGELOG.md).
+
+## 📄 License
+
+This project is licensed under the **GNU General Public License v3.0**. 
+See the [LICENSE](LICENSE) file for more details. 
+
+*Note: If you plan to distribute a modified version of this app, your project must also be open-sourced under the same GPLv3 license.*
